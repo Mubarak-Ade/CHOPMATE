@@ -1,14 +1,14 @@
-import {Features} from "../components/Features"
-import { Launch } from "../components/Launch"
+import {Features} from "../components/home/Features"
+import { Launch } from "../components/home/Launch"
 
-import {Hero} from "../components/Hero"
-import { TestimonialSection } from "../components/TestimonialSection"
+import {Hero} from "../components/home/Hero"
+import { TestimonialSection } from "../components/home/TestimonialSection"
 import { Footer} from "../components/Footer"
 
 
 export const HomePage = () => {
   return (
-    <div>
+    <div className="">
         <Hero />
         <Features />
         <Launch />

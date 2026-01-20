@@ -1,6 +1,6 @@
 import React from 'react'
 import { Quote } from 'lucide-react'
-import {Icon} from './custom/Icon'
+import {Icon} from '../custom/Icon'
 
 export const TestimonialSection = () => {
   return (
@@ -10,7 +10,7 @@ export const TestimonialSection = () => {
         
         
         <div className="absolute -top-6 left-10 bg-[#e14949] w-14 h-14 rounded-2xl flex items-center justify-center shadow-lg shadow-red-500/30">
-          <Icon size={100} icon={Quote} className="text-white fill-white w-12 h-12" />
+          <Icon size={50} icon={Quote} className="text-white fill-white p-3" />
         </div>
 
       

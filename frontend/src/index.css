@@ -8,3 +8,7 @@
 	--color-sandy-brown: #f4a261ff;
 	--color-emerald: #2ecc71ff;
  }
+
+body {
+	background-color: var(--color-white);
+}

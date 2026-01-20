@@ -1,5 +1,5 @@
 import React from 'react'
-import {Icon} from './custom/Icon'
+import {Icon} from '../custom/Icon'
 
 export const FeaturesCard = ({ icon, title, content, bgColor }) => {
   return (
