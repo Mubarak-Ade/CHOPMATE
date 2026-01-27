@@ -1,22 +1,23 @@
 import React from 'react'
 import {SoupIcon} from "lucide-react"
 import {Icon} from './custom/Icon'
+import {Link} from "react-router"
 
 export const Header = () => {
   return (
-    <header className='flex justify-between border-2 border-gray-200 items-center px-10 py-5'>
+    <header className='flex justify-between border border-slate-grey/20 bg-slate-grey/10 items-center px-10 py-5'>
         <div className="flex gap-3 justify-center text-center items-center">
             <Icon size={35} icon={SoupIcon} />
-            <h1 className='text-3xl font-bold'>CHOP<span className='text-punch-red'>MATE</span></h1>
+            <Link to="/"><h1 className='text-3xl font-bold'>CHOP<span className='text-punch-red'>MATE</span></h1></Link>
         </div>
-        <ul className='flex gap-6 text-lg font-bold uppercase'>
-            <li>Features</li>
-            <li>Benefits</li>
-            <li>Resources</li>
+        <ul className='flex gap-6 text-base font-bold uppercase'>
+            <Link>Features</Link>
+            <Link>Benefits</Link>
+            <Link>Resources</Link>
         </ul>
         <div className="flex gap-3">
-            <button className='font-bold px-6 py-3 text-lg'>Login</button>
-            <button className='bg-punch-red px-6 py-3 text-white rounded-xl font-bold shadow-[0_2px_10px] shadow-punch-red/50'>Start Free</button>
+            <Link to="signup" className='font-bold px-6 py-3 text-lg'>Login</Link>
+            <Link className='bg-punch-red px-6 py-3 text-white rounded-xl font-bold shadow-[0_2px_10px] shadow-punch-red/50'>Start Free</Link>
         </div>
     </header>
   )
