@@ -9,6 +9,17 @@
 	--color-emerald: #2ecc71ff;
  }
 
-body {
+verify-card{
 	background-color: var(--color-white);
+}
+.outer-container {
+	height: 100vh;
+	background-color: lightblue;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.inner-container {
+	background-color: lightpink;
+	width: 400px;
 }
