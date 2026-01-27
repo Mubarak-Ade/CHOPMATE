@@ -26,6 +26,7 @@ function App() {
         <Route path='/login' Component={LoginPage} />
          <Route path='/signup' Component={Layout}>
             <Route index path='account' Component={Account} />
+            <Route path='verify' Component={Verification} />
             <Route path='info' Component={RestaurantInfo} />
             <Route path='location' Component={Location} />
             <Route path='plan' Component={Plan} />

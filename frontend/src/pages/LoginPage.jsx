@@ -8,7 +8,7 @@ import {Link} from 'react-router'
 export function LoginPage() {
 
    return (
-      <div>
+      <div className=''>
          <div className="main-content">
             <div className="login-container">
                <div className="left-bar">
