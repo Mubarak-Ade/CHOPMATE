@@ -1,6 +1,11 @@
 import React from 'react'
+import {useGlobalContext} from '../context/GlobalContext'
+import {Link} from 'react-router'
 
 export const Account=() => {
+
+    const {goToNextPage} = useGlobalContext()
+
     return (
         <div className='w-full p-5'>
             <h1 className='font-[1000] text-4xl'>Create Your Account</h1>
@@ -49,7 +54,7 @@ export const Account=() => {
                 </div>
                 <div className='flex justify-between mt-10 p-5'>
                     <p className='text-punch-red/80'>Already have an account? <span className='font-bold text-punch-red'>Log in</span></p>
-                    <button className='bg-punch-red px-6 py-3 rounded-xl text-white '>Create Account & Verify</button>
+                    <button onClick={goToNextPage}  className='bg-punch-red px-6 py-3 rounded-xl text-white '>Create Account & Verify</button>
                 </div>
 
             </form>

@@ -8,6 +8,9 @@ import {Header} from './components/Header'
 import {Account} from './pages/Account'
 import {Layout} from './components/signup/Layout'
 import {Verification} from './pages/SignUp/Verification'
+import {Footer} from './components/Footer'
+import {RestaurantInfo} from './pages/SignUp/RestaurantInfo'
+import {ConfirmPage} from './pages/SignUp/ConfirmPage'
 
 
 function App() {
@@ -18,10 +21,13 @@ function App() {
       <Routes>
         <Route path='/' element={<HomePage />} />
          <Route path='/signup' Component={Layout}>
-            <Route index Component={Account} />
-            <Route path='/signup/verification' Component={Verification} />
+            <Route index path='account' Component={Account} />
+            <Route path='verify' Component={Verification} />
+            <Route path='info' Component={RestaurantInfo}/>
+            <Route path='confirm' Component={ConfirmPage} />
          </Route>
       </Routes>
+      <Footer />
     </>
   )
 }
