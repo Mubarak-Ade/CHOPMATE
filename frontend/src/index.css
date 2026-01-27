@@ -59,7 +59,7 @@ body {
 	align-items: center;
 }
 .login-container {
-	width: 65%;
+	width: 70%;
 	height: 85%;
 	display: flex;
 	border-radius: 10px;
@@ -84,21 +84,21 @@ body {
 	transform: scale(0.9);
 }
 .left-inner-content h1 {
-	font-size: 1.5em;
+	font-size: 2.5em;
 	font-weight: bold;
 }
 .left-inner-content .title-text {
 	color: var(--color-punch-red);
-	font-size: 12px;
+	font-size: 16px;
 	margin-bottom: 20px;
 }
 .left-inner-content form {
 	display: flex;
 	flex-direction: column;
-	gap: 8px	;
+	gap: 10px	;
 }
 .left-inner-content form label {
-	font-size: 12px;
+	font-size: 16px;
 	font-weight: 500;
 }
 .left-inner-content form input[type='text'] {
@@ -113,7 +113,7 @@ body {
 }
 .left-inner-content form a {	
 	color: var(--color-punch-red);
-	font-size: 12px;
+	font-size: 16px;
 	font-weight: 400;
 	margin-left: auto;
 }
@@ -123,7 +123,7 @@ body {
 	padding: 8px;
 	margin-top: 15px;
 	border-radius: 5px;
-	font-size: 12px;
+	font-size: 16px;
 	font-weight: bold;
 }
 .left-inner-content form div { display: flex }
@@ -149,9 +149,9 @@ body {
 	justify-content: space-between;
 }
 .link-buttons {
-	font-size: 12px;
+	font-size: 16px;
 	font-weight: 500;
-	padding: 8px 35px;
+	padding: 8px 45px;
 	border: 1px solid #f8505e6f;
 	border-radius: 5px;
 	display: flex;
