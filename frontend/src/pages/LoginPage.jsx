@@ -3,25 +3,12 @@ import spoonImg from '../assets/images/spoon.png'
 import appleLogoImg from '../assets/images/apple-logo.png'
 import googleLogoImg from '../assets/images/google-logo.png'
 import headerLogiImg from '../assets/images/header-logo.png'
+import {Link} from 'react-router'
 
-export default function LoginPage() {
+export function LoginPage() {
 
    return (
       <div>
-         <div className="header">
-            <ul>
-               <li className='li-left'>
-                  <img src={headerLogiImg} alt="header logo" />
-                  <span>Restaurant Portal</span>
-               </li>
-               <li className='li-right'>
-                  <p>Help</p>
-                  <p>Contact Support</p>
-                  <button>Join now</button>
-               </li>
-            </ul>
-         </div>
-
          <div className="main-content">
             <div className="login-container">
                <div className="left-bar">
@@ -59,7 +46,7 @@ export default function LoginPage() {
                   </div>
                   <h1>New Here?</h1>
                   <p>Join our network of top-rated restaurants and start scaling your business today.</p>
-                  <button>Create Account</button>
+                  <Link to="/signup/account" className='bg-white px-6 py-3 rounded-full text-sm'>Create Account</Link>
                </div>
             </div>
          </div>

@@ -1,7 +1,11 @@
 import React from 'react'
 import { Icon } from '../../components/custom/Icon'
 import { ArrowLeft, MapIcon, Info } from 'lucide-react'
+import {useGlobalContext} from '../../context/GlobalContext'
 export const Location = () => {
+
+  const {goToNextPage, goToPrevPage} = useGlobalContext()
+
   return (
     <div className='px-6' py-6>
       <h1 className='text-2xl font-bold mb-5 mt-5'>Location & Contact info</h1>
@@ -56,9 +60,9 @@ export const Location = () => {
         <div className='flex mt-5 mb-10 justify-between'>
           <div className='flex gap-2 justify-items-start items-center'>
             <Icon icon={ArrowLeft} className={'absolute '} size={20}/>
-          <button  className='font-bold px-6 py-3 text-lg relative'>Back</button>
+          <button onClick={goToPrevPage}  className='font-bold px-6 py-3 text-lg relative'>Back</button>
           </div>
-          <button className='bg-punch-red px-6 py-3 text-white rounded-xl font-bold shadow-[0_2px_10px] shadow-punch-red/50' >continue</button>
+          <button onClick={goToNextPage} className='bg-punch-red px-6 py-3 text-white rounded-xl font-bold shadow-[0_2px_10px] shadow-punch-red/50' >continue</button>
         </div>
     </div>
   )

@@ -19,7 +19,25 @@ export const links = [
 	},
 	{
 		id: 4,
-		name: 'Review and Submit',
+		name: 'Location & Contact',
+		info: 'Address & reachability',
+		path: "location"
+	},
+	{
+		id: 5,
+		name: 'Operating Hours',
+		info: 'Set your working hours',
+		path: "operation"
+	},
+	{
+		id: 6,
+		name: 'Choose Your Plan',
+		info: 'Select a subscription plan',
+		path: "plan"
+	},
+	{
+		id: 7,
+		name: 'Review & Submit',
 		info: 'Final Confirmation',
 		path: "confirm"
 	}
