@@ -8,7 +8,6 @@ export const Layout = () => {
         <Sidebar />
         <main className='w-full h-full'>
          <Outlet />
-         
         </main>
     </div>
   )

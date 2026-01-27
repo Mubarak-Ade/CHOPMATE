@@ -8,10 +8,11 @@ import {Header} from './components/Header'
 import {Account} from './pages/Account'
 import {Layout} from './components/signup/Layout'
 import {Verification} from './pages/SignUp/Verification'
-
+import { Footer } from './components/Footer'
+import { Location } from './pages/SignUp/Location'
+import { Plan } from './pages/SignUp/Plan'
 
 function App() {
-
   return (
     <>
       <Header />
@@ -20,8 +21,11 @@ function App() {
          <Route path='/signup' Component={Layout}>
             <Route index Component={Account} />
             <Route path='/signup/verification' Component={Verification} />
-         </Route>
+            <Route path='/signup/location' Component={Location}/>
+            <Route path='/signup/plan' Component={Plan}/>
+        </Route>
       </Routes>
+      <Footer />
     </>
   )
 }
