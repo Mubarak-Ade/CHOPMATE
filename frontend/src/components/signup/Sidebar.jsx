@@ -1,29 +1,34 @@
-import React from 'react'
+import {useGlobalContext} from '../../context/GlobalContext';
+import {Icon} from '../custom/Icon';
+import {Check} from 'lucide-react';
+import {NavLink} from 'react-router';
+import {links} from '../../links';
+
 
 export const Sidebar = () => {
-  return (
-    <ul className='w-100 border-r border-slate-grey/20 bg-slate-grey/10 min-h-screen p-4 space-y-12'>
-        <li className='flex relative after:absolute items-center gap-4 after:h-full after:w-0.5 after:-bottom-12 after:left-5 after:bg-punch-red/20'>
-            <button className='py-1.5 px-3.5 rounded-full bg-punch-red text-white text-xl'>1</button>
-            <div className="">
-                <h4 className='font-bold'>Account Creation</h4>
-                <p className='text-sm text-slate-grey'>Set up your admin profile</p>
-            </div>
-        </li>
-       <li className='flex relative after:absolute items-center gap-4 after:h-full after:w-0.5 after:-bottom-12 after:left-5 after:bg-punch-red/20'>
-            <button className='py-1.5 px-3.5 rounded-full bg-punch-red text-white text-xl'>2</button>
-            <div className="">
-                <h4 className=' font-bold'>Verification</h4>
-                <p className='text-sm text-slate-grey'>Verify email & phone</p>
-            </div>
-        </li>
-        <li className='flex items-center gap-4 after:bg-punch-red/20'>
-            <button className='py-1.5 px-3.5 rounded-full text-white bg-punch-red text-xl'>3</button>
-            <div className="">
-                <h4 className=' font-bold'>Bussiness Setup</h4>
-                <p className='text-sm text-slate-grey'>Register your account</p>
-            </div>
-        </li>
-    </ul>
-  )
-}
+    
+    const {activePage, index} = useGlobalContext()
+    const isLast = links.length - 1;
+    
+    return (
+        <ul className="w-100 border-r border-slate-grey/20 bg-slate-grey/10 min-h-screen p-4 space-y-12">
+            {links.map((link, idx) => (
+                <NavLink
+                    key={idx}
+                    to={`/signup/${link.path}`}
+                    className={({isActive}) => `flex relative items-center gap-4 ${isActive ? "text-coral-black" : "text-slate-grey/50"} ${idx !== isLast && 'after:absolute after:h-full after:w-0.5 after:-bottom-12 after:left-5 after:bg-slate-grey/20'}`}
+                >
+                    <button
+                        className={`size-10 flex items-center justify-center rounded-full ${idx === index ? "bg-punch-red text-white" : "bg-transparent border border-slate-grey text-slate-grey"} text-xl`}
+                    >
+                        {index > idx ? <Icon icon={Check} /> : idx + 1}
+                    </button>
+                    <div className="">
+                        <h4 className={`font-bold`}>{link.name}</h4>
+                        <p className={`text-sm`}>{link.info}</p>
+                    </div>
+                </NavLink>
+            ))}
+        </ul>
+    );
+};

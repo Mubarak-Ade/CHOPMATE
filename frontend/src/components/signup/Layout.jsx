@@ -1,4 +1,3 @@
-import React from 'react'
 import {Outlet} from 'react-router'
 import {Sidebar} from './Sidebar'
 
@@ -8,7 +7,6 @@ export const Layout = () => {
         <Sidebar />
         <main className='w-full h-full'>
          <Outlet />
-         
         </main>
     </div>
   )
