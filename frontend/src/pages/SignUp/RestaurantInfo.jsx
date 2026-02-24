@@ -17,7 +17,7 @@ export const RestaurantInfo = () => {
             <hr className='mt-2 border-slate-grey/20' />
             <div className="mt-4 flex gap-10">
                 <div className="">
-                    <h6 className='font-medium'>Brand Logo <span className='font-normal text-punch-red'>(optional)</span></h6>
+                    <h6 className='font-medium mb-2'>Brand Logo <span className='font-normal text-punch-red'>(optional)</span></h6>
                     <div className="flex items-center p-5 justify-center size-30 rounded-full border border-dashed border-punch-red flex-col gap-2">
                         <Icon icon={Camera} size={20} className="text-punch-red" />
                         <p className='text-sm text-punch-red'>Upload</p>

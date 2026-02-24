@@ -6,7 +6,7 @@ export const Layout = () => {
   return (
     <div className='flex w-full h-full'>
         <Sidebar />
-        <main className='w-full h-full'>
+        <main className='w-full h-full p-8'>
          <Outlet />
         </main>
     </div>
