@@ -1,0 +1,131 @@
+ 
+.menu-img {
+   width: 100%;
+   height: 120px; 
+   border-radius: 7px;
+}
+
+.main-container { 
+   display: flex; 
+   gap: 70px; 
+   margin-top: 5px; 
+}
+.left-section { 
+   flex: 1; 
+   font-weight: 500; 
+}
+.right-section { flex: 2.5 }
+
+.hr-left, 
+.hr-right { color: #0000001a }
+
+.hr-left:first-of-type { margin: 30px 0 }
+.hr-left:last-of-type { margin: 20px 0 }
+.hr-right { margin-top: 10px }
+
+.left-section-top {
+   display: flex;
+   flex-direction: column;
+   gap: 15px;
+}
+.left-section-top h1 {
+   font-size: 2em;
+   font-weight: 900;
+}
+.left-section-top p {
+   display: flex;
+   align-items: center;
+   gap: 5px;
+}
+.left-section-top p span:nth-child(2) {
+   color: green;
+}
+.left-section-top ul {
+   display: flex;
+   gap: 10px;
+}
+.left-section-top ul li {
+   background-color: hsl(34, 70%, 95%);
+   padding: 5px 15px;
+   border-radius: 7px;
+}
+.left-section-top ul li:last-child {
+   text-wrap: nowrap;
+}
+
+.left-section-bottom {
+   display: flex;
+   flex-direction: column;
+   gap: 15px;
+}
+.left-section-bottom div {
+   display: flex;
+   align-items: ce;
+   gap: 15px;
+}
+.left-section-bottom p {
+   margin-top: -5px;
+}
+.require-red { color: #e63946ff }
+.icons { color: green; }
+
+.order-btn-container {
+   font-weight: bold;
+   display: flex;
+   flex-direction: column;
+   gap: 10px;
+}
+.order-btn-container button {
+   flex: 1;
+   padding: 10px 0;
+   border-radius: 7px;
+}
+.order-btn-container button:nth-child(1) {
+   background-color: #e63946ff;
+   color: #fff;
+}
+.order-btn-container button:nth-child(2) {
+   background-color: hsl(34, 70%, 95%);
+}
+
+.main-nav {
+   display: flex;
+   gap: 15px;
+   font-size: 18px;
+   font-weight: 500;
+   color: green;
+   margin-top: 5px;
+}
+.main-nav button { padding: 5px 10px }
+
+.menu-container .category-name {
+   font-size: 1.3rem;
+   font-weight: bold;
+   margin: 30px 0 20px -5px;
+}
+
+.menu-items {
+   display: grid;
+   grid-template-columns: repeat(2, 1fr);
+   /* grid-auto-rows: 120px; */
+   gap: 20px;
+}
+.menu-items ul {
+   background-color: hsl(34, 70%, 95%);
+   border-radius: 7px;
+   padding: 10px;
+   display: flex;
+   flex-direction: column;
+   gap: 5px;
+}
+
+.menu-items ul .name {
+   font-weight: bold;
+}
+.menu-items ul .description {
+   color: green;
+}
+.menu-items ul .price {
+   color: #e63946ff;
+   font-weight: bold;
+}

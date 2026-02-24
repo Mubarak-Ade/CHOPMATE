@@ -1,6 +1,5 @@
-import { ArrowLeft, Lock, TextAlignCenter, Thermometer } from 'lucide-react'
-import React from 'react'
-import "../../verify.css"
+import "../../styles/Verification.css"
+import { ArrowLeft, Lock } from 'lucide-react'
 import {Icon} from "../../components/custom/Icon"
 
 export const Verification = () => {
