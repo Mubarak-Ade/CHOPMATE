@@ -1,4 +1,3 @@
-import React from 'react';
 import {useGlobalContext} from '../../context/GlobalContext';
 import {Icon} from '../custom/Icon';
 import {Check} from 'lucide-react';
@@ -10,9 +9,7 @@ export const Sidebar = () => {
     
     const {activePage, index} = useGlobalContext()
     const isLast = links.length - 1;
-
     
-
     return (
         <ul className="w-100 border-r border-slate-grey/20 bg-slate-grey/10 min-h-screen p-4 space-y-12">
             {links.map((link, idx) => (

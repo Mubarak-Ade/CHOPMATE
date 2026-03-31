@@ -1,7 +1,3 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
 import {Route, Routes} from 'react-router'
 import {HomePage} from './pages/HomePage'
 import {Header} from './components/Header'
@@ -18,14 +14,17 @@ import {LoginPage} from './pages/LoginPage'
 import {CheckoutPage} from './pages/CheckoutPage'
 import {CartPage} from './pages/CartPage'
 
+import RestaurantDetails from './pages/RestaurantDetails'
+
 
 function App() {
   return (
-    <>
+    <>      
       <Header />
       <Routes>
         <Route path='/' element={<HomePage />} />
         <Route path='/login' Component={LoginPage} />
+        <Route path="restaurant/details" Component={RestaurantDetails} />
         <Route path='/cart' Component={CartPage} />
         <Route path='/checkout' Component={CheckoutPage} />
          <Route path='/signup' Component={Layout}>
@@ -38,7 +37,7 @@ function App() {
             <Route path='confirm' Component={ConfirmPage} />
          </Route>
       </Routes>
-      <Footer />
+      <Footer /> 
     </>
   )
 }

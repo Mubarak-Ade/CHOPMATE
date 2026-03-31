@@ -30,6 +30,9 @@ export const GlobalContext = ({ children }) => {
 	}
 
     return (
-        <AppContext.Provider value={{ activePage: activePage.path, goToNextPage, goToPrevPage, index }}>{children}</AppContext.Provider>
-    );
+      <AppContext.Provider 
+			value={{ activePage: activePage.path, goToNextPage, goToPrevPage, index }}>
+				{children}
+		</AppContext.Provider>
+   );
 };

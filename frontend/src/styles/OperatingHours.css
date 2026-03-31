@@ -1,0 +1,157 @@
+/* operating hours styles */
+
+/* TimeBreak style */
+.schedule {
+   background-color: #6b72801a;
+   padding: 7px 10px;
+   border: 1px solid #00000023;
+   border-radius: 5px;
+   display: flex;
+   letter-spacing: 0.5px;
+}
+.schedule .left-schedule {
+   flex: 1;
+   display: flex;
+   gap: 20px;
+   padding: 5px;
+}
+
+.left-schedule .left-toggle {
+   display: flex;
+   align-items: center;
+   gap: 10px;
+}
+
+.left-schedule .right-time {
+   display: flex;
+   align-items: center;
+   gap: 10px;
+}
+
+.left-toggle .label-prop {
+   font-weight: bold;
+   width: 75px;
+}
+
+.left-schedule input[type='time'] {
+   background-color: #fff;
+   padding: 4px 15px;
+   border: 1px solid rgba(0, 0, 0, 0.238);
+   border-radius: 5px;
+}
+
+.schedule button {
+   color: red;
+   font-weight: 500;
+}
+
+/* toggle switch */
+.switch {
+   position: relative;
+   display: inline-block;
+   width: 38px;
+   height: 20px;
+}
+.switch input {
+   opacity: 0;
+   width: 0;
+   height: 0;
+}
+.slider {
+   position: absolute;
+   cursor: pointer;
+   inset: 0;
+   background-color: #ccc;
+   transition: 0.4s;
+   border-radius: 24px;
+}
+.slider:before {
+   position: absolute;
+   content: '';
+   height: 15px;
+   width: 15px;
+   left: 2px;
+   bottom: 2.5px;
+   background-color: white;
+   transition: 0.4s;
+   border-radius: 50%;
+}
+input:checked + .slider {
+   background-color: var(--color-punch-red);
+}
+input:checked + .slider:before {
+   transform: translateX(19px);
+}
+
+
+/* OperatingHours */
+
+/* operating hours -> top bar styles */
+.inner-content { padding: 20px 18px }
+.inner-content .top-bar {
+   display: flex;
+   flex-direction: column;
+   gap: 15px;
+}
+.inner-content .top-bar h1 {
+   font-size: 1.7rem;
+   font-weight: bold;
+   margin-bottom: -10px;
+}
+
+.red-content {
+   background-color: hsla(0, 80%, 92%, 0.5);
+   padding: 15px 15px 15px 42px;
+   position: relative;
+   border: 1px solid rgba(255, 0, 0, 0.15);
+   border-radius: 5px;
+}
+.red-content img {
+   width: 18px;
+   position: absolute;
+   top: 17px;
+   left: 12px;
+}
+.red-content h3 {
+   font-weight: 500;
+   margin-bottom: 5px;
+}
+
+.top-bar .week-bar {
+   display: flex;
+   font-weight: bold;
+}
+.week-bar span {
+   flex: 1;
+}
+.week-bar button {
+   color: red;
+}
+
+/* operating hours -> bottom bar styles */
+.bottom-bar {
+   margin-top: 15px;
+   margin-bottom: 30px;
+   display: flex;
+   flex-direction: column;
+   gap: 10px;
+}
+.btn-container {
+   display: flex;
+   font-weight: bold;
+}
+.prev-btn {
+   color: #707070;
+   display: flex;
+   align-items: center;
+   gap: 5px;
+}
+.next-btn {
+   background-color: var(--color-punch-red);
+   color: #fff;
+   padding: 7px 15px;
+   border-radius: 5px;
+   margin-left: auto;
+   box-shadow: 3px 3px 10px #0000002a;
+}
+
