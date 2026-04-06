@@ -1,13 +1,13 @@
 import '../styles/RestaurantDetails.css'
 import { menuItems } from '../jsFiles/menu.js'
-import menuImg from '../assets/menu-img.jpg'
+import menuImg from '../assets/menu-Img.jpg'
 import { Icon } from '../components/custom/Icon.jsx'
 import { Clock, Globe, MapPin, Phone, Star } from 'lucide-react'
 
 
 export default function RestaurantDatails() {
    return (
-      <div>
+      <div className='py-5 px-15'>
          <img className="menu-img" src={menuImg} alt="menu image" />
          <main className='main-container'>
             <div className="left-section">

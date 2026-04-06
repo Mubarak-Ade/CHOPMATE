@@ -11,18 +11,22 @@ import {ConfirmPage} from './pages/SignUp/ConfirmPage'
 import {Location} from './pages/SignUp/Location'
 import {OperatingHours} from './pages/SignUp/OperatingHours'
 import {LoginPage} from './pages/LoginPage'
+import {CheckoutPage} from './pages/CheckoutPage'
+import {CartPage} from './pages/CartPage'
 
 import RestaurantDetails from './pages/RestaurantDetails'
-import CartInfo from './pages/CartInfo'
 
 
 function App() {
   return (
     <>      
-      <Header />3
+      <Header />
       <Routes>
         <Route path='/' element={<HomePage />} />
         <Route path='/login' Component={LoginPage} />
+        <Route path="restaurant/details" Component={RestaurantDetails} />
+        <Route path='/cart' Component={CartPage} />
+        <Route path='/checkout' Component={CheckoutPage} />
          <Route path='/signup' Component={Layout}>
             <Route index path='account' Component={Account} />
             <Route path='verify' Component={Verification} />
