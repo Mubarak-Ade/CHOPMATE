@@ -3,6 +3,7 @@ import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
 
+import apiRoutes from "./routes/index.js";
 import healthRoutes from "./routes/healthRoutes.js";
 import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
 
@@ -26,6 +27,7 @@ app.get("/", (_req, res) => {
 });
 
 app.use("/api/health", healthRoutes);
+app.use("/api", apiRoutes);
 
 app.use(notFound);
 app.use(errorHandler);
