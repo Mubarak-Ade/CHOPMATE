@@ -1,13 +1,13 @@
 import mongoose from "mongoose";
+import { env } from "./env.js";
 
 const connectDB = async () => {
-  const mongoUri = process.env.MONGO_URI;
-
-  if (!mongoUri) {
-    throw new Error("MONGO_URI is missing from environment variables");
+  if (!env.mongoUri || env.useMemoryStore) {
+    console.log("Using in-memory Stage 1 store");
+    return;
   }
 
-  await mongoose.connect(mongoUri);
+  await mongoose.connect(env.mongoUri);
   console.log("MongoDB connected");
 };
 
