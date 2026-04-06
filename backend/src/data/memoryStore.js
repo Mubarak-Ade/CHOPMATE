@@ -11,6 +11,10 @@ const users = [
     role: "owner",
     isVerified: true,
     favorites: ["rst_2"],
+    preferences: {
+      cuisines: ["Nigerian", "Grill"],
+      priceRange: 4,
+    },
     createdAt: now(),
   },
   {
@@ -21,6 +25,10 @@ const users = [
     role: "customer",
     isVerified: true,
     favorites: ["rst_1"],
+    preferences: {
+      cuisines: ["Nigerian", "Healthy"],
+      priceRange: 3,
+    },
     createdAt: now(),
   },
   {
@@ -31,6 +39,10 @@ const users = [
     role: "customer",
     isVerified: true,
     favorites: [],
+    preferences: {
+      cuisines: ["Continental"],
+      priceRange: 3,
+    },
     createdAt: now(),
   },
   {
@@ -41,6 +53,10 @@ const users = [
     role: "admin",
     isVerified: true,
     favorites: [],
+    preferences: {
+      cuisines: [],
+      priceRange: 0,
+    },
     createdAt: now(),
   },
 ];
@@ -392,6 +408,7 @@ const recipes = [
 
 const stockMovements = [];
 const alerts = [];
+const aiCache = [];
 
 let sequence = 100;
 
@@ -416,6 +433,7 @@ export const memoryStore = {
   recipes,
   stockMovements,
   alerts,
+  aiCache,
   nextId(prefix) {
     sequence += 1;
     return `${prefix}_${sequence}`;

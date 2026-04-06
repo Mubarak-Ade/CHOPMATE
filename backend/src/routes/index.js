@@ -1,5 +1,6 @@
 import express from "express";
 
+import aiRoutes from "../modules/ai/ai.routes.js";
 import analyticsRoutes from "../modules/analytics/analytics.routes.js";
 import authRoutes from "../modules/auth/auth.routes.js";
 import cartRoutes from "../modules/cart/cart.routes.js";
@@ -21,6 +22,7 @@ import realtimeRoutes from "../realtime/realtime.routes.js";
 
 const router = express.Router();
 
+router.use("/ai", aiRoutes);
 router.use("/analytics", analyticsRoutes);
 router.use("/auth", authRoutes);
 router.use("/cart", cartRoutes);
