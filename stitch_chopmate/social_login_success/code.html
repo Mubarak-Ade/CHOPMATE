@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Login Success</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=JetBrains+Mono:wght@400&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-fixed-dim": "#d0c4bf",
+                    "outline-variant": "#e1bfb4",
+                    "on-primary-fixed": "#380c00",
+                    "surface-variant": "#e2e2e2",
+                    "inverse-on-surface": "#f1f1f0",
+                    "on-tertiary-fixed-variant": "#005321",
+                    "on-error": "#ffffff",
+                    "surface-tint": "#aa3700",
+                    "tertiary": "#006b2d",
+                    "surface": "#f9f9f8",
+                    "surface-container-highest": "#e2e2e2",
+                    "primary-fixed-dim": "#ffb59c",
+                    "on-tertiary": "#ffffff",
+                    "tertiary-fixed": "#6bff8f",
+                    "error-container": "#ffdad6",
+                    "surface-container": "#eeeeed",
+                    "tertiary-container": "#00873b",
+                    "primary": "#a63500",
+                    "on-primary-container": "#fffbff",
+                    "inverse-surface": "#2f3130",
+                    "on-secondary": "#ffffff",
+                    "on-tertiary-fixed": "#002109",
+                    "surface-bright": "#f9f9f8",
+                    "on-surface-variant": "#594139",
+                    "on-secondary-fixed-variant": "#4d4541",
+                    "tertiary-fixed-dim": "#4ae176",
+                    "on-secondary-fixed": "#201a17",
+                    "surface-dim": "#dadad9",
+                    "secondary-container": "#ede0da",
+                    "inverse-primary": "#ffb59c",
+                    "surface-container-high": "#e8e8e7",
+                    "surface-container-lowest": "#ffffff",
+                    "secondary": "#655d58",
+                    "on-primary": "#ffffff",
+                    "on-surface": "#1a1c1c",
+                    "on-background": "#1a1c1c",
+                    "error": "#ba1a1a",
+                    "surface-container-low": "#f4f4f3",
+                    "secondary-fixed": "#ede0da",
+                    "on-tertiary-container": "#f7fff3",
+                    "on-error-container": "#93000a",
+                    "background": "#f9f9f8",
+                    "on-secondary-container": "#6b635e",
+                    "on-primary-fixed-variant": "#822800",
+                    "outline": "#8d7168",
+                    "primary-fixed": "#ffdbcf",
+                    "primary-container": "#cc4911",
+                    "brand": "#E85D26"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Inter"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .brand-shadow {
+        box-shadow: 0 4px 12px rgba(232, 93, 38, 0.15);
+      }
+    </style>
+</head>
+<body class="h-full bg-[#f9f9f8] font-body flex items-center justify-center p-6">
+<!-- Success Container -->
+<main class="w-full max-w-md bg-surface p-8 rounded-xl shadow-md border border-outline-variant/30 flex flex-col items-center text-center">
+<!-- User Avatar with Success Badge -->
+<div class="relative mb-8">
+<div class="w-24 h-24 rounded-full overflow-hidden border-4 border-white shadow-sm">
+<img alt="User avatar" class="w-full h-full object-cover" data-alt="Close-up portrait of a smiling young professional man with a friendly expression in a brightly lit modern studio setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBCwAqTRvMO4RKG4G8jVAKcsyZicTCmluogPyABGeS2tUpepM2cHcYzBCNP72-5XtL8mTNW6IBU8lvrzEw5vD8uUNQbMCQSo_vY48wyvW3gX2nIMX9qh6yENWz3oF3Ntpoczk25BBP6QJoLWcq1eD4eiivAHFaYHxrLeJQvKScKt78Jpqq3Y_kjQ9zNoyBsK45GNK8ajytghv9x9HoKoAkCJ7m35heznf38PpHJ-n7hNivcSdxpaBc1djWDnRu3sWVXIqTB-_naZlY"/>
+</div>
+<!-- Large Checkmark Badge -->
+<div class="absolute -bottom-1 -right-1 bg-white rounded-full p-1 shadow-sm">
+<div class="bg-emerald-500 text-white rounded-full w-8 h-8 flex items-center justify-center">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; font-size: 20px;">check_circle</span>
+</div>
+</div>
+</div>
+<!-- Success Text -->
+<div class="space-y-2 mb-10">
+<h1 class="text-2xl font-semibold text-on-surface tracking-tight">Welcome back!</h1>
+<p class="text-on-surface-variant text-base">Successfully logged in with Google</p>
+</div>
+<!-- Progress Indicator (Subtle Transition Hint) -->
+<div class="w-full h-1 bg-surface-container rounded-full mb-10 overflow-hidden">
+<div class="h-full bg-brand w-1/3 rounded-full"></div>
+</div>
+<!-- Primary CTA -->
+<button class="w-full bg-brand hover:bg-primary-container text-white font-semibold py-4 px-6 rounded-lg transition-all active:scale-[0.98] brand-shadow flex items-center justify-center gap-2">
+            Continue to Dashboard
+            <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+</button>
+<!-- Secondary Info -->
+<p class="mt-8 text-xs text-on-secondary-container font-medium tracking-wide">
+            Redirecting in 3 seconds...
+        </p>
+</main>
+<!-- Background Decoration -->
+<div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
+<div class="absolute -top-[10%] -right-[5%] w-[40%] h-[40%] bg-brand/5 blur-[120px] rounded-full"></div>
+<div class="absolute -bottom-[10%] -left-[5%] w-[40%] h-[40%] bg-tertiary/5 blur-[120px] rounded-full"></div>
+</div>
+</body></html>

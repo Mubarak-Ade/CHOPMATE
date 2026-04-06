@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>RestoFind - Marketplace Search &amp; Discovery</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=JetBrains+Mono&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed-dim": "#d0c4bf",
+                        "secondary-container": "#ede0da",
+                        "surface-container-highest": "#e2e2e2",
+                        "on-primary-container": "#fffbff",
+                        "surface-container-high": "#e8e8e7",
+                        "primary-fixed-dim": "#ffb59c",
+                        "tertiary-fixed": "#6bff8f",
+                        "on-tertiary-fixed-variant": "#005321",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "primary-container": "#cc4911",
+                        "inverse-primary": "#ffb59c",
+                        "inverse-on-surface": "#f1f1f0",
+                        "tertiary-fixed-dim": "#4ae176",
+                        "error": "#ba1a1a",
+                        "surface-tint": "#aa3700",
+                        "tertiary": "#006b2d",
+                        "on-surface": "#1a1c1c",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-low": "#f4f4f3",
+                        "on-secondary-fixed": "#201a17",
+                        "on-primary-fixed": "#380c00",
+                        "on-background": "#1a1c1c",
+                        "surface-bright": "#f9f9f8",
+                        "secondary-fixed": "#ede0da",
+                        "surface-container": "#eeeeed",
+                        "primary": "#a63500",
+                        "on-secondary-fixed-variant": "#4d4541",
+                        "on-tertiary-container": "#f7fff3",
+                        "on-primary-fixed-variant": "#822800",
+                        "secondary": "#655d58",
+                        "outline": "#8d7168",
+                        "on-primary": "#ffffff",
+                        "surface-variant": "#e2e2e2",
+                        "on-error": "#ffffff",
+                        "background": "#f9f9f8",
+                        "surface-dim": "#dadad9",
+                        "outline-variant": "#e1bfb4",
+                        "on-secondary-container": "#6b635e",
+                        "on-surface-variant": "#594139",
+                        "surface": "#f9f9f8",
+                        "primary-fixed": "#ffdbcf",
+                        "inverse-surface": "#2f3130",
+                        "on-tertiary-fixed": "#002109",
+                        "tertiary-container": "#00873b",
+                        "on-error-container": "#93000a",
+                        "error-container": "#ffdad6"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .glass-card { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(12px); }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-[#F5F5F4] font-body text-[#111111] min-h-screen">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-white dark:bg-zinc-900 border-b border-gray-200 dark:border-zinc-800 shadow-sm flex justify-between items-center px-4 h-14 w-full">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[#e85d26] dark:text-[#f38d61]">search</span>
+<span class="text-[#e85d26] font-black text-2xl tracking-tight">RestoFind</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="transition-colors duration-200 ease-in-out hover:bg-gray-100 dark:hover:bg-zinc-800 p-2 rounded-full">
+<span class="material-symbols-outlined text-gray-500 dark:text-zinc-400">account_circle</span>
+</button>
+</div>
+</header>
+<main class="pt-14 pb-24">
+<!-- Search & Location Hero Section -->
+<div class="bg-white px-4 py-6 shadow-sm">
+<div class="flex flex-col gap-4">
+<!-- Location Selector -->
+<div class="flex items-center gap-2 text-[#6B7280]">
+<span class="material-symbols-outlined text-sm">location_on</span>
+<span class="text-sm font-medium">Lagos, Nigeria</span>
+<span class="material-symbols-outlined text-sm">expand_more</span>
+</div>
+<!-- Search Bar Cluster -->
+<div class="flex gap-2">
+<div class="relative flex-1 group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">search</span>
+<input class="w-full bg-[#F5F5F4] border-none rounded-lg py-3 pl-10 pr-4 text-sm focus:ring-2 focus:ring-[#E85D26]/20 transition-all placeholder:text-gray-400" placeholder="Restaurant name or dish" type="text"/>
+</div>
+<button class="bg-[#E85D26] text-white p-3 rounded-lg flex items-center justify-center active:scale-95 transition-transform">
+<span class="material-symbols-outlined">tune</span>
+</button>
+</div>
+</div>
+<!-- Filter Bar (Horizontal Chips) -->
+<div class="flex overflow-x-auto gap-2 no-scrollbar mt-6 -mx-4 px-4">
+<button class="whitespace-nowrap px-4 py-2 bg-[#FDF0EA] text-[#E85D26] rounded-full text-sm font-semibold border border-[#E85D26]/10">
+                    Open Now
+                </button>
+<button class="whitespace-nowrap px-4 py-2 bg-[#F5F5F4] text-[#6B7280] rounded-full text-sm font-medium hover:bg-gray-200 transition-colors">
+                    Nigerian
+                </button>
+<button class="whitespace-nowrap px-4 py-2 bg-[#F5F5F4] text-[#6B7280] rounded-full text-sm font-medium hover:bg-gray-200 transition-colors">
+                    Chinese
+                </button>
+<button class="whitespace-nowrap px-4 py-2 bg-[#F5F5F4] text-[#6B7280] rounded-full text-sm font-medium hover:bg-gray-200 transition-colors">
+                    Near Me
+                </button>
+<button class="whitespace-nowrap px-4 py-2 bg-[#F5F5F4] text-[#6B7280] rounded-full text-sm font-medium hover:bg-gray-200 transition-colors">
+                    $$$
+                </button>
+</div>
+</div>
+<!-- Main Content: Vertical Restaurant Cards -->
+<div class="p-4 flex flex-col gap-6">
+<!-- Restaurant Card 1 -->
+<div class="bg-white rounded-xl overflow-hidden shadow-sm group active:scale-[0.98] transition-transform">
+<div class="relative h-56 w-full">
+<img class="w-full h-full object-cover" data-alt="vibrant jollof rice served with grilled chicken and fried plantain on a colorful patterned ceramic plate, warm lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBwyuX7-mqZFhDyMwyIPvHtt8rKrCLmhWe5xZ-UiH58rqP8iuGgw2fdiKbwQsktLzYIIRJ8uT5BEgQaT6b0LL9S6B5S2d3hlGDk_VhFqKSJoNXfx2rxA0yXiX_6VRUrLxkId8j_TKP5dpKx94R0sxq-hC1ldnU3xhwkIGDfog32WpuwfjLuOSeZRc91mrv-zRoFdp0-Jp9OEtnjD6Uw8WKdWqWaG6eGEKqb9L_vNpOwodNyWE07s36Kb7v-RvfN3iK79RyYTFCOMDk"/>
+<div class="absolute top-3 right-3">
+<button class="bg-white/90 backdrop-blur p-2 rounded-full shadow-md text-[#6B7280] hover:text-[#E85D26]">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">favorite</span>
+</button>
+</div>
+<div class="absolute bottom-3 left-3 flex gap-2">
+<span class="bg-white/90 backdrop-blur text-[#22C55E] text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider">Free Delivery</span>
+</div>
+</div>
+<div class="p-4">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-bold text-lg text-[#111111]">Terra Kulture</h3>
+<div class="flex items-center gap-1 bg-[#FDF0EA] px-2 py-0.5 rounded">
+<span class="material-symbols-outlined text-[16px] text-[#E85D26]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-sm font-bold text-[#E85D26]">4.8</span>
+</div>
+</div>
+<div class="flex items-center gap-2 text-sm text-[#6B7280] mb-3">
+<span>Nigerian</span>
+<span class="w-1 h-1 rounded-full bg-gray-300"></span>
+<span>$$</span>
+<span class="w-1 h-1 rounded-full bg-gray-300"></span>
+<span>1.2 mi</span>
+</div>
+<div class="flex items-center justify-between pt-3 border-t border-gray-100">
+<div class="flex items-center gap-2 text-xs font-medium text-[#6B7280]">
+<span class="material-symbols-outlined text-[18px]">schedule</span>
+<span>25–35 min</span>
+</div>
+<button class="text-[#E85D26] font-bold text-sm">View Menu</button>
+</div>
+</div>
+</div>
+<!-- Restaurant Card 2 -->
+<div class="bg-white rounded-xl overflow-hidden shadow-sm group active:scale-[0.98] transition-transform">
+<div class="relative h-56 w-full">
+<img class="w-full h-full object-cover" data-alt="authentic steaming dim sum basket with shrimp dumplings and spicy dipping sauce, moody atmospheric restaurant interior lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCE1d_S1PIeIk7vVyut0RY-WWPE9QU7-msyG62MoIjZPsetDgVpbGU5RiS-wSCmKmQobtpadhOIJPnlBHDEiOCZjn1acG-NwUpqa06vXMPkfUGH682c6rdnAPApkVCSP4YoSRF5I24_LzM6Cyr2G8foQXU7Rf-DOV1-_-_4SNu_fqPZ8QyXkPhhZvgyzyvE7eEprdv6y4Eb9g4aBP1-mztyHY2WylFJqInLH5Y__k9UkaGFsqToCGR4hvZKfyEOcR12ikHYurIPqgs"/>
+<div class="absolute top-3 right-3">
+<button class="bg-white/90 backdrop-blur p-2 rounded-full shadow-md text-[#6B7280] hover:text-[#E85D26]">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">favorite</span>
+</button>
+</div>
+</div>
+<div class="p-4">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-bold text-lg text-[#111111]">Jade Palace</h3>
+<div class="flex items-center gap-1 bg-[#FDF0EA] px-2 py-0.5 rounded">
+<span class="material-symbols-outlined text-[16px] text-[#E85D26]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-sm font-bold text-[#E85D26]">4.5</span>
+</div>
+</div>
+<div class="flex items-center gap-2 text-sm text-[#6B7280] mb-3">
+<span>Chinese</span>
+<span class="w-1 h-1 rounded-full bg-gray-300"></span>
+<span>$$$</span>
+<span class="w-1 h-1 rounded-full bg-gray-300"></span>
+<span>0.8 mi</span>
+</div>
+<div class="flex items-center justify-between pt-3 border-t border-gray-100">
+<div class="flex items-center gap-2 text-xs font-medium text-[#6B7280]">
+<span class="material-symbols-outlined text-[18px]">schedule</span>
+<span>15–25 min</span>
+</div>
+<button class="text-[#E85D26] font-bold text-sm">View Menu</button>
+</div>
+</div>
+</div>
+<!-- Restaurant Card 3 -->
+<div class="bg-white rounded-xl overflow-hidden shadow-sm group active:scale-[0.98] transition-transform">
+<div class="relative h-56 w-full">
+<img class="w-full h-full object-cover" data-alt="grilled prime ribeye steak on a wood board with rosemary and roasted garlic, rustic upscale bistro setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAuoSEg3rPBbi_dVRkjWXZAuGyY51a2yVMT0yxy8tFLzcTD0IvHEWW6Sage_muikErIyqzWWFFmd_akpAyz3k6tzKr4EXQ_QcVjrRSVULlqhAj4Rj30vTXfauyhURb-ktHrkteIEQONhA8odWR4y8Qku2ZFmZBBkE8RHf31ULuWpTai7QSLZ-i0GMNT3maHM-kCOyEuHsS9mL4U0gkiI7-dFnxRxU7F5tB86dKcZGqTPZ44GZvUMa-mb27i8UQFp0c7DPNzDiGsLC8"/>
+<div class="absolute top-3 right-3">
+<button class="bg-white/90 backdrop-blur p-2 rounded-full shadow-md text-[#6B7280] hover:text-[#E85D26]">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">favorite</span>
+</button>
+</div>
+</div>
+<div class="p-4">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-bold text-lg text-[#111111]">The Grill Room</h3>
+<div class="flex items-center gap-1 bg-[#FDF0EA] px-2 py-0.5 rounded">
+<span class="material-symbols-outlined text-[16px] text-[#E85D26]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-sm font-bold text-[#E85D26]">4.9</span>
+</div>
+</div>
+<div class="flex items-center gap-2 text-sm text-[#6B7280] mb-3">
+<span>Steakhouse</span>
+<span class="w-1 h-1 rounded-full bg-gray-300"></span>
+<span>$$$$</span>
+<span class="w-1 h-1 rounded-full bg-gray-300"></span>
+<span>2.4 mi</span>
+</div>
+<div class="flex items-center justify-between pt-3 border-t border-gray-100">
+<div class="flex items-center gap-2 text-xs font-medium text-[#6B7280]">
+<span class="material-symbols-outlined text-[18px]">schedule</span>
+<span>40–55 min</span>
+</div>
+<button class="text-[#E85D26] font-bold text-sm">View Menu</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Sheet (Simplified UI Representation) -->
+<div class="hidden fixed inset-0 z-[60] bg-black/40 flex items-end">
+<div class="w-full bg-white rounded-t-2xl p-6 shadow-2xl animate-in slide-in-from-bottom">
+<div class="w-12 h-1.5 bg-gray-200 rounded-full mx-auto mb-6"></div>
+<div class="flex justify-between items-center mb-6">
+<h2 class="text-xl font-bold">Filters</h2>
+<button class="text-[#E85D26] font-bold text-sm">Clear All</button>
+</div>
+<!-- Dietary Needs -->
+<div class="mb-8">
+<h4 class="text-sm font-bold mb-4 uppercase tracking-wider text-gray-500">Dietary Needs</h4>
+<div class="grid grid-cols-3 gap-3">
+<label class="flex flex-col items-center gap-2 p-3 border border-gray-100 rounded-xl">
+<input class="rounded border-gray-300 text-[#E85D26] focus:ring-[#E85D26]" type="checkbox"/>
+<span class="text-xs font-medium">Vegan</span>
+</label>
+<label class="flex flex-col items-center gap-2 p-3 border border-[#E85D26] bg-[#FDF0EA] rounded-xl">
+<input checked="" class="rounded border-[#E85D26] text-[#E85D26] focus:ring-[#E85D26]" type="checkbox"/>
+<span class="text-xs font-medium text-[#E85D26]">Halal</span>
+</label>
+<label class="flex flex-col items-center gap-2 p-3 border border-gray-100 rounded-xl">
+<input class="rounded border-gray-300 text-[#E85D26] focus:ring-[#E85D26]" type="checkbox"/>
+<span class="text-xs font-medium">Gluten-free</span>
+</label>
+</div>
+</div>
+<!-- Rating Slider -->
+<div class="mb-8">
+<div class="flex justify-between items-center mb-4">
+<h4 class="text-sm font-bold uppercase tracking-wider text-gray-500">Minimum Rating</h4>
+<span class="text-sm font-bold text-[#E85D26]">4.0+</span>
+</div>
+<input class="w-full h-1.5 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-[#E85D26]" type="range"/>
+<div class="flex justify-between mt-2 text-[10px] text-gray-400 font-bold">
+<span>1.0</span>
+<span>5.0</span>
+</div>
+</div>
+<button class="w-full bg-[#E85D26] text-white py-4 rounded-xl font-bold text-lg shadow-lg shadow-[#E85D26]/30">
+                Apply Filters
+            </button>
+</div>
+</div>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 bg-white/95 dark:bg-zinc-900/95 backdrop-blur-md border-t border-gray-100 dark:border-zinc-800 shadow-lg flex justify-around items-center px-4 py-2 pb-safe">
+<button class="flex flex-col items-center justify-center text-[#e85d26] bg-[#fdf0ea] dark:bg-[#e85d26]/10 rounded-xl px-3 py-1 transition-transform active:scale-95">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">explore</span>
+<span class="font-['Inter'] text-[12px] font-medium">Explore</span>
+</button>
+<button class="flex flex-col items-center justify-center text-gray-500 dark:text-zinc-500 hover:text-[#e85d26] transition-transform active:scale-95">
+<span class="material-symbols-outlined">receipt_long</span>
+<span class="font-['Inter'] text-[12px] font-medium">Orders</span>
+</button>
+<button class="flex flex-col items-center justify-center text-gray-500 dark:text-zinc-500 hover:text-[#e85d26] transition-transform active:scale-95">
+<span class="material-symbols-outlined">favorite</span>
+<span class="font-['Inter'] text-[12px] font-medium">Saved</span>
+</button>
+<button class="flex flex-col items-center justify-center text-gray-500 dark:text-zinc-500 hover:text-[#e85d26] transition-transform active:scale-95">
+<span class="material-symbols-outlined">person</span>
+<span class="font-['Inter'] text-[12px] font-medium">Profile</span>
+</button>
+</nav>
+</body></html>

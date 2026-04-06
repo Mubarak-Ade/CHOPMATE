@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DineDash | Marketplace Search &amp; Discovery</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&amp;family=DM+Serif+Display&amp;family=Public+Sans:wght@400;600&amp;family=JetBrains+Mono&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-container": "#fffbff",
+                        "error-container": "#ffdad6",
+                        "on-primary-fixed-variant": "#822800",
+                        "inverse-on-surface": "#f1f1f0",
+                        "surface-variant": "#e2e2e2",
+                        "primary-fixed-dim": "#ffb59c",
+                        "surface": "#f9f9f8",
+                        "on-tertiary-fixed": "#002109",
+                        "surface-tint": "#aa3700",
+                        "surface-container-high": "#e8e8e7",
+                        "on-surface-variant": "#594139",
+                        "tertiary-container": "#00873b",
+                        "on-secondary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed": "#380c00",
+                        "tertiary-fixed-dim": "#4ae176",
+                        "on-background": "#1a1c1c",
+                        "on-primary": "#ffffff",
+                        "outline-variant": "#e1bfb4",
+                        "on-error-container": "#93000a",
+                        "inverse-surface": "#2f3130",
+                        "surface-dim": "#dadad9",
+                        "on-tertiary-container": "#f7fff3",
+                        "on-secondary-container": "#6b635e",
+                        "tertiary-fixed": "#6bff8f",
+                        "inverse-primary": "#ffb59c",
+                        "surface-bright": "#f9f9f8",
+                        "primary-container": "#cc4911",
+                        "background": "#f9f9f8",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary-fixed": "#201a17",
+                        "surface-container-highest": "#e2e2e2",
+                        "on-secondary-fixed-variant": "#4d4541",
+                        "surface-container": "#eeeeed",
+                        "secondary-container": "#ede0da",
+                        "on-surface": "#1a1c1c",
+                        "surface-container-low": "#f4f4f3",
+                        "secondary-fixed": "#ede0da",
+                        "on-tertiary-fixed-variant": "#005321",
+                        "primary": "#a63500",
+                        "tertiary": "#006b2d",
+                        "secondary-fixed-dim": "#d0c4bf",
+                        "secondary": "#655d58",
+                        "primary-fixed": "#ffdbcf",
+                        "outline": "#8d7168",
+                        "on-error": "#ffffff",
+                        "brand": "#E85D26"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Public Sans"],
+                        "body": ["Public Sans"],
+                        "label": ["Public Sans"],
+                        "brand-serif": ["DM Serif Display"],
+                        "brand-sans": ["DM Sans"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Public Sans', sans-serif; }
+    </style>
+</head>
+<body class="bg-[#f9f9f8] text-[#111111]">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-white dark:bg-zinc-900 border-b border-gray-200 dark:border-zinc-800 shadow-sm flex items-center justify-between px-6 h-16 max-w-full mx-auto">
+<div class="flex items-center gap-8">
+<span class="font-['DM_Serif_Display'] text-2xl text-orange-600 dark:text-orange-500">DineDash</span>
+<!-- Search Bar (on_left as per JSON) -->
+<div class="hidden md:flex items-center bg-gray-100 dark:bg-zinc-800 rounded-full px-4 py-2 w-96 gap-2">
+<span class="material-symbols-outlined text-gray-400">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm w-full" placeholder="Search for food or restaurants" type="text"/>
+<div class="h-4 w-[1px] bg-gray-300"></div>
+<div class="flex items-center gap-1 text-orange-600">
+<span class="material-symbols-outlined text-sm">location_on</span>
+<span class="text-xs font-medium whitespace-nowrap">New York, NY</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-6 font-['DM_Sans'] text-sm font-medium">
+<div class="hidden lg:flex items-center gap-6">
+<a class="text-orange-600 border-b-2 border-orange-600 pb-1" href="#">Explore</a>
+<a class="text-gray-600 dark:text-zinc-400 hover:text-orange-600 dark:hover:text-orange-400 transition-colors" href="#">Offers</a>
+<a class="text-gray-600 dark:text-zinc-400 hover:text-orange-600 dark:hover:text-orange-400 transition-colors" href="#">Become a Partner</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-gray-600 dark:text-zinc-400 hover:text-orange-600 transition-colors">notifications</button>
+<button class="material-symbols-outlined text-gray-600 dark:text-zinc-400 hover:text-orange-600 transition-colors">help</button>
+<button class="text-gray-600 dark:text-zinc-400 font-medium">Sign In</button>
+<button class="bg-orange-600 text-white px-5 py-2 rounded-lg font-medium active:scale-95 duration-150">Cart</button>
+</div>
+</div>
+</nav>
+<main class="pt-20 pb-12 flex flex-col md:flex-row max-w-[1440px] mx-auto gap-8 px-6">
+<!-- SideNavBar (Used as Sidebar Filter here) -->
+<aside class="hidden md:flex flex-col w-64 sticky top-24 h-[calc(100vh-120px)] overflow-y-auto">
+<div class="mb-8">
+<h2 class="text-lg font-bold mb-4 font-brand-serif">Filters</h2>
+<div class="space-y-6">
+<!-- Cuisine Section -->
+<div>
+<h3 class="text-xs font-semibold uppercase tracking-wider text-gray-400 mb-3">Cuisine</h3>
+<div class="space-y-2">
+<label class="flex items-center gap-2 cursor-pointer group">
+<input class="rounded border-gray-300 text-orange-600 focus:ring-orange-600" type="checkbox"/>
+<span class="text-sm text-gray-600 group-hover:text-black">Italian</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer group">
+<input checked="" class="rounded border-gray-300 text-orange-600 focus:ring-orange-600" type="checkbox"/>
+<span class="text-sm text-gray-600 group-hover:text-black">Japanese</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer group">
+<input class="rounded border-gray-300 text-orange-600 focus:ring-orange-600" type="checkbox"/>
+<span class="text-sm text-gray-600 group-hover:text-black">Mexican</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer group">
+<input class="rounded border-gray-300 text-orange-600 focus:ring-orange-600" type="checkbox"/>
+<span class="text-sm text-gray-600 group-hover:text-black">American</span>
+</label>
+</div>
+</div>
+<!-- Price Section -->
+<div>
+<h3 class="text-xs font-semibold uppercase tracking-wider text-gray-400 mb-3">Price Range</h3>
+<div class="flex gap-2">
+<button class="flex-1 py-2 text-xs font-bold border border-gray-200 rounded-lg hover:bg-orange-50 hover:border-orange-600 transition-colors">$</button>
+<button class="flex-1 py-2 text-xs font-bold border border-gray-200 rounded-lg bg-orange-600 text-white border-orange-600">$$</button>
+<button class="flex-1 py-2 text-xs font-bold border border-gray-200 rounded-lg hover:bg-orange-50 hover:border-orange-600 transition-colors">$$$</button>
+</div>
+</div>
+<!-- Diet Section -->
+<div>
+<h3 class="text-xs font-semibold uppercase tracking-wider text-gray-400 mb-3">Dietary</h3>
+<div class="space-y-2">
+<label class="flex items-center gap-2 cursor-pointer group">
+<input class="rounded border-gray-300 text-orange-600 focus:ring-orange-600" type="checkbox"/>
+<span class="text-sm text-gray-600 group-hover:text-black">Vegetarian</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer group">
+<input class="rounded border-gray-300 text-orange-600 focus:ring-orange-600" type="checkbox"/>
+<span class="text-sm text-gray-600 group-hover:text-black">Vegan</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer group">
+<input class="rounded border-gray-300 text-orange-600 focus:ring-orange-600" type="checkbox"/>
+<span class="text-sm text-gray-600 group-hover:text-black">Gluten-Free</span>
+</label>
+</div>
+</div>
+<!-- Rating Section -->
+<div>
+<h3 class="text-xs font-semibold uppercase tracking-wider text-gray-400 mb-3">Minimum Rating</h3>
+<div class="space-y-2">
+<div class="flex items-center gap-1 text-orange-500">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="text-xs text-gray-500 ml-2">4.0+</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<button class="mt-auto bg-zinc-900 text-white py-3 rounded-xl font-semibold active:scale-95 transition-transform flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm">tune</span>
+                Reset All Filters
+            </button>
+</aside>
+<!-- Main Content Canvas -->
+<section class="flex-1">
+<!-- Filter Chips (Horizontal Scroll on Mobile) -->
+<div class="flex items-center gap-3 mb-8 overflow-x-auto pb-2 scrollbar-hide">
+<button class="whitespace-nowrap px-4 py-2 rounded-full bg-orange-600 text-white text-sm font-medium shadow-md">All Results</button>
+<button class="whitespace-nowrap px-4 py-2 rounded-full bg-white border border-gray-200 text-gray-600 text-sm font-medium hover:border-orange-600 transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-lg">schedule</span>
+                    Open Now
+                </button>
+<button class="whitespace-nowrap px-4 py-2 rounded-full bg-white border border-gray-200 text-gray-600 text-sm font-medium hover:border-orange-600 transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-lg">distance</span>
+                    Near Me
+                </button>
+<button class="whitespace-nowrap px-4 py-2 rounded-full bg-white border border-gray-200 text-gray-600 text-sm font-medium hover:border-orange-600 transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-lg">moped</span>
+                    Delivery
+                </button>
+<button class="whitespace-nowrap px-4 py-2 rounded-full bg-white border border-gray-200 text-gray-600 text-sm font-medium hover:border-orange-600 transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-lg">sell</span>
+                    Offers
+                </button>
+</div>
+<header class="flex justify-between items-end mb-6">
+<div>
+<h1 class="font-brand-serif text-3xl text-gray-900">Discover Restaurants</h1>
+<p class="text-gray-500 text-sm">Showing 124 places in New York City</p>
+</div>
+<div class="flex items-center gap-2 text-sm font-medium text-gray-600">
+<span>Sort by:</span>
+<select class="bg-transparent border-none focus:ring-0 font-bold text-black py-0">
+<option>Recommended</option>
+<option>Rating</option>
+<option>Delivery Time</option>
+<option>Price: Low to High</option>
+</select>
+</div>
+</header>
+<!-- Grid of Restaurant Cards -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Card 1 -->
+<div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow group cursor-pointer">
+<div class="relative h-48 overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Close-up of premium sushi platter with fresh salmon and tuna sashimi on dark stone plate with elegant lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAYhNI3jnf0uMbIXA4xjpBGNa2pCeNtqKjllVMLnlUfYHkiUOvGEe0mTq17afJ94_HyuSqREBz99gRsI2cnjH0xkt5Oe_jYmVdLokUa363-K1tgcFnOuAG1ScZsDyj9hSc7NpZtIwyBkYdqg00PWId0Id09K7YKayufT-HnlUdNg4vyBwVnuRyt3Ui1Q7ZOWf28_yJDSSazwrm9k95_VFiQOw1GdFZdSF8HjFZr7DQ0OoXxk59R2AQpcJGBggRkxngaO87vybw7t7E"/>
+<div class="absolute top-3 left-3 bg-white px-2 py-1 rounded-lg flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-orange-500 text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-xs font-bold">4.8</span>
+</div>
+<button class="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center text-gray-800 hover:text-orange-600 transition-colors">
+<span class="material-symbols-outlined text-xl">favorite</span>
+</button>
+<div class="absolute bottom-3 left-3 bg-zinc-900/80 backdrop-blur-md text-white text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wider">
+                            25-35 min
+                        </div>
+</div>
+<div class="p-4">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-brand-sans font-semibold text-lg">Mizu Sushi House</h3>
+<span class="text-xs font-bold text-orange-600">$$</span>
+</div>
+<p class="text-sm text-gray-500 mb-3">Japanese • Sushi • Ramen</p>
+<div class="flex items-center gap-4 text-xs font-medium text-gray-600 border-t border-gray-100 pt-3">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-base">delivery_dining</span>
+                                $0.99 delivery
+                            </span>
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-base">local_offer</span>
+                                20% Off
+                            </span>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow group cursor-pointer">
+<div class="relative h-48 overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Artisan wood-fired pizza with bubbling mozzarella and fresh basil leaves on a rustic wooden table in a dimly lit setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB4evE5AS_ETGfqQgbb_iwXlRjwj8g3sDlzhXLaxMNhJtb5XG8X9Kl9IKv1KIgLkitzeIFkOuqQnU2-T7GjWyTjy7kY5miOBcRXeKdrkZ4IH6ICtkeFGz0xWoXBEe6FdBbMYR96flXIuqyLXpKcgBdkHRtn_PFGV_2iBXZOfVQRnez2jOUPs3_FPZVClOvuQN8Vi0Iyqu30gCdl_jdHPAwDxHqKMiH54KnodIMP_yPubRuxzJzj0L40ymifNcmh1L_ctOjEJ7lxyE8"/>
+<div class="absolute top-3 left-3 bg-white px-2 py-1 rounded-lg flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-orange-500 text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-xs font-bold">4.6</span>
+</div>
+<button class="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center text-gray-800 hover:text-orange-600 transition-colors">
+<span class="material-symbols-outlined text-xl">favorite</span>
+</button>
+<div class="absolute bottom-3 left-3 bg-zinc-900/80 backdrop-blur-md text-white text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wider">
+                            15-25 min
+                        </div>
+</div>
+<div class="p-4">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-brand-sans font-semibold text-lg">Pizzeria Napoletana</h3>
+<span class="text-xs font-bold text-orange-600">$$</span>
+</div>
+<p class="text-sm text-gray-500 mb-3">Italian • Pizza • Pasta</p>
+<div class="flex items-center gap-4 text-xs font-medium text-gray-600 border-t border-gray-100 pt-3">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-base">delivery_dining</span>
+                                Free delivery
+                            </span>
+</div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow group cursor-pointer">
+<div class="relative h-48 overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Vibrant healthy salad bowl with roasted vegetables, avocado, and seeds in a minimalist ceramic bowl on white surface" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDnJqGepumE1-IG_5FZWHAx1BrUX0Srg7SjjzO2ckRC4qXXs0EfUKrD7xPgQhcp4tsVGoTIcpHqAeOvRJDmX7G44ur3-rYKBPRvuwW9fde1fMdOHx3_lUVJawWIMqZ_2b7sVdIhDhfNEkqEbEwENofhintZ6ILAPirpCHS78tpoj_wpsMcR7y5mFcoy6obNMYXnRlM4qs87ka13GWCGunmEQjZ1-OJfNhZnwM-5qtinD549N9TjjYVQ08kSMkiWfGpaT7BpI7Gu9P8"/>
+<div class="absolute top-3 left-3 bg-white px-2 py-1 rounded-lg flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-orange-500 text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-xs font-bold">4.9</span>
+</div>
+<button class="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center text-gray-800 hover:text-orange-600 transition-colors">
+<span class="material-symbols-outlined text-xl">favorite</span>
+</button>
+<div class="absolute bottom-3 left-3 bg-zinc-900/80 backdrop-blur-md text-white text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wider">
+                            20-30 min
+                        </div>
+</div>
+<div class="p-4">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-brand-sans font-semibold text-lg">Green Leaf Bistro</h3>
+<span class="text-xs font-bold text-orange-600">$$$</span>
+</div>
+<p class="text-sm text-gray-500 mb-3">Healthy • Salad • Bowls</p>
+<div class="flex items-center gap-4 text-xs font-medium text-gray-600 border-t border-gray-100 pt-3">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-base">delivery_dining</span>
+                                $2.49 delivery
+                            </span>
+<span class="flex items-center gap-1 text-green-600">
+<span class="material-symbols-outlined text-base">eco</span>
+                                Eco-friendly
+                            </span>
+</div>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow group cursor-pointer">
+<div class="relative h-48 overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Gourmet double cheeseburger with melting cheese, crispy bacon, and fresh greens on a toasted brioche bun" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDLo5BpLDcmz7RV-vTgrgUKz3SrJx0fUZ0QTRg8QUQ9WsaBvaFOEftS4LlKX2yOb8GBOpnUWKVbzpyvub1RMApek7OR4S9rMAyHa1iMEdw1RDBvTC_Ujdexc1NIeBQ-os_H7cKxCuNyrU98hjnL7EOsfS4qt6ZClEaEPruw9Zcfc_jKs-s-r46Ei_bcF6X5FGUUw4ZFGon-mnqX5_v85ebgcIBf7LLvaaE_ZV1dtJUme7A-JdGYJKj4aJwlrvWjsE_L4co_21FPlZw"/>
+<div class="absolute top-3 left-3 bg-white px-2 py-1 rounded-lg flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-orange-500 text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-xs font-bold">4.5</span>
+</div>
+<button class="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center text-gray-800 hover:text-orange-600 transition-colors">
+<span class="material-symbols-outlined text-xl">favorite</span>
+</button>
+<div class="absolute bottom-3 left-3 bg-zinc-900/80 backdrop-blur-md text-white text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wider">
+                            30-45 min
+                        </div>
+</div>
+<div class="p-4">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-brand-sans font-semibold text-lg">The Burger Lab</h3>
+<span class="text-xs font-bold text-orange-600">$</span>
+</div>
+<p class="text-sm text-gray-500 mb-3">American • Burgers • Fries</p>
+<div class="flex items-center gap-4 text-xs font-medium text-gray-600 border-t border-gray-100 pt-3">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-base">delivery_dining</span>
+                                $1.49 delivery
+                            </span>
+</div>
+</div>
+</div>
+<!-- Card 5 -->
+<div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow group cursor-pointer">
+<div class="relative h-48 overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Hot spicy thai curry with jasmine rice and fresh coriander in a dark bowl on a wooden tabletop with ambient warm light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCTnxD9R2mHauHv1LOtXGkpVv0qSZ-2IyRoXgzKu95FzKKuFxQL1GK5vXmw05sLYaRR3AB6O6aryNsflUeyhxc_9_PGT8h-cLGPsZmqtkSvMGHrXvf9Vt_2ElFqcr5SI8sJ22Hhid2TUWvSUJVl-rmrFlDQ9TqQKQkRi0oDcQ0mII7LQyHZ6vL0gLucsGrg2z4wGQRlbxI7pxvWbVPSyC18CNtwKM4m9gQCNFxhv8MmR1WunIn4ip9A9bfxOxGdIL3sVMV_gI-ecGw"/>
+<div class="absolute top-3 left-3 bg-white px-2 py-1 rounded-lg flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-orange-500 text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-xs font-bold">4.7</span>
+</div>
+<button class="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center text-gray-800 hover:text-orange-600 transition-colors">
+<span class="material-symbols-outlined text-xl">favorite</span>
+</button>
+<div class="absolute bottom-3 left-3 bg-zinc-900/80 backdrop-blur-md text-white text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wider">
+                            35-50 min
+                        </div>
+</div>
+<div class="p-4">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-brand-sans font-semibold text-lg">Bangkok Spice</h3>
+<span class="text-xs font-bold text-orange-600">$$</span>
+</div>
+<p class="text-sm text-gray-500 mb-3">Thai • Asian • Spicy</p>
+<div class="flex items-center gap-4 text-xs font-medium text-gray-600 border-t border-gray-100 pt-3">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-base">delivery_dining</span>
+                                $3.99 delivery
+                            </span>
+</div>
+</div>
+</div>
+<!-- Card 6 -->
+<div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow group cursor-pointer">
+<div class="relative h-48 overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Selection of assorted tacos with various fillings, salsas, and lime wedges on a colorful ceramic plate" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCrGdfQYDN8Iq6klMZN9ThZ2ElgURy1P9tar4Kvo_Ohvtr9apZCSTR2kcaNLlYcO9Y6UamE1z9bD0Nvfa085ryDZgCh1WN0Pvg8IL6eKMCOIU2uzU7oDlZnCKO-tQ6MJYycYqVILLX2c292ui7Dpt34cGc-hs-_Z_0sHXuSj6XB9ycnR6ZxxerSx22mrvD4j31XpB-2USyfsu4BNUyLStamkxTtuviSsQiRUYd1nUhqFM_xnHoGedfiRgHJw6e0wJFjEQ2vGndgYuU"/>
+<div class="absolute top-3 left-3 bg-white px-2 py-1 rounded-lg flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-orange-500 text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-xs font-bold">4.4</span>
+</div>
+<button class="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center text-gray-800 hover:text-orange-600 transition-colors">
+<span class="material-symbols-outlined text-xl">favorite</span>
+</button>
+<div class="absolute bottom-3 left-3 bg-zinc-900/80 backdrop-blur-md text-white text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wider">
+                            10-20 min
+                        </div>
+</div>
+<div class="p-4">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-brand-sans font-semibold text-lg">Taco Fiesta</h3>
+<span class="text-xs font-bold text-orange-600">$</span>
+</div>
+<p class="text-sm text-gray-500 mb-3">Mexican • Tacos • Street Food</p>
+<div class="flex items-center gap-4 text-xs font-medium text-gray-600 border-t border-gray-100 pt-3">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-base">delivery_dining</span>
+                                $0.49 delivery
+                            </span>
+</div>
+</div>
+</div>
+</div>
+<!-- Pagination -->
+<div class="mt-12 flex justify-center items-center gap-2">
+<button class="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-50 transition-colors disabled:opacity-50" disabled="">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="w-10 h-10 rounded-full bg-orange-600 text-white font-bold text-sm">1</button>
+<button class="w-10 h-10 rounded-full hover:bg-gray-100 transition-colors font-bold text-sm">2</button>
+<button class="w-10 h-10 rounded-full hover:bg-gray-100 transition-colors font-bold text-sm">3</button>
+<span class="px-2">...</span>
+<button class="w-10 h-10 rounded-full hover:bg-gray-100 transition-colors font-bold text-sm">12</button>
+<button class="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-50 transition-colors">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-gray-50 dark:bg-zinc-950 w-full py-12 border-t border-gray-200 dark:border-zinc-800">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-8 px-6 max-w-7xl mx-auto">
+<div class="space-y-4">
+<span class="font-['DM_Serif_Display'] text-xl text-zinc-900 dark:text-white">DineDash</span>
+<p class="font-['DM_Sans'] text-xs text-gray-500 leading-relaxed">
+                    Connecting you with the best local restaurants in your city. Fresh food delivered fast to your doorstep.
+                </p>
+<div class="flex gap-4">
+<span class="material-symbols-outlined text-gray-400 hover:text-orange-600 cursor-pointer">social_leaderboard</span>
+<span class="material-symbols-outlined text-gray-400 hover:text-orange-600 cursor-pointer">brand_awareness</span>
+<span class="material-symbols-outlined text-gray-400 hover:text-orange-600 cursor-pointer">public</span>
+</div>
+</div>
+<div>
+<h4 class="font-bold text-sm mb-4">Discover</h4>
+<ul class="font-['DM_Sans'] text-xs text-gray-500 space-y-2">
+<li><a class="hover:underline hover:text-orange-600" href="#">Explore</a></li>
+<li><a class="hover:underline hover:text-orange-600" href="#">Offers</a></li>
+<li><a class="hover:underline hover:text-orange-600" href="#">Featured Brands</a></li>
+<li><a class="hover:underline hover:text-orange-600" href="#">New Arrivals</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold text-sm mb-4">Legal</h4>
+<ul class="font-['DM_Sans'] text-xs text-gray-500 space-y-2">
+<li><a class="hover:underline hover:text-orange-600" href="#">Privacy Policy</a></li>
+<li><a class="hover:underline hover:text-orange-600" href="#">Terms of Service</a></li>
+<li><a class="hover:underline hover:text-orange-600" href="#">Cookie Policy</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold text-sm mb-4">Support</h4>
+<ul class="font-['DM_Sans'] text-xs text-gray-500 space-y-2">
+<li><a class="hover:underline hover:text-orange-600" href="#">Contact Us</a></li>
+<li><a class="hover:underline hover:text-orange-600" href="#">Help Center</a></li>
+<li><a class="hover:underline hover:text-orange-600" href="#">Become a Partner</a></li>
+<li><a class="hover:underline hover:text-orange-600" href="#">Ride with Us</a></li>
+</ul>
+</div>
+</div>
+<div class="mt-12 pt-8 border-t border-gray-200 dark:border-zinc-800 text-center">
+<p class="font-['DM_Sans'] text-xs text-gray-500">© 2024 DineDash Marketplace. All rights reserved.</p>
+</div>
+</footer>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full bg-white border-t border-gray-100 flex items-center justify-around py-3 px-2 z-50">
+<a class="flex flex-col items-center gap-1 text-orange-600" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">explore</span>
+<span class="text-[10px] font-bold">Explore</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-gray-400" href="#">
+<span class="material-symbols-outlined">favorite</span>
+<span class="text-[10px] font-medium">Favorites</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-gray-400" href="#">
+<span class="material-symbols-outlined">shopping_bag</span>
+<span class="text-[10px] font-medium">Cart</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-gray-400" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] font-medium">Profile</span>
+</a>
+</nav>
+</body></html>

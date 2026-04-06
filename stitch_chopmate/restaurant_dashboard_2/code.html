@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Order Management</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings:
+            'FILL' 0,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 24;
+            font-size: 24px;
+        }
+        .material-symbols-outlined.fill {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13ec5b",
+                        "background-light": "#f6f8f6",
+                        "background-dark": "#102216",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#1a2c20",
+                        "text-light-primary": "#0d1b12",
+                        "text-dark-primary": "#e6f5e9",
+                        "text-light-secondary": "#4c9a66",
+                        "text-dark-secondary": "#a3d3b3",
+                        "border-light": "#cfe7d7",
+                        "border-dark": "#365943",
+                        "status-pending": "#facc15","status-preparing": "#38bdf8","status-ready": "#34d399","status-completed": "#a3a3a3",},
+                    fontFamily: {
+                        "display": ["Work Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-text-light-primary dark:text-text-dark-primary">
+<div class="relative flex min-h-screen w-full">
+<aside class="sticky top-0 h-screen w-64 flex-shrink-0 bg-surface-light dark:bg-surface-dark border-r border-border-light dark:border-border-dark p-4 flex flex-col justify-between">
+<div class="flex flex-col gap-8">
+<div class="flex items-center gap-3 px-2">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="The Golden Spoon restaurant logo" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAe8etHMCNPJ3eqqPAeOQfVANcul-_zneuYOBa1oCfTCz0YXoN6Tk8oTg-9p1C9Uo-6Bo_tmNpet4nilKFFNNxuAmaAzcTNxmJqtodolzJvp45eoc3D47DdnRgwCOO1mmZSm_qvkJswQ52BcruyqINQaCmZ3s_Z77sbtOeJXlXrq0vy07F3kmETnALW_OunAwGKeRL7zG1-MvOMr-fz1rMepm4fllwNMNlDBVVpbGOGzNoKPPyEdtUJ89X7ELkuVNfSvJ6NTJ1E0eY");'></div>
+<div class="flex flex-col">
+<h1 class="text-text-light-primary dark:text-text-dark-primary text-base font-medium leading-normal">The Golden Spoon</h1>
+<p class="text-text-light-secondary dark:text-text-dark-secondary text-sm font-normal leading-normal">Restaurant Admin</p>
+</div>
+</div>
+<nav class="flex flex-col gap-2">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 dark:hover:bg-primary/20 transition-colors" href="#">
+<span class="material-symbols-outlined">storefront</span>
+<p class="text-text-light-primary dark:text-text-dark-primary text-sm font-medium leading-normal">Profile</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 dark:hover:bg-primary/20 transition-colors" href="#">
+<span class="material-symbols-outlined">menu_book</span>
+<p class="text-text-light-primary dark:text-text-dark-primary text-sm font-medium leading-normal">Menu</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/20 dark:bg-primary/30" href="#">
+<span class="material-symbols-outlined fill">receipt_long</span>
+<p class="text-text-light-primary dark:text-text-dark-primary text-sm font-medium leading-normal">Orders</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 dark:hover:bg-primary/20 transition-colors" href="#">
+<span class="material-symbols-outlined">star_rate</span>
+<p class="text-text-light-primary dark:text-text-dark-primary text-sm font-medium leading-normal">Reviews</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 dark:hover:bg-primary/20 transition-colors" href="#">
+<span class="material-symbols-outlined">bar_chart</span>
+<p class="text-text-light-primary dark:text-text-dark-primary text-sm font-medium leading-normal">Analytics</p>
+</a>
+</nav>
+</div>
+<div class="flex flex-col gap-2">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 dark:hover:bg-primary/20 transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<p class="text-text-light-primary dark:text-text-dark-primary text-sm font-medium leading-normal">Settings</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 dark:hover:bg-primary/20 transition-colors" href="#">
+<span class="material-symbols-outlined">logout</span>
+<p class="text-text-light-primary dark:text-text-dark-primary text-sm font-medium leading-normal">Logout</p>
+</a>
+</div>
+</aside>
+<main class="flex-1 p-8 overflow-y-auto">
+<div class="max-w-7xl mx-auto">
+<div class="mb-6 flex justify-between items-center">
+<p class="text-text-light-primary dark:text-text-dark-primary text-4xl font-black leading-tight tracking-[-0.033em]">Order Management</p>
+<div class="flex items-center gap-4">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-text-light-secondary dark:text-text-dark-secondary" style="font-size: 20px;">search</span>
+<input class="w-64 pl-10 pr-4 py-2 text-sm bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark rounded-lg focus:ring-primary focus:border-primary" placeholder="Search by Order ID or Name" type="text"/>
+</div>
+</div>
+</div>
+<div class="border-b border-border-light dark:border-border-dark mb-6">
+<nav class="flex gap-6 -mb-px">
+<a class="py-3 px-1 border-b-2 border-primary text-primary text-sm font-medium" href="#">Current Orders</a>
+<a class="py-3 px-1 border-b-2 border-transparent text-text-light-secondary dark:text-text-dark-secondary hover:text-text-light-primary dark:hover:text-text-dark-primary hover:border-border-light dark:hover:border-border-dark transition-colors text-sm font-medium" href="#">Past Orders</a>
+</nav>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark rounded-xl overflow-hidden">
+<table class="w-full text-left">
+<thead class="bg-background-light dark:bg-background-dark border-b border-border-light dark:border-border-dark">
+<tr>
+<th class="p-4 text-sm font-semibold text-text-light-secondary dark:text-text-dark-secondary">Order ID</th>
+<th class="p-4 text-sm font-semibold text-text-light-secondary dark:text-text-dark-secondary">Customer</th>
+<th class="p-4 text-sm font-semibold text-text-light-secondary dark:text-text-dark-secondary">Time</th>
+<th class="p-4 text-sm font-semibold text-text-light-secondary dark:text-text-dark-secondary">Items</th>
+<th class="p-4 text-sm font-semibold text-text-light-secondary dark:text-text-dark-secondary">Total</th>
+<th class="p-4 text-sm font-semibold text-text-light-secondary dark:text-text-dark-secondary">Status</th>
+<th class="p-4 text-sm font-semibold text-text-light-secondary dark:text-text-dark-secondary">Actions</th>
+</tr>
+</thead>
+<tbody>
+<tr class="border-b border-border-light dark:border-border-dark last:border-b-0">
+<td class="p-4 text-sm font-medium text-text-light-primary dark:text-text-dark-primary">#ORD-001</td>
+<td class="p-4 text-sm text-text-light-primary dark:text-text-dark-primary">John Doe</td>
+<td class="p-4 text-sm text-text-light-secondary dark:text-text-dark-secondary">12:30 PM</td>
+<td class="p-4 text-sm text-text-light-secondary dark:text-text-dark-secondary">3</td>
+<td class="p-4 text-sm font-medium text-text-light-primary dark:text-text-dark-primary">$45.50</td>
+<td class="p-4">
+<span class="inline-flex items-center gap-1.5 px-2 py-1 text-xs font-medium rounded-full text-yellow-900 dark:text-yellow-100 bg-yellow-100 dark:bg-yellow-900/30">
+<span class="size-1.5 rounded-full bg-status-pending"></span>
+Pending
+</span>
+</td>
+<td class="p-4">
+<div class="flex gap-2">
+<button class="flex items-center justify-center size-9 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition-colors">
+<span class="material-symbols-outlined text-text-light-secondary dark:text-text-dark-secondary" style="font-size: 20px;">visibility</span>
+</button>
+<button class="flex items-center justify-center size-9 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition-colors">
+<span class="material-symbols-outlined text-text-light-secondary dark:text-text-dark-secondary" style="font-size: 20px;">print</span>
+</button>
+</div>
+</td>
+</tr>
+<tr class="border-b border-border-light dark:border-border-dark last:border-b-0">
+<td class="p-4 text-sm font-medium text-text-light-primary dark:text-text-dark-primary">#ORD-002</td>
+<td class="p-4 text-sm text-text-light-primary dark:text-text-dark-primary">Jane Smith</td>
+<td class="p-4 text-sm text-text-light-secondary dark:text-text-dark-secondary">12:25 PM</td>
+<td class="p-4 text-sm text-text-light-secondary dark:text-text-dark-secondary">2</td>
+<td class="p-4 text-sm font-medium text-text-light-primary dark:text-text-dark-primary">$28.00</td>
+<td class="p-4">
+<span class="inline-flex items-center gap-1.5 px-2 py-1 text-xs font-medium rounded-full text-sky-900 dark:text-sky-100 bg-sky-100 dark:bg-sky-900/30">
+<span class="size-1.5 rounded-full bg-status-preparing"></span>
+Preparing
+</span>
+</td>
+<td class="p-4">
+<div class="flex gap-2">
+<button class="flex items-center justify-center size-9 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition-colors">
+<span class="material-symbols-outlined text-text-light-secondary dark:text-text-dark-secondary" style="font-size: 20px;">visibility</span>
+</button>
+<button class="flex items-center justify-center size-9 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition-colors">
+<span class="material-symbols-outlined text-text-light-secondary dark:text-text-dark-secondary" style="font-size: 20px;">print</span>
+</button>
+</div>
+</td>
+</tr>
+<tr class="border-b border-border-light dark:border-border-dark last:border-b-0">
+<td class="p-4 text-sm font-medium text-text-light-primary dark:text-text-dark-primary">#ORD-003</td>
+<td class="p-4 text-sm text-text-light-primary dark:text-text-dark-primary">Mike Johnson</td>
+<td class="p-4 text-sm text-text-light-secondary dark:text-text-dark-secondary">12:15 PM</td>
+<td class="p-4 text-sm text-text-light-secondary dark:text-text-dark-secondary">5</td>
+<td class="p-4 text-sm font-medium text-text-light-primary dark:text-text-dark-primary">$82.25</td>
+<td class="p-4">
+<span class="inline-flex items-center gap-1.5 px-2 py-1 text-xs font-medium rounded-full text-emerald-900 dark:text-emerald-100 bg-emerald-100 dark:bg-emerald-900/30">
+<span class="size-1.5 rounded-full bg-status-ready"></span>
+Ready
+</span>
+</td>
+<td class="p-4">
+<div class="flex gap-2">
+<button class="flex items-center justify-center size-9 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition-colors">
+<span class="material-symbols-outlined text-text-light-secondary dark:text-text-dark-secondary" style="font-size: 20px;">visibility</span>
+</button>
+<button class="flex items-center justify-center size-9 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition-colors">
+<span class="material-symbols-outlined text-text-light-secondary dark:text-text-dark-secondary" style="font-size: 20px;">print</span>
+</button>
+</div>
+</td>
+</tr>
+<tr class="border-b border-border-light dark:border-border-dark last:border-b-0">
+<td class="p-4 text-sm font-medium text-text-light-primary dark:text-text-dark-primary">#ORD-004</td>
+<td class="p-4 text-sm text-text-light-primary dark:text-text-dark-primary">Emily Davis</td>
+<td class="p-4 text-sm text-text-light-secondary dark:text-text-dark-secondary">11:50 AM</td>
+<td class="p-4 text-sm text-text-light-secondary dark:text-text-dark-secondary">1</td>
+<td class="p-4 text-sm font-medium text-text-light-primary dark:text-text-dark-primary">$15.00</td>
+<td class="p-4">
+<span class="inline-flex items-center gap-1.5 px-2 py-1 text-xs font-medium rounded-full text-neutral-800 dark:text-neutral-200 bg-neutral-200 dark:bg-neutral-700/30">
+<span class="size-1.5 rounded-full bg-status-completed"></span>
+Completed
+</span>
+</td>
+<td class="p-4">
+<div class="flex gap-2">
+<button class="flex items-center justify-center size-9 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition-colors">
+<span class="material-symbols-outlined text-text-light-secondary dark:text-text-dark-secondary" style="font-size: 20px;">visibility</span>
+</button>
+<button class="flex items-center justify-center size-9 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition-colors">
+<span class="material-symbols-outlined text-text-light-secondary dark:text-text-dark-secondary" style="font-size: 20px;">print</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</main>
+</div>
+</body></html>

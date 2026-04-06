@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Account Creation - Restaurant Onboarding</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style type="text/tailwindcss">
+        :root {
+            --bright-snow: #fafafaff;
+            --punch-red: #e63946ff;
+            --carbon-black: #1d1d1dff;
+            --slate-grey: #6b7280ff;
+            --sandy-brown: #f4a261ff;
+        }
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "bright-snow": "var(--bright-snow)",
+                        "punch-red": "var(--punch-red)",
+                        "carbon-black": "var(--carbon-black)",
+                        "slate-grey": "var(--slate-grey)",
+                        "sandy-brown": "var(--sandy-brown)",
+                    },
+                    fontFamily: {
+                        "display": ["Work Sans", "Noto Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="font-display bg-[var(--bright-snow)] text-[var(--carbon-black)]">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<header class="flex items-center justify-between whitespace-nowrap border-b border-gray-100 px-10 py-3 fixed w-full bg-white z-50">
+<div class="flex items-center gap-4 text-[var(--carbon-black)]">
+<div class="size-6 text-[var(--punch-red)]">
+<svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_6_319)">
+<path d="M8.57829 8.57829C5.52816 11.6284 3.451 15.5145 2.60947 19.7452C1.76794 23.9758 2.19984 28.361 3.85056 32.3462C5.50128 36.3314 8.29667 39.7376 11.8832 42.134C15.4698 44.5305 19.6865 45.8096 24 45.8096C28.3135 45.8096 32.5302 44.5305 36.1168 42.134C39.7033 39.7375 42.4987 36.3314 44.1494 32.3462C45.8002 28.361 46.2321 23.9758 45.3905 19.7452C44.549 15.5145 42.4718 11.6284 39.4217 8.57829L24 24L8.57829 8.57829Z" fill="currentColor"></path>
+</g>
+<defs>
+<clipPath id="clip0_6_319">
+<rect fill="white" height="48" width="48"></rect>
+</clipPath>
+</defs>
+</svg>
+</div>
+<h2 class="text-[var(--carbon-black)] text-lg font-bold leading-tight tracking-[-0.015em]">Admin Portal</h2>
+</div>
+<div class="flex items-center gap-4">
+<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-transparent text-[var(--carbon-black)] text-sm font-bold leading-normal tracking-[0.015em] hover:bg-gray-50 transition-colors">
+<span class="truncate">Log in</span>
+</button>
+<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[var(--punch-red)] text-white text-sm font-bold leading-normal tracking-[0.015em]">
+<span class="truncate">Sign Up</span>
+</button>
+</div>
+</header>
+<main class="flex-1 pt-16">
+<div class="container mx-auto px-4 py-12 max-w-6xl">
+<div class="grid grid-cols-12 gap-12">
+<div class="col-span-12 lg:col-span-3">
+<div class="sticky top-24">
+<ul class="space-y-6">
+<li class="flex items-start">
+<div class="flex flex-col items-center mr-4">
+<div class="flex items-center justify-center w-8 h-8 rounded-full bg-[var(--punch-red)] text-white font-bold">1</div>
+<div class="w-px h-16 bg-gray-200"></div>
+</div>
+<div>
+<h3 class="font-bold text-[var(--carbon-black)]">Account Creation</h3>
+<p class="text-sm text-[var(--slate-grey)]">Personal details</p>
+</div>
+</li>
+<li class="flex items-start">
+<div class="flex flex-col items-center mr-4">
+<div class="flex items-center justify-center w-8 h-8 rounded-full border-2 border-gray-200 text-[var(--slate-grey)] font-bold">2</div>
+<div class="w-px h-16 bg-gray-200"></div>
+</div>
+<div>
+<h3 class="font-bold text-[var(--slate-grey)]">Verification</h3>
+<p class="text-sm text-[var(--slate-grey)]">Email &amp; Phone</p>
+</div>
+</li>
+<li class="flex items-start">
+<div class="flex flex-col items-center mr-4">
+<div class="flex items-center justify-center w-8 h-8 rounded-full border-2 border-gray-200 text-[var(--slate-grey)] font-bold">3</div>
+</div>
+<div>
+<h3 class="font-bold text-[var(--slate-grey)]">Business Profile</h3>
+<p class="text-sm text-[var(--slate-grey)]">Restaurant info</p>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="col-span-12 lg:col-span-9">
+<div class="bg-white p-8 md:p-12 rounded-xl shadow-sm border border-gray-100">
+<div class="mb-10">
+<h1 class="text-[var(--carbon-black)] text-4xl font-black leading-tight tracking-[-0.033em] mb-3">Create Your Account</h1>
+<p class="text-[var(--slate-grey)] text-base font-normal leading-normal">To get started, please provide your contact information to set up your administrative profile.</p>
+</div>
+<div class="space-y-10">
+<div class="space-y-6">
+<h2 class="text-[var(--carbon-black)] text-[22px] font-bold leading-tight tracking-[-0.015em] pb-3 border-b border-gray-100">Personal Information</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<label class="flex flex-col col-span-2">
+<p class="text-[var(--slate-grey)] text-sm font-semibold leading-normal pb-2 uppercase tracking-wider">Full Name</p>
+<input class="form-input flex w-full min-w-0 flex-1 rounded-lg text-[var(--carbon-black)] border border-gray-200 bg-white focus:border-[var(--punch-red)] focus:ring-[var(--punch-red)] focus:ring-1 h-14 px-4 text-base" placeholder="Jane Doe" type="text"/>
+</label>
+<label class="flex flex-col">
+<p class="text-[var(--slate-grey)] text-sm font-semibold leading-normal pb-2 uppercase tracking-wider">Email Address</p>
+<input class="form-input flex w-full min-w-0 flex-1 rounded-lg text-[var(--carbon-black)] border border-gray-200 bg-white focus:border-[var(--punch-red)] focus:ring-[var(--punch-red)] focus:ring-1 h-14 px-4 text-base" placeholder="jane@example.com" type="email"/>
+</label>
+<label class="flex flex-col">
+<p class="text-[var(--slate-grey)] text-sm font-semibold leading-normal pb-2 uppercase tracking-wider">Phone Number</p>
+<input class="form-input flex w-full min-w-0 flex-1 rounded-lg text-[var(--carbon-black)] border border-gray-200 bg-white focus:border-[var(--punch-red)] focus:ring-[var(--punch-red)] focus:ring-1 h-14 px-4 text-base" placeholder="(555) 000-0000" type="tel"/>
+</label>
+<label class="flex flex-col">
+<p class="text-[var(--slate-grey)] text-sm font-semibold leading-normal pb-2 uppercase tracking-wider">Role</p>
+<div class="relative">
+<select class="form-select flex w-full min-w-0 flex-1 rounded-lg text-[var(--carbon-black)] border border-gray-200 bg-white focus:border-[var(--punch-red)] focus:ring-[var(--punch-red)] focus:ring-1 h-14 px-4 text-base appearance-none">
+<option>Owner</option>
+<option>Manager</option>
+</select>
+</div>
+</label>
+</div>
+</div>
+<div class="space-y-6">
+<h2 class="text-[var(--carbon-black)] text-[22px] font-bold leading-tight tracking-[-0.015em] pb-3 border-b border-gray-100">Security</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<label class="flex flex-col">
+<p class="text-[var(--slate-grey)] text-sm font-semibold leading-normal pb-2 uppercase tracking-wider">Password</p>
+<input class="form-input flex w-full min-w-0 flex-1 rounded-lg text-[var(--carbon-black)] border border-gray-200 bg-white focus:border-[var(--punch-red)] focus:ring-[var(--punch-red)] focus:ring-1 h-14 px-4 text-base" placeholder="••••••••" type="password"/>
+</label>
+<label class="flex flex-col">
+<p class="text-[var(--slate-grey)] text-sm font-semibold leading-normal pb-2 uppercase tracking-wider">Confirm Password</p>
+<input class="form-input flex w-full min-w-0 flex-1 rounded-lg text-[var(--carbon-black)] border border-gray-200 bg-white focus:border-[var(--punch-red)] focus:ring-[var(--punch-red)] focus:ring-1 h-14 px-4 text-base" placeholder="••••••••" type="password"/>
+</label>
+</div>
+</div>
+<div class="bg-[var(--bright-snow)] border-l-4 border-[var(--sandy-brown)] rounded-r-lg p-6 shadow-sm">
+<div class="flex gap-4">
+<span class="material-symbols-outlined text-[var(--sandy-brown)] shrink-0 text-3xl">info</span>
+<div>
+<p class="text-[var(--carbon-black)] font-bold mb-1">Verification Required</p>
+<p class="text-[var(--slate-grey)] text-sm leading-relaxed">
+                                                Email and phone verification will occur in the next step. You will receive a code to confirm your account identity before setting up your restaurant details.
+                                            </p>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-12 flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="text-sm text-[var(--slate-grey)]">
+                                    Already have an account? <a class="text-[var(--punch-red)] font-bold hover:underline" href="#">Log in</a>
+</div>
+<button class="flex min-w-[240px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-14 px-8 bg-[var(--punch-red)] text-white text-base font-bold leading-normal tracking-[0.015em] hover:brightness-110 transition-all shadow-lg">
+<span>Create Account &amp; Verify</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<footer class="w-full border-t border-gray-100 mt-12 py-8 bg-white">
+<div class="container mx-auto px-4 text-center">
+<div class="flex justify-center gap-8 text-[var(--slate-grey)] text-sm font-medium">
+<a class="hover:text-[var(--punch-red)] transition-colors" href="#">Terms of Service</a>
+<a class="hover:text-[var(--punch-red)] transition-colors" href="#">Privacy Policy</a>
+<a class="hover:text-[var(--punch-red)] transition-colors" href="#">Help Center</a>
+</div>
+<p class="mt-4 text-[var(--slate-grey)] text-xs">© 2024 Admin Portal Onboarding. Professional Dashboard Services.</p>
+</div>
+</footer>
+</div>
+</div>
+
+</body></html>

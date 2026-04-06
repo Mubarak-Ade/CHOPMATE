@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Shopping Cart - Restaurant Marketplace</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#e63746",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#211112",
+                    },
+                    fontFamily: {
+                        "display": ["Work Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: "Work Sans", sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark min-h-screen text-[#1d1d1d] dark:text-gray-100 transition-colors duration-200">
+<!-- Top Navigation Bar -->
+<header class="sticky top-0 z-50 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex items-center justify-between h-16">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3">
+<div class="text-primary">
+<svg class="size-8" fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M24 4C25.7818 14.2173 33.7827 22.2182 44 24C33.7827 25.7818 25.7818 33.7827 24 44C22.2182 33.7827 14.2173 25.7818 4 24C14.2173 22.2182 22.2182 14.2173 24 4Z" fill="currentColor"></path>
+</svg>
+</div>
+<h2 class="text-xl font-black tracking-tight">CraveDash</h2>
+</div>
+<div class="hidden md:flex items-center bg-gray-100 dark:bg-gray-800 rounded-lg px-3 py-1.5 w-64">
+<span class="material-symbols-outlined text-gray-400 text-xl">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm w-full placeholder-gray-400" placeholder="Search dishes..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<nav class="hidden lg:flex items-center gap-6 text-sm font-medium">
+<a class="hover:text-primary transition-colors" href="#">Browse</a>
+<a class="hover:text-primary transition-colors" href="#">Deals</a>
+<a class="hover:text-primary transition-colors" href="#">Orders</a>
+</nav>
+<div class="flex items-center gap-3 border-l border-gray-200 dark:border-gray-800 pl-6">
+<button class="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors relative">
+<span class="material-symbols-outlined">shopping_cart</span>
+<span class="absolute top-1 right-1 w-2 h-2 bg-primary rounded-full"></span>
+</button>
+<button class="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors">
+<span class="material-symbols-outlined">person</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</header>
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+<!-- Page Heading -->
+<div class="mb-8">
+<h1 class="text-4xl font-black tracking-tight mb-2">Your Basket</h1>
+<p class="text-gray-500 dark:text-gray-400 font-medium flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">restaurant</span>
+                3 items from The Burger House
+            </p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+<!-- Left Column: Items List -->
+<div class="lg:col-span-2 space-y-4">
+<div class="bg-white dark:bg-background-dark border border-gray-100 dark:border-gray-800 rounded-xl overflow-hidden shadow-sm">
+<!-- Item 1 -->
+<div class="flex gap-6 p-6 border-b border-gray-50 dark:border-gray-800 group">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-24 shrink-0 shadow-sm" data-alt="Juicy truffle burger with melted cheese and mushrooms" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAQhyIUf2sVJfuwH2zcFTMENsq12lCwVHRaCcUQ-_8mj1vMF1i-3ABQO4cHfUT9q7YRQDbvOCiV_iIF1swmJB8U8A00Q4be1lhClQaatcsn-OhuGt64PgZGsWV3R7jFX5pBCpqoh2vjMqlyDiQwW23ZFrz-8XusV6nO5sEsL7ZT3eGus6kCfjDCXQj8vU3G5zpK856HjqYZeplVje0m-p_GenwbMltCkDhBNhvMbElAiEaH20SLKiir0lbaoiv54ubxGQKGTPTSIug");'>
+</div>
+<div class="flex-1 flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-start">
+<h3 class="text-lg font-bold">Truffle Burger</h3>
+<span class="font-bold text-lg">$15.99</span>
+</div>
+<p class="text-gray-500 dark:text-gray-400 text-sm mt-1">Extra spicy, no onions, with seasoned fries</p>
+</div>
+<div class="flex justify-between items-center mt-4">
+<button class="text-gray-400 hover:text-primary text-sm font-medium flex items-center gap-1 transition-colors">
+<span class="material-symbols-outlined text-base">delete</span> Remove
+                                </button>
+<div class="flex items-center gap-4 bg-gray-50 dark:bg-gray-800 rounded-full px-2 py-1">
+<button class="flex h-8 w-8 items-center justify-center rounded-full bg-white dark:bg-background-dark shadow-sm hover:text-primary transition-all">-</button>
+<span class="font-bold text-sm w-4 text-center">1</span>
+<button class="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-white shadow-sm hover:opacity-90 transition-all">+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="flex gap-6 p-6 border-b border-gray-50 dark:border-gray-800 group">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-24 shrink-0 shadow-sm" data-alt="Golden crispy garlic parmesan fries in a basket" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDDnQEAjC1nZoHcWelPBvhkjeBO2OnO2RXv9PGpamBakA41uTd9-b_gA_N69Jk_EJHI99r0ZYbDT9QWNvFb_VPCekZ6y3WZkc7SfrHTc6nNwx-E_9dhB7ug69kgVRGjrSuZWYK6poBam8QP1kxZ-jm6EwiRd-m0zYoPeyZzvuj3Bax5DEdtcsFtZt4O8ToRHj_oFqliTXQv_ecofLRS-pez4foyJE6P5bLf3LnE5oYlxPuAP8CIzaTxQiybyzBeHUPaFs-d3cwjYyQ");'>
+</div>
+<div class="flex-1 flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-start">
+<h3 class="text-lg font-bold">Garlic Parmesan Fries</h3>
+<span class="font-bold text-lg">$13.00</span>
+</div>
+<p class="text-gray-500 dark:text-gray-400 text-sm mt-1">Large portion, extra parmesan dip on the side</p>
+</div>
+<div class="flex justify-between items-center mt-4">
+<button class="text-gray-400 hover:text-primary text-sm font-medium flex items-center gap-1 transition-colors">
+<span class="material-symbols-outlined text-base">delete</span> Remove
+                                </button>
+<div class="flex items-center gap-4 bg-gray-50 dark:bg-gray-800 rounded-full px-2 py-1">
+<button class="flex h-8 w-8 items-center justify-center rounded-full bg-white dark:bg-background-dark shadow-sm hover:text-primary transition-all">-</button>
+<span class="font-bold text-sm w-4 text-center">2</span>
+<button class="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-white shadow-sm hover:opacity-90 transition-all">+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="flex gap-6 p-6 group">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-24 shrink-0 shadow-sm" data-alt="Refreshing iced lemon tea with mint leaf" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD9UuYe6FvNb3_RuAfthvSYxl9sXh0baTQ2gI8ab4kNJKm1Ssghq281eW5ogQ3sIgQnm4aLIBsi1Cdu-D7e3kgi8_aHMltZR521WE7kea8eS0hebfpsATibLMvSle7HpUlCfbfqjqii0hC0Kgl_yMMDPlDcRcrSUMZp79lFRKcXhF8tqX_ZgJjVuVW2npPlLUQlvx2weNXpCGRPnl5IxBvNMurfCdquzY8JBZUzTpK6Lj9GI27pvgelLkJxih9ZnbGpKOQCmIKVZf8");'>
+</div>
+<div class="flex-1 flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-start">
+<h3 class="text-lg font-bold">Iced Lemon Tea</h3>
+<span class="font-bold text-lg">$3.50</span>
+</div>
+<p class="text-gray-500 dark:text-gray-400 text-sm mt-1">Less ice, fresh mint added</p>
+</div>
+<div class="flex justify-between items-center mt-4">
+<button class="text-gray-400 hover:text-primary text-sm font-medium flex items-center gap-1 transition-colors">
+<span class="material-symbols-outlined text-base">delete</span> Remove
+                                </button>
+<div class="flex items-center gap-4 bg-gray-50 dark:bg-gray-800 rounded-full px-2 py-1">
+<button class="flex h-8 w-8 items-center justify-center rounded-full bg-white dark:bg-background-dark shadow-sm hover:text-primary transition-all">-</button>
+<span class="font-bold text-sm w-4 text-center">1</span>
+<button class="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-white shadow-sm hover:opacity-90 transition-all">+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<a class="inline-flex items-center gap-2 text-primary font-semibold hover:gap-3 transition-all mt-4" href="#">
+<span class="material-symbols-outlined">arrow_back</span>
+                    Continue Shopping
+                </a>
+</div>
+<!-- Right Column: Order Summary -->
+<div class="lg:col-span-1">
+<div class="sticky top-24 space-y-6">
+<div class="bg-white dark:bg-background-dark p-6 rounded-xl border border-gray-100 dark:border-gray-800 shadow-xl">
+<h2 class="text-xl font-bold mb-6">Order Summary</h2>
+<div class="space-y-4 mb-6">
+<div class="flex justify-between text-gray-600 dark:text-gray-400">
+<span>Subtotal</span>
+<span class="font-medium">$32.49</span>
+</div>
+<div class="flex justify-between text-gray-600 dark:text-gray-400">
+<span>Delivery Fee</span>
+<span class="font-medium text-green-600">FREE</span>
+</div>
+<div class="flex justify-between text-gray-600 dark:text-gray-400">
+<span>Service Fee</span>
+<span class="font-medium">$2.00</span>
+</div>
+<div class="border-t border-dashed border-gray-200 dark:border-gray-700 pt-4 mt-4">
+<div class="flex justify-between items-center">
+<span class="text-lg font-bold">Total</span>
+<span class="text-2xl font-black">$34.49</span>
+</div>
+</div>
+</div>
+<!-- Promo Code -->
+<div class="mb-6">
+<label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Promo Code</label>
+<div class="flex gap-2">
+<input class="flex-1 bg-gray-50 dark:bg-gray-800 border-none rounded-lg text-sm px-4 focus:ring-2 focus:ring-primary/20" placeholder="Enter code" type="text"/>
+<button class="bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-sm font-bold px-4 py-2 rounded-lg transition-colors">Apply</button>
+</div>
+</div>
+<button class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-4 rounded-xl shadow-lg shadow-primary/20 transition-all transform active:scale-[0.98] flex items-center justify-center gap-2">
+                            Go to Checkout
+                            <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+<p class="text-center text-xs text-gray-400 mt-6">
+                            By clicking 'Checkout', you agree to our <br/>
+<a class="underline" href="#">Terms of Service</a> &amp; <a class="underline" href="#">Privacy Policy</a>
+</p>
+</div>
+<!-- Delivery Info Card -->
+<div class="bg-primary/5 dark:bg-primary/10 p-5 rounded-xl border border-primary/10">
+<div class="flex gap-4">
+<div class="text-primary">
+<span class="material-symbols-outlined text-3xl">schedule</span>
+</div>
+<div>
+<h4 class="font-bold text-sm">Estimated Delivery</h4>
+<p class="text-sm text-gray-600 dark:text-gray-400">25 - 35 mins to your location</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Simple Footer -->
+<footer class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 mt-10 border-t border-gray-200 dark:border-gray-800">
+<div class="flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="flex items-center gap-3 grayscale opacity-60">
+<div class="text-gray-900 dark:text-white">
+<svg class="size-6" fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M24 4C25.7818 14.2173 33.7827 22.2182 44 24C33.7827 25.7818 25.7818 33.7827 24 44C22.2182 33.7827 14.2173 25.7818 4 24C14.2173 22.2182 22.2182 14.2173 24 4Z" fill="currentColor"></path>
+</svg>
+</div>
+<span class="font-bold text-lg">CraveDash</span>
+</div>
+<div class="flex gap-8 text-sm text-gray-500 dark:text-gray-400">
+<a class="hover:text-primary transition-colors" href="#">Help Center</a>
+<a class="hover:text-primary transition-colors" href="#">Privacy</a>
+<a class="hover:text-primary transition-colors" href="#">Terms</a>
+<a class="hover:text-primary transition-colors" href="#">Restaurant Portal</a>
+</div>
+<p class="text-xs text-gray-400">© 2024 CraveDash Marketplace. All rights reserved.</p>
+</div>
+</footer>
+</body></html>

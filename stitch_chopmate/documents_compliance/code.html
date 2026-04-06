@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Restaurant Portal - Onboarding: Documents</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=DM+Serif+Display:wght@400&amp;family=Public+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-container": "#ede0da",
+                        "on-tertiary-container": "#f7fff3",
+                        "on-error": "#ffffff",
+                        "surface-dim": "#dadad9",
+                        "secondary": "#655d58",
+                        "on-surface-variant": "#594139",
+                        "tertiary": "#006b2d",
+                        "surface-container-high": "#e8e8e7",
+                        "secondary-fixed-dim": "#d0c4bf",
+                        "surface-container-highest": "#e2e2e2",
+                        "surface": "#f9f9f8",
+                        "error-container": "#ffdad6",
+                        "surface-container": "#eeeeed",
+                        "primary-fixed-dim": "#ffb59c",
+                        "outline-variant": "#e1bfb4",
+                        "on-tertiary-fixed": "#002109",
+                        "on-secondary": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-fixed": "#ffdbcf",
+                        "on-secondary-container": "#6b635e",
+                        "surface-bright": "#f9f9f8",
+                        "surface-variant": "#e2e2e2",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-container": "#00873b",
+                        "outline": "#8d7168",
+                        "background": "#f9f9f8",
+                        "tertiary-fixed": "#6bff8f",
+                        "tertiary-fixed-dim": "#4ae176",
+                        "on-primary-fixed-variant": "#822800",
+                        "on-primary-fixed": "#380c00",
+                        "primary": "#a63500",
+                        "on-primary": "#ffffff",
+                        "inverse-primary": "#ffb59c",
+                        "on-secondary-fixed": "#201a17",
+                        "on-secondary-fixed-variant": "#4d4541",
+                        "on-background": "#1a1c1c",
+                        "inverse-surface": "#2f3130",
+                        "surface-tint": "#aa3700",
+                        "surface-container-low": "#f4f4f3",
+                        "on-surface": "#1a1c1c",
+                        "error": "#ba1a1a",
+                        "on-primary-container": "#fffbff",
+                        "inverse-on-surface": "#f1f1f0",
+                        "secondary-fixed": "#ede0da",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-fixed-variant": "#005321",
+                        "primary-container": "#cc4911"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Public Sans"],
+                        "body": ["Public Sans"],
+                        "label": ["Public Sans"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Public Sans', sans-serif; }
+    </style>
+</head>
+<body class="bg-background text-on-surface">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-white dark:bg-zinc-900 border-b border-gray-200 dark:border-zinc-800 shadow-sm flex justify-between items-center h-16 px-6 w-full">
+<div class="flex items-center gap-4">
+<span class="font-['DM_Serif_Display'] text-2xl text-orange-600 dark:text-orange-500">Restaurant Portal</span>
+</div>
+<div class="flex items-center gap-6 font-['DM_Sans'] text-sm font-medium">
+<a class="text-gray-500 dark:text-zinc-400 hover:text-orange-600 dark:hover:text-orange-400 transition-colors" href="#">Help</a>
+<a class="text-gray-500 dark:text-zinc-400 hover:text-orange-600 dark:hover:text-orange-400 transition-colors" href="#">Support</a>
+<span class="material-symbols-outlined text-gray-500 cursor-pointer active:opacity-80 transition-all" data-icon="contact_support">contact_support</span>
+</div>
+</nav>
+<!-- SideNavBar -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-zinc-900 dark:bg-black border-r border-zinc-800 shadow-lg flex flex-col py-6 gap-2 z-40 mt-16">
+<div class="px-6 mb-8">
+<h2 class="font-['DM_Sans'] text-white font-semibold text-lg">Onboarding</h2>
+<p class="text-zinc-400 text-xs mt-1">Step 6 of 8</p>
+</div>
+<div class="flex flex-col gap-1">
+<div class="flex items-center px-4 py-2 text-zinc-400 hover:text-zinc-100 mx-2 hover:bg-zinc-800 rounded-lg transition-all cursor-pointer font-['DM_Sans'] text-sm">
+<span class="material-symbols-outlined mr-3" data-icon="account_circle">account_circle</span>
+<span>Account</span>
+</div>
+<div class="flex items-center px-4 py-2 text-zinc-400 hover:text-zinc-100 mx-2 hover:bg-zinc-800 rounded-lg transition-all cursor-pointer font-['DM_Sans'] text-sm">
+<span class="material-symbols-outlined mr-3" data-icon="verified_user">verified_user</span>
+<span>Verification</span>
+</div>
+<div class="flex items-center px-4 py-2 text-zinc-400 hover:text-zinc-100 mx-2 hover:bg-zinc-800 rounded-lg transition-all cursor-pointer font-['DM_Sans'] text-sm">
+<span class="material-symbols-outlined mr-3" data-icon="info">info</span>
+<span>Basic Info</span>
+</div>
+<div class="flex items-center px-4 py-2 text-zinc-400 hover:text-zinc-100 mx-2 hover:bg-zinc-800 rounded-lg transition-all cursor-pointer font-['DM_Sans'] text-sm">
+<span class="material-symbols-outlined mr-3" data-icon="location_on">location_on</span>
+<span>Location</span>
+</div>
+<div class="flex items-center px-4 py-2 text-zinc-400 hover:text-zinc-100 mx-2 hover:bg-zinc-800 rounded-lg transition-all cursor-pointer font-['DM_Sans'] text-sm">
+<span class="material-symbols-outlined mr-3" data-icon="schedule">schedule</span>
+<span>Hours</span>
+</div>
+<div class="flex items-center px-4 py-2 text-white font-semibold bg-orange-600 rounded-lg mx-2 transition-all cursor-pointer font-['DM_Sans'] text-sm">
+<span class="material-symbols-outlined mr-3" data-icon="description">description</span>
+<span>Documents</span>
+</div>
+<div class="flex items-center px-4 py-2 text-zinc-400 hover:text-zinc-100 mx-2 hover:bg-zinc-800 rounded-lg transition-all cursor-pointer font-['DM_Sans'] text-sm">
+<span class="material-symbols-outlined mr-3" data-icon="layers">layers</span>
+<span>Plan</span>
+</div>
+<div class="flex items-center px-4 py-2 text-zinc-400 hover:text-zinc-100 mx-2 hover:bg-zinc-800 rounded-lg transition-all cursor-pointer font-['DM_Sans'] text-sm">
+<span class="material-symbols-outlined mr-3" data-icon="rate_review">rate_review</span>
+<span>Review</span>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="ml-64 mt-16 p-8 min-h-screen">
+<div class="max-w-5xl mx-auto">
+<!-- Header Section -->
+<div class="mb-10">
+<h1 class="font-['DM_Serif_Display'] text-3xl mb-2">Documents &amp; Compliance</h1>
+<p class="text-secondary text-sm">Upload your business documents to verify your restaurant and start receiving orders.</p>
+<!-- Progress Indicator -->
+<div class="mt-8 bg-surface-container rounded-xl p-6 border border-outline-variant flex items-center justify-between">
+<div class="flex flex-col gap-2 flex-1 max-w-md">
+<div class="flex justify-between items-end">
+<span class="font-semibold text-primary">2 of 4 completed</span>
+<span class="text-xs text-secondary">50%</span>
+</div>
+<div class="w-full bg-secondary-container h-2 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-1/2"></div>
+</div>
+</div>
+<div class="ml-8 px-4 py-2 bg-on-tertiary-container rounded-lg border border-tertiary-container/20">
+<p class="text-xs text-tertiary font-medium">Note: Can be completed later</p>
+</div>
+</div>
+</div>
+<!-- Bento Grid of Document Uploads -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Required: Business Registration -->
+<div class="bg-surface rounded-xl border-2 border-primary-fixed p-6 shadow-md hover:shadow-lg transition-shadow">
+<div class="flex justify-between items-start mb-4">
+<div class="bg-primary-fixed/30 p-2 rounded-lg">
+<span class="material-symbols-outlined text-primary" data-icon="business_center">business_center</span>
+</div>
+<span class="px-2 py-1 bg-primary/10 text-primary text-[10px] font-bold rounded-full uppercase tracking-wider">Required</span>
+</div>
+<h3 class="font-semibold text-lg mb-1">Business Registration</h3>
+<p class="text-secondary text-xs mb-6">Government issued business certificate or tax identification.</p>
+<div class="border-2 border-dashed border-outline-variant rounded-xl p-8 flex flex-col items-center justify-center text-center group cursor-pointer hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-secondary group-hover:text-primary transition-colors mb-2" data-icon="cloud_upload">cloud_upload</span>
+<p class="text-sm font-medium">Click to upload</p>
+<p class="text-[10px] text-secondary mt-1">or drag &amp; drop</p>
+</div>
+</div>
+<!-- Optional: Food Handling License -->
+<div class="bg-surface rounded-xl border border-outline-variant p-6 shadow-sm hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-4">
+<div class="bg-secondary-container/30 p-2 rounded-lg">
+<span class="material-symbols-outlined text-secondary" data-icon="restaurant">restaurant</span>
+</div>
+<span class="px-2 py-1 bg-surface-container-highest text-secondary text-[10px] font-bold rounded-full uppercase tracking-wider">Optional</span>
+</div>
+<h3 class="font-semibold text-lg mb-1">Food Handling License</h3>
+<p class="text-secondary text-xs mb-6">Valid permit from your local health department or agency.</p>
+<div class="border-2 border-dashed border-outline-variant rounded-xl p-8 flex flex-col items-center justify-center text-center group cursor-pointer hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-secondary group-hover:text-primary transition-colors mb-2" data-icon="cloud_upload">cloud_upload</span>
+<p class="text-sm font-medium">Click to upload</p>
+<p class="text-[10px] text-secondary mt-1">or drag &amp; drop</p>
+</div>
+</div>
+<!-- Required: ID Verification -->
+<div class="bg-surface rounded-xl border-2 border-primary-fixed p-6 shadow-md hover:shadow-lg transition-shadow">
+<div class="flex justify-between items-start mb-4">
+<div class="bg-primary-fixed/30 p-2 rounded-lg">
+<span class="material-symbols-outlined text-primary" data-icon="badge">badge</span>
+</div>
+<span class="px-2 py-1 bg-primary/10 text-primary text-[10px] font-bold rounded-full uppercase tracking-wider">Required</span>
+</div>
+<h3 class="font-semibold text-lg mb-1">ID Verification</h3>
+<p class="text-secondary text-xs mb-6">Passport or Driver's License of the primary account owner.</p>
+<div class="border-2 border-dashed border-outline-variant rounded-xl p-8 flex flex-col items-center justify-center text-center group cursor-pointer hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-secondary group-hover:text-primary transition-colors mb-2" data-icon="cloud_upload">cloud_upload</span>
+<p class="text-sm font-medium">Click to upload</p>
+<p class="text-[10px] text-secondary mt-1">or drag &amp; drop</p>
+</div>
+</div>
+<!-- Glassmorphism Card Style for Additional Info -->
+<div class="md:col-span-2 lg:col-span-3 bg-white/40 backdrop-blur-sm rounded-xl border border-white/50 p-6 flex flex-col md:flex-row items-center gap-6 mt-4 overflow-hidden relative">
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full -mr-16 -mt-16"></div>
+<div class="z-10 bg-white p-4 rounded-xl shadow-sm border border-outline-variant shrink-0">
+<span class="material-symbols-outlined text-primary text-3xl" data-icon="shield_person">shield_person</span>
+</div>
+<div class="z-10">
+<h4 class="font-semibold text-lg">Why do we need this?</h4>
+<p class="text-secondary text-sm mt-1">As a regulated marketplace, we must verify the identity and business status of our partners to ensure food safety standards and prevent fraud. Your documents are stored securely and encrypted.</p>
+</div>
+</div>
+</div>
+<!-- Footer CTAs -->
+<div class="mt-12 pt-8 border-t border-outline-variant flex items-center justify-between">
+<button class="px-6 py-3 text-secondary font-semibold hover:text-on-surface transition-colors">
+                    Back
+                </button>
+<div class="flex gap-4">
+<button class="px-6 py-3 text-primary font-semibold hover:bg-primary-fixed/20 rounded-lg transition-colors">
+                        Skip / Continue to Plans
+                    </button>
+<button class="bg-primary text-white px-10 py-3 rounded-lg font-bold shadow-lg hover:bg-primary-container active:scale-95 transition-all">
+                        Save and Continue
+                    </button>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Help (Only for mobile view reference) -->
+<div class="md:hidden fixed bottom-0 left-0 right-0 bg-surface border-t border-outline-variant p-4 flex justify-around items-center">
+<span class="material-symbols-outlined text-primary" data-icon="description" style="font-variation-settings: 'FILL' 1;">description</span>
+<span class="material-symbols-outlined text-secondary" data-icon="layers">layers</span>
+<span class="material-symbols-outlined text-secondary" data-icon="rate_review">rate_review</span>
+</div>
+</body></html>

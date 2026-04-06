@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Review &amp; Submit - Restaurant Portal</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=DM+Serif+Display&amp;family=Public+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-container": "#ede0da",
+                        "on-tertiary-container": "#f7fff3",
+                        "on-error": "#ffffff",
+                        "surface-dim": "#dadad9",
+                        "secondary": "#655d58",
+                        "on-surface-variant": "#594139",
+                        "tertiary": "#006b2d",
+                        "surface-container-high": "#e8e8e7",
+                        "secondary-fixed-dim": "#d0c4bf",
+                        "surface-container-highest": "#e2e2e2",
+                        "surface": "#f9f9f8",
+                        "error-container": "#ffdad6",
+                        "surface-container": "#eeeeed",
+                        "primary-fixed-dim": "#ffb59c",
+                        "outline-variant": "#e1bfb4",
+                        "on-tertiary-fixed": "#002109",
+                        "on-secondary": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-fixed": "#ffdbcf",
+                        "on-secondary-container": "#6b635e",
+                        "surface-bright": "#f9f9f8",
+                        "surface-variant": "#e2e2e2",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-container": "#00873b",
+                        "outline": "#8d7168",
+                        "background": "#f9f9f8",
+                        "tertiary-fixed": "#6bff8f",
+                        "tertiary-fixed-dim": "#4ae176",
+                        "on-primary-fixed-variant": "#822800",
+                        "on-primary-fixed": "#380c00",
+                        "primary": "#a63500",
+                        "on-primary": "#ffffff",
+                        "inverse-primary": "#ffb59c",
+                        "on-secondary-fixed": "#201a17",
+                        "on-secondary-fixed-variant": "#4d4541",
+                        "on-background": "#1a1c1c",
+                        "inverse-surface": "#2f3130",
+                        "surface-tint": "#aa3700",
+                        "surface-container-low": "#f4f4f3",
+                        "on-surface": "#1a1c1c",
+                        "error": "#ba1a1a",
+                        "on-primary-container": "#fffbff",
+                        "inverse-on-surface": "#f1f1f0",
+                        "secondary-fixed": "#ede0da",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-fixed-variant": "#005321",
+                        "primary-container": "#cc4911"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Public Sans"],
+                        "body": ["Public Sans"],
+                        "label": ["Public Sans"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Public Sans', sans-serif; }
+        .display-font { font-family: 'DM Serif Display', serif; }
+        .dm-sans { font-family: 'DM Sans', sans-serif; }
+    </style>
+</head>
+<body class="bg-background text-on-surface">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 bg-white dark:bg-zinc-900 border-b border-gray-200 dark:border-zinc-800 shadow-sm">
+<div class="flex justify-between items-center h-16 px-6 w-full">
+<div class="flex items-center gap-8">
+<span class="font-['DM_Serif_Display'] text-2xl text-orange-600 dark:text-orange-500">Restaurant Portal</span>
+</div>
+<div class="flex items-center gap-6">
+<div class="hidden md:flex gap-6 font-['DM_Sans'] text-sm font-medium">
+<a class="text-gray-500 dark:text-zinc-400 hover:text-orange-600 dark:hover:text-orange-400 transition-colors" href="#">Help</a>
+<a class="text-gray-500 dark:text-zinc-400 hover:text-orange-600 dark:hover:text-orange-400 transition-colors" href="#">Support</a>
+</div>
+<div class="material-symbols-outlined text-gray-500 dark:text-zinc-400 cursor-pointer active:opacity-80 transition-all">contact_support</div>
+</div>
+</div>
+</header>
+<!-- SideNavBar -->
+<nav class="h-screen w-64 fixed left-0 top-0 bg-zinc-900 dark:bg-black border-r border-zinc-800 shadow-lg pt-20 flex flex-col hidden lg:flex">
+<div class="px-6 mb-8">
+<h2 class="font-['DM_Serif_Display'] text-xl text-white">Onboarding</h2>
+<p class="font-['DM_Sans'] text-xs text-zinc-400 mt-1">Step 8 of 8</p>
+</div>
+<div class="flex flex-col py-6 gap-2 font-['DM_Sans'] text-sm antialiased">
+<div class="flex items-center gap-3 px-4 py-3 text-zinc-400 hover:text-zinc-100 mx-2 hover:bg-zinc-800 rounded-lg transition-all cursor-pointer active:scale-95">
+<span class="material-symbols-outlined">account_circle</span>
+<span>Account</span>
+</div>
+<div class="flex items-center gap-3 px-4 py-3 text-zinc-400 hover:text-zinc-100 mx-2 hover:bg-zinc-800 rounded-lg transition-all cursor-pointer active:scale-95">
+<span class="material-symbols-outlined">verified_user</span>
+<span>Verification</span>
+</div>
+<div class="flex items-center gap-3 px-4 py-3 text-zinc-400 hover:text-zinc-100 mx-2 hover:bg-zinc-800 rounded-lg transition-all cursor-pointer active:scale-95">
+<span class="material-symbols-outlined">info</span>
+<span>Basic Info</span>
+</div>
+<div class="flex items-center gap-3 px-4 py-3 text-zinc-400 hover:text-zinc-100 mx-2 hover:bg-zinc-800 rounded-lg transition-all cursor-pointer active:scale-95">
+<span class="material-symbols-outlined">location_on</span>
+<span>Location</span>
+</div>
+<div class="flex items-center gap-3 px-4 py-3 text-zinc-400 hover:text-zinc-100 mx-2 hover:bg-zinc-800 rounded-lg transition-all cursor-pointer active:scale-95">
+<span class="material-symbols-outlined">schedule</span>
+<span>Hours</span>
+</div>
+<div class="flex items-center gap-3 px-4 py-3 text-zinc-400 hover:text-zinc-100 mx-2 hover:bg-zinc-800 rounded-lg transition-all cursor-pointer active:scale-95">
+<span class="material-symbols-outlined">description</span>
+<span>Documents</span>
+</div>
+<div class="flex items-center gap-3 px-4 py-3 text-zinc-400 hover:text-zinc-100 mx-2 hover:bg-zinc-800 rounded-lg transition-all cursor-pointer active:scale-95">
+<span class="material-symbols-outlined">layers</span>
+<span>Plan</span>
+</div>
+<div class="flex items-center gap-3 px-4 py-3 text-white font-semibold bg-orange-600 rounded-lg mx-2 transition-all cursor-pointer active:scale-95">
+<span class="material-symbols-outlined">rate_review</span>
+<span>Review</span>
+</div>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="lg:ml-64 pt-24 pb-12 px-4 md:px-8 lg:px-12">
+<div class="max-w-5xl mx-auto">
+<header class="mb-10">
+<h1 class="display-font text-3xl md:text-4xl text-on-surface mb-2">Review &amp; Submit</h1>
+<p class="dm-sans text-secondary text-base">Please verify all the information below before finalizing your registration. Status will be updated to submitted once you click.</p>
+</header>
+<!-- Bento Grid Summary -->
+<div class="grid grid-cols-1 md:grid-cols-6 gap-6">
+<!-- Basic Info Card -->
+<div class="md:col-span-4 bg-surface-container-lowest rounded-xl p-6 shadow-sm border border-outline-variant relative group">
+<div class="flex justify-between items-start mb-6">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-primary-container/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">info</span>
+</div>
+<h3 class="dm-sans font-semibold text-lg">Basic Info</h3>
+</div>
+<button class="p-2 rounded-full hover:bg-secondary-container transition-colors text-secondary hover:text-primary">
+<span class="material-symbols-outlined text-xl">edit</span>
+</button>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-8">
+<div>
+<p class="text-xs text-secondary mb-1 uppercase tracking-wider font-bold">Restaurant Name</p>
+<p class="dm-sans font-medium">The Sizzling Hearth</p>
+</div>
+<div>
+<p class="text-xs text-secondary mb-1 uppercase tracking-wider font-bold">Cuisine Type</p>
+<p class="dm-sans font-medium">Wood-fired Artisan Pizza</p>
+</div>
+<div>
+<p class="text-xs text-secondary mb-1 uppercase tracking-wider font-bold">Primary Phone</p>
+<p class="dm-sans font-medium">+1 (555) 0123-4567</p>
+</div>
+<div>
+<p class="text-xs text-secondary mb-1 uppercase tracking-wider font-bold">Official Email</p>
+<p class="dm-sans font-medium">hello@sizzlinghearth.com</p>
+</div>
+</div>
+</div>
+<!-- Plan Selected -->
+<div class="md:col-span-2 bg-orange-600 rounded-xl p-6 shadow-md text-white flex flex-col justify-between relative overflow-hidden">
+<div class="relative z-10">
+<div class="flex justify-between items-start mb-4">
+<p class="font-medium text-white/80">Selected Plan</p>
+<button class="p-1 rounded-full hover:bg-white/20 transition-colors">
+<span class="material-symbols-outlined text-white">edit</span>
+</button>
+</div>
+<h4 class="display-font text-3xl mb-1">Growth Pro</h4>
+<p class="text-white/90 text-sm">Everything in Starter plus advanced analytics and priority support.</p>
+</div>
+<div class="mt-6 relative z-10 flex items-end gap-1">
+<span class="text-4xl font-bold">$99</span>
+<span class="text-white/80 pb-1">/ month</span>
+</div>
+<!-- Decorative Element -->
+<div class="absolute -right-8 -bottom-8 w-32 h-32 bg-white/10 rounded-full blur-2xl"></div>
+</div>
+<!-- Location & Map -->
+<div class="md:col-span-3 bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm border border-outline-variant group">
+<div class="p-6">
+<div class="flex justify-between items-center mb-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-primary-container/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">location_on</span>
+</div>
+<h3 class="dm-sans font-semibold text-lg">Location</h3>
+</div>
+<button class="p-2 rounded-full hover:bg-secondary-container transition-colors text-secondary hover:text-primary">
+<span class="material-symbols-outlined text-xl">edit</span>
+</button>
+</div>
+<p class="dm-sans text-on-surface">742 Evergreen Terrace</p>
+<p class="dm-sans text-on-surface">Suite 400</p>
+<p class="dm-sans text-secondary">Springfield, OR 97477</p>
+</div>
+<div class="h-40 bg-surface-container-high relative">
+<img class="w-full h-full object-cover grayscale opacity-60 group-hover:grayscale-0 transition-all duration-700" data-alt="clean minimalist map graphic showing a restaurant location icon in a city grid with soft orange accent colors" data-location="Springfield, OR" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBciblhaSpZf7bkryLyns-Yrjxnom6taJeCGSGeoiM_NvaFovit90KJ5fcYwDCf2JLA4u1BRBx23xy7H-6wS-ZCooWqv3UlBV2exz5ZDFn-qdnbsNxBRuud4G34jc3nRxvUDYHBYOU01oDM7KzQ-vkZM5x8aLhR6BFuMgTkH1zBBGiS7TPMIEMvhYVJqY8M9jrfNKkN1lSBn4-8xwb_wgfR4xY29QTUHKK9PkxqJzFBm082b7047hJyzaUj95LAgWZCIPrd8lQPFYo"/>
+</div>
+</div>
+<!-- Business Hours -->
+<div class="md:col-span-3 bg-surface-container-lowest rounded-xl p-6 shadow-sm border border-outline-variant">
+<div class="flex justify-between items-center mb-6">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-primary-container/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">schedule</span>
+</div>
+<h3 class="dm-sans font-semibold text-lg">Business Hours</h3>
+</div>
+<button class="p-2 rounded-full hover:bg-secondary-container transition-colors text-secondary hover:text-primary">
+<span class="material-symbols-outlined text-xl">edit</span>
+</button>
+</div>
+<div class="space-y-3">
+<div class="flex justify-between items-center text-sm">
+<span class="text-secondary">Mon – Fri</span>
+<span class="font-medium">11:00 AM – 10:00 PM</span>
+</div>
+<div class="flex justify-between items-center text-sm">
+<span class="text-secondary">Sat</span>
+<span class="font-medium">10:00 AM – 11:00 PM</span>
+</div>
+<div class="flex justify-between items-center text-sm">
+<span class="text-secondary">Sun</span>
+<span class="font-medium text-error">Closed</span>
+</div>
+<div class="mt-4 pt-4 border-t border-outline-variant flex items-center gap-2 text-xs text-secondary">
+<span class="material-symbols-outlined text-sm">info</span>
+<span>Holiday hours may differ.</span>
+</div>
+</div>
+</div>
+<!-- Sticky Action Footer (Simulated) -->
+<div class="md:col-span-6 bg-white rounded-xl p-8 border border-orange-100 flex flex-col md:flex-row items-center justify-between gap-6 mt-4">
+<div class="flex items-start gap-4">
+<div class="w-12 h-12 rounded-full bg-orange-50 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-orange-600">assignment_turned_in</span>
+</div>
+<div>
+<h4 class="font-bold text-lg">Ready to Launch?</h4>
+<p class="text-secondary text-sm">Your application will be reviewed by our onboarding team within 24-48 hours.</p>
+</div>
+</div>
+<div class="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
+<button class="px-8 py-3 rounded-lg border border-outline font-medium text-on-surface hover:bg-surface-container transition-all active:scale-95 text-center">
+                            Save as Draft
+                        </button>
+<button class="px-10 py-3 rounded-lg bg-primary font-bold text-white shadow-lg hover:shadow-orange-200 transition-all active:scale-95 text-center" style="background-color: #E85D26;">
+                            Submit for Approval
+                        </button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Mobile Navigation -->
+<div class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50 flex justify-around py-3 px-2">
+<div class="flex flex-col items-center text-gray-500">
+<span class="material-symbols-outlined">info</span>
+<span class="text-[10px] mt-1">Info</span>
+</div>
+<div class="flex flex-col items-center text-gray-500">
+<span class="material-symbols-outlined">location_on</span>
+<span class="text-[10px] mt-1">Location</span>
+</div>
+<div class="flex flex-col items-center text-orange-600">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">rate_review</span>
+<span class="text-[10px] mt-1 font-bold">Review</span>
+</div>
+<div class="flex flex-col items-center text-gray-500">
+<span class="material-symbols-outlined">account_circle</span>
+<span class="text-[10px] mt-1">Account</span>
+</div>
+</div>
+</body></html>

@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&amp;family=DM+Serif+Display&amp;family=JetBrains+Mono&amp;family=Public+Sans:wght@400;600;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-container": "#fffbff",
+                        "error-container": "#ffdad6",
+                        "on-primary-fixed-variant": "#822800",
+                        "inverse-on-surface": "#f1f1f0",
+                        "surface-variant": "#e2e2e2",
+                        "primary-fixed-dim": "#ffb59c",
+                        "surface": "#f9f9f8",
+                        "on-tertiary-fixed": "#002109",
+                        "surface-tint": "#aa3700",
+                        "surface-container-high": "#e8e8e7",
+                        "on-surface-variant": "#594139",
+                        "tertiary-container": "#00873b",
+                        "on-secondary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed": "#380c00",
+                        "tertiary-fixed-dim": "#4ae176",
+                        "on-background": "#1a1c1c",
+                        "on-primary": "#ffffff",
+                        "outline-variant": "#e1bfb4",
+                        "on-error-container": "#93000a",
+                        "inverse-surface": "#2f3130",
+                        "surface-dim": "#dadad9",
+                        "on-tertiary-container": "#f7fff3",
+                        "on-secondary-container": "#6b635e",
+                        "tertiary-fixed": "#6bff8f",
+                        "inverse-primary": "#ffb59c",
+                        "surface-bright": "#f9f9f8",
+                        "primary-container": "#cc4911",
+                        "background": "#f9f9f8",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary-fixed": "#201a17",
+                        "surface-container-highest": "#e2e2e2",
+                        "on-secondary-fixed-variant": "#4d4541",
+                        "surface-container": "#eeeeed",
+                        "secondary-container": "#ede0da",
+                        "on-surface": "#1a1c1c",
+                        "surface-container-low": "#f4f4f3",
+                        "secondary-fixed": "#ede0da",
+                        "on-tertiary-fixed-variant": "#005321",
+                        "primary": "#a63500",
+                        "tertiary": "#006b2d",
+                        "secondary-fixed-dim": "#d0c4bf",
+                        "secondary": "#655d58",
+                        "primary-fixed": "#ffdbcf",
+                        "outline": "#8d7168",
+                        "on-error": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Public Sans"],
+                        "body": ["Public Sans"],
+                        "label": ["Public Sans"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Public Sans', sans-serif; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface">
+<!-- SideNavBar Anchor -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-zinc-900 flex flex-col py-4 border-r border-zinc-800 shadow-lg z-50">
+<div class="px-6 mb-8">
+<h2 class="text-white font-bold text-lg">Admin Panel</h2>
+<p class="text-zinc-400 text-xs">Restaurant Management</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center px-4 py-3 text-zinc-400 hover:text-white mx-2 hover:bg-zinc-800 rounded-lg transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="dashboard">dashboard</span>
+<span class="font-['DM_Sans'] text-sm">Dashboard</span>
+</a>
+<a class="flex items-center px-4 py-3 text-zinc-400 hover:text-white mx-2 hover:bg-zinc-800 rounded-lg transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="restaurant_menu">restaurant_menu</span>
+<span class="font-['DM_Sans'] text-sm">Orders</span>
+</a>
+<a class="flex items-center px-4 py-3 text-zinc-400 hover:text-white mx-2 hover:bg-zinc-800 rounded-lg transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="edit_note">edit_note</span>
+<span class="font-['DM_Sans'] text-sm">Menu Editor</span>
+</a>
+<!-- Active State Logic: Analytics -->
+<a class="flex items-center px-4 py-3 bg-orange-600 text-white rounded-lg mx-2 transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="monitoring">monitoring</span>
+<span class="font-['DM_Sans'] text-sm">Analytics</span>
+</a>
+<a class="flex items-center px-4 py-3 text-zinc-400 hover:text-white mx-2 hover:bg-zinc-800 rounded-lg transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="settings">settings</span>
+<span class="font-['DM_Sans'] text-sm">Settings</span>
+</a>
+</nav>
+<div class="mt-auto pt-4 border-t border-zinc-800">
+<button class="w-[calc(100%-2rem)] mx-4 mb-4 py-2 bg-orange-600 text-white rounded-lg text-sm font-medium transition-transform active:scale-95">
+                Add New Item
+            </button>
+<a class="flex items-center px-4 py-2 text-zinc-400 hover:text-white mx-2 hover:bg-zinc-800 rounded-lg transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="contact_support">contact_support</span>
+<span class="font-['DM_Sans'] text-sm">Support</span>
+</a>
+<a class="flex items-center px-4 py-2 text-zinc-400 hover:text-white mx-2 hover:bg-zinc-800 rounded-lg transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="logout">logout</span>
+<span class="font-['DM_Sans'] text-sm">Logout</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-64 p-8 min-h-screen">
+<!-- Header -->
+<header class="flex justify-between items-end mb-8">
+<div>
+<h1 class="font-['DM_Serif_Display'] text-3xl text-on-surface">Analytics and Reporting</h1>
+<p class="text-secondary text-sm">Performance tracking and sales insights for June 2024</p>
+</div>
+<div class="flex gap-3">
+<button class="px-4 py-2 rounded-lg border border-outline text-on-surface text-sm font-medium bg-white flex items-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="calendar_today">calendar_today</span>
+                    Last 30 Days
+                </button>
+<button class="px-4 py-2 rounded-lg bg-primary text-on-primary text-sm font-medium flex items-center gap-2 shadow-sm">
+<span class="material-symbols-outlined text-sm" data-icon="file_download">file_download</span>
+                    Export CSV
+                </button>
+</div>
+</header>
+<!-- Metric Cards Grid -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+<!-- Total Sales Card -->
+<div class="bg-white p-6 rounded-xl shadow-sm border border-outline-variant flex flex-col justify-between">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-primary-fixed rounded-lg text-primary">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+</div>
+<span class="flex items-center text-tertiary text-sm font-medium">
+<span class="material-symbols-outlined text-sm mr-1" data-icon="trending_up">trending_up</span>
+                        +12.5%
+                    </span>
+</div>
+<div>
+<p class="text-secondary text-sm font-medium">Total Sales</p>
+<h3 class="text-2xl font-bold font-['DM_Sans'] text-on-surface">$42,850.00</h3>
+</div>
+</div>
+<!-- Total Orders Card -->
+<div class="bg-white p-6 rounded-xl shadow-sm border border-outline-variant flex flex-col justify-between">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-secondary-fixed rounded-lg text-secondary">
+<span class="material-symbols-outlined" data-icon="shopping_bag">shopping_bag</span>
+</div>
+<span class="flex items-center text-tertiary text-sm font-medium">
+<span class="material-symbols-outlined text-sm mr-1" data-icon="trending_up">trending_up</span>
+                        +8.2%
+                    </span>
+</div>
+<div>
+<p class="text-secondary text-sm font-medium">Total Orders</p>
+<h3 class="text-2xl font-bold font-['DM_Sans'] text-on-surface">1,284</h3>
+</div>
+</div>
+<!-- Average Order Value Card -->
+<div class="bg-white p-6 rounded-xl shadow-sm border border-outline-variant flex flex-col justify-between">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-tertiary-fixed rounded-lg text-tertiary">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+</div>
+<span class="flex items-center text-error text-sm font-medium">
+<span class="material-symbols-outlined text-sm mr-1" data-icon="trending_down">trending_down</span>
+                        -2.1%
+                    </span>
+</div>
+<div>
+<p class="text-secondary text-sm font-medium">Average Order Value</p>
+<h3 class="text-2xl font-bold font-['DM_Sans'] text-on-surface">$33.37</h3>
+</div>
+</div>
+</section>
+<!-- Charts Bento Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+<!-- Large Line Chart: Sales Over Time -->
+<div class="lg:col-span-8 bg-white p-8 rounded-xl shadow-sm border border-outline-variant">
+<div class="flex justify-between items-center mb-10">
+<div>
+<h4 class="font-semibold text-lg">Sales Over Time</h4>
+<p class="text-secondary text-xs">Revenue trend across the current month</p>
+</div>
+<div class="flex items-center gap-4 text-xs font-medium">
+<span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-primary"></span> This Month</span>
+<span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-outline-variant"></span> Last Month</span>
+</div>
+</div>
+<div class="relative h-64 w-full">
+<!-- Stylized SVG Line Chart representing the trend -->
+<svg class="w-full h-full" viewbox="0 0 800 200">
+<defs>
+<lineargradient id="chartGradient" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#E85D26" stop-opacity="0.2"></stop>
+<stop offset="100%" stop-color="#E85D26" stop-opacity="0"></stop>
+</lineargradient>
+</defs>
+<!-- Grid Lines -->
+<line stroke="#f0f0f0" stroke-width="1" x1="0" x2="800" y1="0" y2="0"></line>
+<line stroke="#f0f0f0" stroke-width="1" x1="0" x2="800" y1="50" y2="50"></line>
+<line stroke="#f0f0f0" stroke-width="1" x1="0" x2="800" y1="100" y2="100"></line>
+<line stroke="#f0f0f0" stroke-width="1" x1="0" x2="800" y1="150" y2="150"></line>
+<line stroke="#f0f0f0" stroke-width="1" x1="0" x2="800" y1="200" y2="200"></line>
+<!-- Area Fill -->
+<path d="M0,160 Q100,140 200,150 T400,80 T600,100 T800,40 L800,200 L0,200 Z" fill="url(#chartGradient)"></path>
+<!-- Line -->
+<path d="M0,160 Q100,140 200,150 T400,80 T600,100 T800,40" fill="none" stroke="#E85D26" stroke-linecap="round" stroke-width="3"></path>
+<!-- Comparison Line -->
+<path d="M0,180 Q100,160 200,170 T400,120 T600,140 T800,100" fill="none" stroke="#E5E7EB" stroke-dasharray="4" stroke-width="2"></path>
+</svg>
+<div class="flex justify-between mt-4 text-[10px] text-secondary font-['JetBrains_Mono']">
+<span>JUNE 01</span>
+<span>JUNE 07</span>
+<span>JUNE 14</span>
+<span>JUNE 21</span>
+<span>JUNE 28</span>
+<span>JUNE 30</span>
+</div>
+</div>
+</div>
+<!-- Bar Chart: Busiest Times -->
+<div class="lg:col-span-4 bg-white p-8 rounded-xl shadow-sm border border-outline-variant flex flex-col">
+<div class="mb-8">
+<h4 class="font-semibold text-lg text-on-surface">Busiest Times</h4>
+<p class="text-secondary text-xs">Peak ordering hours daily average</p>
+</div>
+<div class="flex-1 flex items-end justify-between gap-2 h-48">
+<!-- Visualizing bars -->
+<div class="flex flex-col items-center flex-1 gap-2">
+<div class="w-full bg-secondary-container rounded-t-lg" style="height: 40%"></div>
+<span class="text-[10px] text-secondary">11AM</span>
+</div>
+<div class="flex flex-col items-center flex-1 gap-2">
+<div class="w-full bg-primary rounded-t-lg" style="height: 90%"></div>
+<span class="text-[10px] text-secondary font-bold text-primary">1PM</span>
+</div>
+<div class="flex flex-col items-center flex-1 gap-2">
+<div class="w-full bg-secondary-container rounded-t-lg" style="height: 60%"></div>
+<span class="text-[10px] text-secondary">3PM</span>
+</div>
+<div class="flex flex-col items-center flex-1 gap-2">
+<div class="w-full bg-secondary-container rounded-t-lg" style="height: 45%"></div>
+<span class="text-[10px] text-secondary">5PM</span>
+</div>
+<div class="flex flex-col items-center flex-1 gap-2">
+<div class="w-full bg-primary rounded-t-lg" style="height: 85%"></div>
+<span class="text-[10px] text-secondary">7PM</span>
+</div>
+<div class="flex flex-col items-center flex-1 gap-2">
+<div class="w-full bg-secondary-container rounded-t-lg" style="height: 30%"></div>
+<span class="text-[10px] text-secondary">9PM</span>
+</div>
+</div>
+<div class="mt-8 pt-6 border-t border-outline-variant">
+<div class="flex justify-between items-center text-sm">
+<span class="text-secondary">Peak Hour</span>
+<span class="font-semibold text-primary">1:00 PM - 2:00 PM</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Recent Transactions/Breakdown Section -->
+<section class="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-6">
+<div class="bg-white p-6 rounded-xl shadow-sm border border-outline-variant">
+<div class="flex justify-between items-center mb-6">
+<h4 class="font-semibold">Top Categories</h4>
+<button class="text-xs text-primary font-medium">View Detailed Report</button>
+</div>
+<div class="space-y-4">
+<div class="space-y-1.5">
+<div class="flex justify-between text-xs">
+<span class="font-medium">Main Courses</span>
+<span class="text-secondary">45% ($19,282)</span>
+</div>
+<div class="w-full bg-surface-container-high h-2 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 45%"></div>
+</div>
+</div>
+<div class="space-y-1.5">
+<div class="flex justify-between text-xs">
+<span class="font-medium">Beverages</span>
+<span class="text-secondary">30% ($12,855)</span>
+</div>
+<div class="w-full bg-surface-container-high h-2 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 30%"></div>
+</div>
+</div>
+<div class="space-y-1.5">
+<div class="flex justify-between text-xs">
+<span class="font-medium">Desserts</span>
+<span class="text-secondary">15% ($6,427)</span>
+</div>
+<div class="w-full bg-surface-container-high h-2 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 15%"></div>
+</div>
+</div>
+<div class="space-y-1.5">
+<div class="flex justify-between text-xs">
+<span class="font-medium">Starters</span>
+<span class="text-secondary">10% ($4,285)</span>
+</div>
+<div class="w-full bg-surface-container-high h-2 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 10%"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-white p-6 rounded-xl shadow-sm border border-outline-variant">
+<h4 class="font-semibold mb-6">Device Breakdown</h4>
+<div class="flex items-center justify-around h-40">
+<div class="relative w-32 h-32">
+<!-- Simulated Donut Chart -->
+<svg class="w-full h-full transform -rotate-90" viewbox="0 0 36 36">
+<circle cx="18" cy="18" fill="transparent" r="16" stroke="#eeeeed" stroke-width="4"></circle>
+<circle cx="18" cy="18" fill="transparent" r="16" stroke="#E85D26" stroke-dasharray="65 100" stroke-width="4"></circle>
+<circle cx="18" cy="18" fill="transparent" r="16" stroke="#655d58" stroke-dasharray="25 100" stroke-dashoffset="-65" stroke-width="4"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="text-lg font-bold">1.2k</span>
+<span class="text-[8px] text-secondary uppercase tracking-wider">Total</span>
+</div>
+</div>
+<div class="space-y-3">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-primary"></div>
+<span class="text-sm font-medium">Mobile (65%)</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-secondary"></div>
+<span class="text-sm font-medium">Desktop (25%)</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-surface-container-high"></div>
+<span class="text-sm font-medium">Tablet (10%)</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer Anchor -->
+<footer class="ml-64 w-full py-12 bg-gray-50 border-t border-gray-200">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-8 px-6 max-w-7xl">
+<div class="col-span-1 md:col-span-1">
+<h2 class="font-['DM_Serif_Display'] text-xl text-zinc-900 mb-4">DineDash</h2>
+<p class="font-['DM_Sans'] text-xs text-gray-500 max-w-xs leading-relaxed">
+                    The ultimate management suite for modern restaurant owners and partners.
+                </p>
+</div>
+<div>
+<h4 class="font-bold text-xs text-zinc-900 uppercase tracking-widest mb-4">Platform</h4>
+<ul class="space-y-2">
+<li><a class="font-['DM_Sans'] text-xs text-gray-500 hover:underline" href="#">About Us</a></li>
+<li><a class="font-['DM_Sans'] text-xs text-gray-500 hover:underline" href="#">Features</a></li>
+<li><a class="font-['DM_Sans'] text-xs text-gray-500 hover:underline" href="#">Pricing</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold text-xs text-zinc-900 uppercase tracking-widest mb-4">Support</h4>
+<ul class="space-y-2">
+<li><a class="font-['DM_Sans'] text-xs text-gray-500 hover:underline" href="#">Help Center</a></li>
+<li><a class="font-['DM_Sans'] text-xs text-gray-500 hover:underline" href="#">Contact</a></li>
+<li><a class="font-['DM_Sans'] text-xs text-gray-500 hover:underline" href="#">Privacy Policy</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold text-xs text-zinc-900 uppercase tracking-widest mb-4">Newsletter</h4>
+<div class="flex gap-2">
+<input class="bg-white border border-gray-200 rounded px-3 py-1.5 text-xs w-full focus:ring-1 focus:ring-orange-600 outline-none" placeholder="Email" type="email"/>
+<button class="bg-orange-600 text-white px-3 py-1.5 rounded text-xs">Join</button>
+</div>
+</div>
+</div>
+<div class="mt-12 px-6 border-t border-gray-100 pt-6 flex justify-between items-center max-w-7xl">
+<p class="font-['DM_Sans'] text-xs text-gray-500">© 2024 DineDash Marketplace. All rights reserved.</p>
+<div class="flex gap-4">
+<span class="material-symbols-outlined text-gray-400 text-sm" data-icon="public">public</span>
+<span class="material-symbols-outlined text-gray-400 text-sm" data-icon="share">share</span>
+</div>
+</div>
+</footer>
+</body></html>

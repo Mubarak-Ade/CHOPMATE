@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Restaurant Details</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#c54823", // Deep terracotta
+                        "secondary": "#f4f1ed", // Soft beige
+                        "accent": "#f5b700", // Golden yellow
+                        "background-light": "#f8fcf9",
+                        "background-dark": "#102216",
+                        "text-light": "#0d1b12",
+                        "text-dark": "#e7f3eb",
+                        "text-muted-light": "#4c9a66",
+                        "text-muted-dark": "#a7d7b9",
+                        "border-light": "#e7f3eb",
+                        "border-dark": "#2a3c31"
+                    },
+                    fontFamily: {
+                        "display": ["Work Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            font-size: 20px;
+        }
+        .material-symbols-outlined.fill {
+             font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-text-light dark:text-text-dark">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<!-- TopNavBar -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-border-light dark:border-border-dark px-10 py-3 sticky top-0 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-sm z-50">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-4 text-text-light dark:text-text-dark">
+<div class="size-6 text-primary">
+<span class="material-symbols-outlined !text-4xl">restaurant_menu</span>
+</div>
+<h2 class="text-lg font-bold leading-tight tracking-[-0.015em]">Res-Search</h2>
+</div>
+<label class="flex flex-col min-w-40 !h-10 max-w-64">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full">
+<div class="text-text-muted-light dark:text-text-muted-dark flex border-none bg-secondary dark:bg-border-dark items-center justify-center pl-4 rounded-l-lg border-r-0">
+<span class="material-symbols-outlined">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-r-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-0 border-none bg-secondary dark:bg-border-dark h-full placeholder:text-text-muted-light dark:placeholder:text-text-muted-dark px-4 pl-2 text-base font-normal leading-normal" placeholder="Search for restaurants" value=""/>
+</div>
+</label>
+</div>
+<div class="flex flex-1 justify-end gap-8">
+<div class="flex items-center gap-9">
+<a class="text-sm font-medium leading-normal" href="#">Home</a>
+<a class="text-sm font-medium leading-normal" href="#">Explore</a>
+<a class="text-sm font-medium leading-normal" href="#">Favorites</a>
+<a class="text-sm font-medium leading-normal" href="#">About Us</a>
+</div>
+<div class="flex items-center gap-2">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="User profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuADcCwIm2vFvEIOt5gFikuarwfLjZ4VZuvMn5k1Cn-7_KmAlkKzAI4Dc6abH1rlIzvkT0BWYC-cXl_d6vJ0UkcYpjn-nb9C7uw4Ht-_fLqJ2v5118xJFh6Bvgn2JEjKr1TwMXypvbQtG8ztonTfk_bVljLgEIgUc1ntxQ8DVsCDEchsLVmQeMVRy_PFf_QN35-xzjlCPaoQj54EkxGsgjHASpaA1RnVpokf9H1PVbNPyIzeJVsKlrg1yZcQ8EAkX3df6rDfibBRNlg");'></div>
+</div>
+</div>
+</header>
+<main class="px-10 py-8">
+<div class="layout-content-container flex flex-col max-w-7xl mx-auto">
+<!-- Breadcrumbs -->
+<div class="flex flex-wrap gap-2 px-4 pb-4">
+<a class="text-text-muted-light dark:text-text-muted-dark text-sm font-medium leading-normal hover:text-primary" href="#">Home</a>
+<span class="text-text-muted-light dark:text-text-muted-dark text-sm font-medium leading-normal">/</span>
+<a class="text-text-muted-light dark:text-text-muted-dark text-sm font-medium leading-normal hover:text-primary" href="#">Restaurants</a>
+<span class="text-text-muted-light dark:text-text-muted-dark text-sm font-medium leading-normal">/</span>
+<span class="text-text-light dark:text-text-dark text-sm font-medium leading-normal">The Golden Spoon</span>
+</div>
+<!-- HeaderImage -->
+<div class="w-full h-80 bg-center bg-no-repeat bg-cover flex flex-col justify-end overflow-hidden rounded-xl" data-alt="Interior shot of a cozy, elegant restaurant with warm lighting" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBkd6WZiZAjk19LjaFA-hbD9PSJEzIJ_i0V4--t5Eon0f0cXLbv_w4CDD39GCjs110PBzZE28zvO7suj-5cPIYX1ZFeQE7juGJmrtrXhOq3Soo-uf8e9wDlCB7H6Umnfp7y0y_a9R-iO51AM_NnPvoOjMwBeFi8rC4uWy_oXu7PosNAo6EeIbkbgTdEbXIXUBtiUVEsLkvsqxRH0bCi9m_T8XDytSWO5BDWLki4nbeTKReFVjttppYVvgii7dG3nKsWkMnmGfzTP5c");'></div>
+<!-- Main Content Grid -->
+<div class="grid grid-cols-12 gap-8 mt-8">
+<!-- Left Column (Sticky Info) -->
+<div class="col-span-12 lg:col-span-4">
+<div class="sticky top-28 space-y-6">
+<!-- PageHeading -->
+<div class="flex flex-col gap-2">
+<p class="text-4xl font-black leading-tight tracking-[-0.033em]">The Golden Spoon</p>
+<div class="flex items-center gap-2 text-text-muted-light dark:text-text-muted-dark">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined fill text-accent">star</span>
+<span class="font-bold text-text-light dark:text-text-dark">4.5</span>
+<span>(215 reviews)</span>
+</div>
+<span>•</span>
+<span>Italian</span>
+<span>•</span>
+<span>$$</span>
+</div>
+</div>
+<!-- Chips -->
+<div class="flex gap-2 flex-wrap">
+<div class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-secondary dark:bg-border-dark px-3"><p class="text-sm font-medium leading-normal">Italian</p></div>
+<div class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-secondary dark:bg-border-dark px-3"><p class="text-sm font-medium leading-normal">Pizza</p></div>
+<div class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-secondary dark:bg-border-dark px-3"><p class="text-sm font-medium leading-normal">Pasta</p></div>
+<div class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-secondary dark:bg-border-dark px-3"><p class="text-sm font-medium leading-normal">Cozy Ambiance</p></div>
+</div>
+<!-- Info Block -->
+<div class="space-y-4 border-t border-b border-border-light dark:border-border-dark py-6">
+<div class="flex items-start gap-4">
+<span class="material-symbols-outlined text-text-muted-light dark:text-text-muted-dark mt-1">location_on</span>
+<div class="flex flex-col">
+<p class="font-medium">123 Culinary Lane, Foodie City, 10001</p>
+<a class="text-sm text-primary font-semibold" href="#">Get Directions</a>
+</div>
+</div>
+<div class="flex items-start gap-4">
+<span class="material-symbols-outlined text-text-muted-light dark:text-text-muted-dark mt-1">schedule</span>
+<div class="flex flex-col">
+<p class="font-medium">Open today until 11:00 PM</p>
+<a class="text-sm text-primary font-semibold" href="#">View all hours</a>
+</div>
+</div>
+<div class="flex items-start gap-4">
+<span class="material-symbols-outlined text-text-muted-light dark:text-text-muted-dark mt-1">call</span>
+<p class="font-medium">(123) 456-7890</p>
+</div>
+<div class="flex items-start gap-4">
+<span class="material-symbols-outlined text-text-muted-light dark:text-text-muted-dark mt-1">language</span>
+<a class="font-medium text-primary" href="#">thegoldenspoon.com</a>
+</div>
+</div>
+<!-- CTA Buttons -->
+<div class="flex flex-col gap-3">
+<button class="flex w-full min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-4 bg-primary text-white text-base font-bold leading-normal tracking-[0.015em]">
+<span class="truncate">Make a Reservation</span>
+</button>
+<button class="flex w-full min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-4 bg-secondary dark:bg-border-dark text-text-light dark:text-text-dark text-base font-bold leading-normal tracking-[0.015em]">
+<span class="truncate">Place an Order</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Right Column (Tabbed Content) -->
+<div class="col-span-12 lg:col-span-8">
+<!-- Tabs -->
+<div class="border-b border-border-light dark:border-border-dark flex gap-6">
+<button class="py-3 px-1 text-base font-bold text-primary border-b-2 border-primary">Menu</button>
+<button class="py-3 px-1 text-base font-semibold text-text-muted-light dark:text-text-muted-dark hover:text-text-light dark:hover:text-text-dark">Reviews</button>
+<button class="py-3 px-1 text-base font-semibold text-text-muted-light dark:text-text-muted-dark hover:text-text-light dark:hover:text-text-dark">Photos</button>
+</div>
+<!-- Tab Content -->
+<div class="pt-8 space-y-10">
+<!-- Menu Section -->
+<div class="space-y-6">
+<h3 class="text-2xl font-bold">Appetizers</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Menu Item -->
+<div class="flex flex-col gap-1 p-4 rounded-lg bg-secondary/50 dark:bg-border-dark/30">
+<h4 class="font-bold">Bruschetta al Pomodoro</h4>
+<p class="text-sm text-text-muted-light dark:text-text-muted-dark flex-grow">Toasted bread with fresh tomatoes, garlic, basil, and olive oil.</p>
+<p class="font-bold text-primary mt-2">$12.00</p>
+</div>
+<div class="flex flex-col gap-1 p-4 rounded-lg bg-secondary/50 dark:bg-border-dark/30">
+<h4 class="font-bold">Calamari Fritti</h4>
+<p class="text-sm text-text-muted-light dark:text-text-muted-dark flex-grow">Lightly battered and fried calamari served with a zesty marinara sauce.</p>
+<p class="font-bold text-primary mt-2">$15.00</p>
+</div>
+</div>
+</div>
+<div class="space-y-6">
+<h3 class="text-2xl font-bold">Main Courses</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Menu Item -->
+<div class="flex flex-col gap-1 p-4 rounded-lg bg-secondary/50 dark:bg-border-dark/30">
+<h4 class="font-bold">Spaghetti Carbonara</h4>
+<p class="text-sm text-text-muted-light dark:text-text-muted-dark flex-grow">Classic pasta with pancetta, egg yolk, pecorino cheese, and black pepper.</p>
+<p class="font-bold text-primary mt-2">$22.00</p>
+</div>
+<div class="flex flex-col gap-1 p-4 rounded-lg bg-secondary/50 dark:bg-border-dark/30">
+<h4 class="font-bold">Margherita Pizza</h4>
+<p class="text-sm text-text-muted-light dark:text-text-muted-dark flex-grow">Neapolitan-style pizza with San Marzano tomatoes, fresh mozzarella, and basil.</p>
+<p class="font-bold text-primary mt-2">$18.00</p>
+</div>
+<div class="flex flex-col gap-1 p-4 rounded-lg bg-secondary/50 dark:bg-border-dark/30">
+<h4 class="font-bold">Chicken Parmigiana</h4>
+<p class="text-sm text-text-muted-light dark:text-text-muted-dark flex-grow">Breaded chicken breast topped with marinara sauce and melted mozzarella.</p>
+<p class="font-bold text-primary mt-2">$25.00</p>
+</div>
+<div class="flex flex-col gap-1 p-4 rounded-lg bg-secondary/50 dark:bg-border-dark/30">
+<h4 class="font-bold">Risotto ai Funghi</h4>
+<p class="text-sm text-text-muted-light dark:text-text-muted-dark flex-grow">Creamy risotto with a mix of wild mushrooms, parmesan, and truffle oil.</p>
+<p class="font-bold text-primary mt-2">$24.00</p>
+</div>
+</div>
+</div>
+<div class="space-y-6">
+<h3 class="text-2xl font-bold">Desserts</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Menu Item -->
+<div class="flex flex-col gap-1 p-4 rounded-lg bg-secondary/50 dark:bg-border-dark/30">
+<h4 class="font-bold">Tiramisu</h4>
+<p class="text-sm text-text-muted-light dark:text-text-muted-dark flex-grow">Layers of coffee-soaked ladyfingers and mascarpone cream, dusted with cocoa.</p>
+<p class="font-bold text-primary mt-2">$10.00</p>
+</div>
+<div class="flex flex-col gap-1 p-4 rounded-lg bg-secondary/50 dark:bg-border-dark/30">
+<h4 class="font-bold">Panna Cotta</h4>
+<p class="text-sm text-text-muted-light dark:text-text-muted-dark flex-grow">A silky smooth Italian custard served with a fresh berry coulis.</p>
+<p class="font-bold text-primary mt-2">$9.00</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</div>
+</body></html>

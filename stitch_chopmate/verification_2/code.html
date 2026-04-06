@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Verify Your Account - Restaurant Onboard</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=DM+Serif+Display&amp;family=Public+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "on-tertiary-fixed": "#002109",
+                "surface-tint": "#aa3700",
+                "on-secondary-fixed-variant": "#4d4541",
+                "surface-container-low": "#f4f4f3",
+                "surface-container-high": "#e8e8e7",
+                "primary-fixed-dim": "#ffb59c",
+                "on-background": "#1a1c1c",
+                "inverse-surface": "#2f3130",
+                "surface-container": "#eeeeed",
+                "on-surface-variant": "#594139",
+                "primary-container": "#cc4911",
+                "error": "#ba1a1a",
+                "tertiary-container": "#00873b",
+                "surface-container-highest": "#e2e2e2",
+                "primary": "#a63500",
+                "secondary-fixed-dim": "#d0c4bf",
+                "primary-fixed": "#ffdbcf",
+                "surface-bright": "#f9f9f8",
+                "secondary-fixed": "#ede0da",
+                "on-tertiary": "#ffffff",
+                "surface-variant": "#e2e2e2",
+                "tertiary": "#006b2d",
+                "surface-dim": "#dadad9",
+                "on-primary": "#ffffff",
+                "on-secondary-container": "#6b635e",
+                "on-tertiary-fixed-variant": "#005321",
+                "inverse-on-surface": "#f1f1f0",
+                "surface-container-lowest": "#ffffff",
+                "surface": "#f9f9f8",
+                "background": "#f9f9f8",
+                "on-primary-container": "#fffbff",
+                "on-primary-fixed-variant": "#822800",
+                "on-error": "#ffffff",
+                "outline-variant": "#e1bfb4",
+                "on-secondary": "#ffffff",
+                "outline": "#8d7168",
+                "on-tertiary-container": "#f7fff3",
+                "on-error-container": "#93000a",
+                "tertiary-fixed": "#6bff8f",
+                "on-secondary-fixed": "#201a17",
+                "secondary-container": "#ede0da",
+                "on-primary-fixed": "#380c00",
+                "inverse-primary": "#ffb59c",
+                "secondary": "#655d58",
+                "tertiary-fixed-dim": "#4ae176",
+                "on-surface": "#1a1c1c",
+                "error-container": "#ffdad6"
+            },
+            "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "8px",
+                "xl": "12px",
+                "2xl": "16px",
+                "full": "9999px"
+            },
+            "fontFamily": {
+                "headline": ["DM Serif Display", "serif"],
+                "body": ["DM Sans", "sans-serif"],
+                "label": ["DM Sans", "sans-serif"],
+                "mono": ["JetBrains Mono", "monospace"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'DM Sans', sans-serif; }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+    </style>
+</head>
+<body class="bg-[#F5F5F4] text-[#111111] antialiased">
+<!-- TopNavBar -->
+<header class="fixed top-0 left-0 right-0 z-50 bg-white dark:bg-zinc-900 shadow-sm border-b border-gray-200 dark:border-zinc-800 flex justify-between items-center px-6 py-3 w-full">
+<div class="flex items-center gap-2">
+<span class="text-xl font-['DM_Serif_Display'] text-orange-600 dark:text-orange-500">Restaurant Onboard</span>
+</div>
+<div class="flex items-center gap-6">
+<div class="hidden md:flex gap-8 items-center">
+<a class="text-gray-500 dark:text-zinc-400 font-['DM_Sans'] text-sm hover:bg-orange-50 dark:hover:bg-orange-900/20 transition-colors" href="#">Support</a>
+<a class="text-gray-500 dark:text-zinc-400 font-['DM_Sans'] text-sm hover:bg-orange-50 dark:hover:bg-orange-900/20 transition-colors" href="#">Resources</a>
+</div>
+<button class="flex items-center gap-2 text-gray-500 dark:text-zinc-400 font-['DM_Sans'] text-sm active:scale-95 duration-150">
+<span class="material-symbols-outlined text-base">help_outline</span>
+<span>Help</span>
+</button>
+</div>
+</header>
+<!-- SideNavBar (Hidden on small screens) -->
+<aside class="hidden lg:flex h-screen w-64 fixed left-0 top-0 bg-zinc-900 dark:bg-black border-r border-zinc-800 flex-col h-full py-6 z-40 pt-20">
+<div class="px-6 mb-8">
+<h2 class="text-white font-bold text-lg">Setup Guide</h2>
+<p class="text-zinc-400 text-xs">8 steps to go live</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 text-zinc-400 hover:text-white px-4 py-2 hover:bg-zinc-800 transition-all font-['DM_Sans'] text-sm mx-2" href="#">
+<span class="material-symbols-outlined">person</span>
+<span>Account</span>
+</a>
+<!-- Active State: Verification -->
+<a class="flex items-center gap-3 bg-orange-600 text-white rounded-lg mx-2 px-4 py-2 font-['DM_Sans'] text-sm active:opacity-80" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+<span class="font-bold">Verification</span>
+</a>
+<a class="flex items-center gap-3 text-zinc-400 hover:text-white px-4 py-2 hover:bg-zinc-800 transition-all font-['DM_Sans'] text-sm mx-2" href="#">
+<span class="material-symbols-outlined">info</span>
+<span>Basic Info</span>
+</a>
+<a class="flex items-center gap-3 text-zinc-400 hover:text-white px-4 py-2 hover:bg-zinc-800 transition-all font-['DM_Sans'] text-sm mx-2" href="#">
+<span class="material-symbols-outlined">location_on</span>
+<span>Location</span>
+</a>
+<a class="flex items-center gap-3 text-zinc-400 hover:text-white px-4 py-2 hover:bg-zinc-800 transition-all font-['DM_Sans'] text-sm mx-2" href="#">
+<span class="material-symbols-outlined">schedule</span>
+<span>Hours</span>
+</a>
+<a class="flex items-center gap-3 text-zinc-400 hover:text-white px-4 py-2 hover:bg-zinc-800 transition-all font-['DM_Sans'] text-sm mx-2" href="#">
+<span class="material-symbols-outlined">description</span>
+<span>Documents</span>
+</a>
+<a class="flex items-center gap-3 text-zinc-400 hover:text-white px-4 py-2 hover:bg-zinc-800 transition-all font-['DM_Sans'] text-sm mx-2" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span>Plan</span>
+</a>
+<a class="flex items-center gap-3 text-zinc-400 hover:text-white px-4 py-2 hover:bg-zinc-800 transition-all font-['DM_Sans'] text-sm mx-2" href="#">
+<span class="material-symbols-outlined">rate_review</span>
+<span>Review</span>
+</a>
+</nav>
+<div class="mt-auto px-6 pt-4 border-t border-zinc-800">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-zinc-700 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="close up portrait of a professional chef wearing white uniform in a bright kitchen" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDajGtYBkrGhKlW2oUdiTxYq1kas4lhlgSAbEvG2-b3AZZiq3THj5YhQdMBU0_MzcensJ4smZqB6a9exqKa-dujeJywgWTY7vezOYdNSANrYL6BwTTEwNzG9HIqtQpNmrhSFRWQSOjaDDbTE4WVmTotseUk2o5wJTRH8mm96sBylVWfhfaXb423RFCiX0xHDJ9FAgwItXcufq_6rwkL6he0NOBt0iJvWYfPomXX4TD2wnaYfTXWxddpd7Bz64gpYRin_Qt6CxdSXzY"/>
+</div>
+<div>
+<p class="text-white text-xs font-medium">Bistro Admin</p>
+<p class="text-zinc-500 text-[10px]">ID: #89210</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="lg:ml-64 pt-24 pb-12 px-6 md:px-12 min-h-screen">
+<div class="max-w-3xl mx-auto">
+<!-- Progress Tracker -->
+<div class="mb-10">
+<div class="flex justify-between items-end mb-3">
+<div>
+<span class="text-[#E85D26] font-semibold text-xs uppercase tracking-wider">Onboarding Progress</span>
+<h2 class="text-2xl font-bold mt-1">Step 2 of 8</h2>
+</div>
+<span class="text-sm font-medium text-zinc-500">25% Complete</span>
+</div>
+<div class="w-full bg-zinc-200 h-2 rounded-full overflow-hidden">
+<div class="bg-[#E85D26] h-full w-[25%] rounded-full transition-all duration-500"></div>
+</div>
+</div>
+<!-- Verification Card -->
+<div class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden p-8 md:p-12">
+<div class="flex flex-col items-center text-center mb-10">
+<div class="w-16 h-16 bg-[#FDF0EA] rounded-2xl flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-3xl text-[#E85D26]" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+</div>
+<h1 class="text-3xl font-headline text-[#111111] mb-3">Verify your account</h1>
+<p class="text-[#6B7280] max-w-md">
+                        We've sent a 6-digit code to <span class="font-semibold text-zinc-900">admin@thegoldenbistro.com</span>. Please enter it below to confirm your identity.
+                    </p>
+</div>
+<div class="space-y-8">
+<!-- OTP Inputs -->
+<div class="flex justify-between gap-2 md:gap-4 max-w-sm mx-auto">
+<input class="w-12 h-14 md:w-14 md:h-16 text-center text-2xl font-bold border-2 border-gray-200 rounded-xl focus:border-[#E85D26] focus:ring-0 transition-all font-mono" maxlength="1" type="text" value="8"/>
+<input class="w-12 h-14 md:w-14 md:h-16 text-center text-2xl font-bold border-2 border-gray-200 rounded-xl focus:border-[#E85D26] focus:ring-0 transition-all font-mono" maxlength="1" type="text" value="2"/>
+<input class="w-12 h-14 md:w-14 md:h-16 text-center text-2xl font-bold border-2 border-gray-200 rounded-xl focus:border-[#E85D26] focus:ring-0 transition-all font-mono" maxlength="1" placeholder="-" type="text"/>
+<input class="w-12 h-14 md:w-14 md:h-16 text-center text-2xl font-bold border-2 border-gray-200 rounded-xl focus:border-[#E85D26] focus:ring-0 transition-all font-mono" maxlength="1" placeholder="-" type="text"/>
+<input class="w-12 h-14 md:w-14 md:h-16 text-center text-2xl font-bold border-2 border-gray-200 rounded-xl focus:border-[#E85D26] focus:ring-0 transition-all font-mono" maxlength="1" placeholder="-" type="text"/>
+<input class="w-12 h-14 md:w-14 md:h-16 text-center text-2xl font-bold border-2 border-gray-200 rounded-xl focus:border-[#E85D26] focus:ring-0 transition-all font-mono" maxlength="1" placeholder="-" type="text"/>
+</div>
+<div class="flex flex-col items-center gap-4">
+<div class="flex items-center gap-2 text-sm">
+<span class="text-zinc-500">Didn't receive a code?</span>
+<span class="flex items-center gap-1.5 text-[#E85D26] font-semibold">
+<span class="material-symbols-outlined text-base">schedule</span>
+<span>Resend in 00:54</span>
+</span>
+</div>
+<a class="text-zinc-500 text-sm hover:text-[#E85D26] transition-colors underline underline-offset-4 decoration-zinc-300" href="#">Change email/phone</a>
+</div>
+<div class="pt-6">
+<button class="w-full bg-[#E85D26] hover:bg-[#a63500] text-white font-bold py-4 px-6 rounded-xl shadow-md transition-all active:scale-[0.98] flex items-center justify-center gap-3 group">
+<span>Verify &amp; Continue</span>
+<span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+<p class="mt-6 text-center text-xs text-zinc-400">
+                            By verifying, you agree to our Terms of Service and Privacy Policy regarding merchant authentication.
+                        </p>
+</div>
+</div>
+</div>
+<!-- Contextual Info Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12">
+<div class="p-6 rounded-xl bg-white border border-gray-100 flex gap-4 items-start">
+<div class="w-10 h-10 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-xl">security</span>
+</div>
+<div>
+<h4 class="font-bold text-zinc-900 text-sm">Enhanced Security</h4>
+<p class="text-zinc-500 text-xs mt-1 leading-relaxed">Verification helps us maintain a secure platform and prevents fraudulent restaurant listings.</p>
+</div>
+</div>
+<div class="p-6 rounded-xl bg-white border border-gray-100 flex gap-4 items-start">
+<div class="w-10 h-10 rounded-full bg-green-50 text-green-600 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-xl">speed</span>
+</div>
+<div>
+<h4 class="font-bold text-zinc-900 text-sm">Fast Approval</h4>
+<p class="text-zinc-500 text-xs mt-1 leading-relaxed">Verified accounts move 3x faster through our manual review process before going live.</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 flex justify-around py-3 px-6 z-50">
+<button class="flex flex-col items-center gap-1 text-zinc-400">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px]">Account</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-[#E85D26]">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+<span class="text-[10px] font-bold">Verify</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-zinc-400">
+<span class="material-symbols-outlined">help_outline</span>
+<span class="text-[10px]">Help</span>
+</button>
+</nav>
+</body></html>

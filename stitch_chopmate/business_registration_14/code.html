@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Location &amp; Contact Info</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "bright-snow": "#fafafa",
+              "punch-red": "#e63946",
+              "slate-grey": "#6b7280",
+              "carbon-black": "#1d1d1d",
+              "primary": "#e63946", 
+            },
+            fontFamily: {
+              "display": ["Work Sans", "Noto Sans", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+</style>
+</head>
+<body class="font-display bg-bright-snow dark:bg-gray-900">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-gray-200 dark:border-gray-800 px-10 py-3 fixed w-full bg-bright-snow dark:bg-gray-900 z-50">
+<div class="flex items-center gap-4 text-carbon-black dark:text-white">
+<div class="size-6 text-punch-red">
+<svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_6_319)">
+<path d="M8.57829 8.57829C5.52816 11.6284 3.451 15.5145 2.60947 19.7452C1.76794 23.9758 2.19984 28.361 3.85056 32.3462C5.50128 36.3314 8.29667 39.7376 11.8832 42.134C15.4698 44.5305 19.6865 45.8096 24 45.8096C28.3135 45.8096 32.5302 44.5305 36.1168 42.134C39.7033 39.7375 42.4987 36.3314 44.1494 32.3462C45.8002 28.361 46.2321 23.9758 45.3905 19.7452C44.549 15.5145 42.4718 11.6284 39.4217 8.57829L24 24L8.57829 8.57829Z" fill="currentColor"></path>
+</g>
+<defs>
+<clipPath id="clip0_6_319"><rect fill="white" height="48" width="48"></rect></clipPath>
+</defs>
+</svg>
+</div>
+<h2 class="text-carbon-black dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">RestaurantApp</h2>
+</div>
+<div class="flex items-center gap-4">
+<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-transparent text-carbon-black dark:text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-slate-grey/10 transition-colors">
+<span class="truncate">Log in</span>
+</button>
+<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-punch-red text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-red-700 transition-colors">
+<span class="truncate">Sign Up</span>
+</button>
+</div>
+</header>
+<main class="flex-1 pt-16">
+<div class="container mx-auto px-4 py-12">
+<div class="grid grid-cols-12 gap-8">
+<div class="col-span-12 lg:col-span-3">
+<div class="sticky top-24">
+<ul class="space-y-6">
+<li class="flex items-start">
+<div class="flex flex-col items-center mr-4">
+<div class="flex items-center justify-center w-8 h-8 rounded-full border-2 border-slate-grey text-slate-grey dark:text-gray-400 font-bold bg-bright-snow dark:bg-gray-800">
+                  ✓
+                </div>
+<div class="w-px h-16 bg-slate-grey/30 dark:bg-gray-700"></div>
+</div>
+<div>
+<h3 class="font-bold text-slate-grey dark:text-gray-400">Account Setup</h3>
+<p class="text-sm text-slate-grey dark:text-gray-500">Create your account</p>
+</div>
+</li>
+<li class="flex items-start">
+<div class="flex flex-col items-center mr-4">
+<div class="flex items-center justify-center w-8 h-8 rounded-full border-2 border-slate-grey text-slate-grey dark:text-gray-400 font-bold bg-bright-snow dark:bg-gray-800">
+                  ✓
+                </div>
+<div class="w-px h-16 bg-slate-grey/30 dark:bg-gray-700"></div>
+</div>
+<div>
+<h3 class="font-bold text-slate-grey dark:text-gray-400">Restaurant Info</h3>
+<p class="text-sm text-slate-grey dark:text-gray-500">Basic details &amp; branding</p>
+</div>
+</li>
+<li class="flex items-start">
+<div class="flex flex-col items-center mr-4">
+<div class="flex items-center justify-center w-8 h-8 rounded-full bg-punch-red text-white font-bold shadow-md shadow-punch-red/20">3</div>
+<div class="w-px h-16 bg-slate-grey/30 dark:bg-gray-700"></div>
+</div>
+<div>
+<h3 class="font-bold text-carbon-black dark:text-white">Location &amp; Contact</h3>
+<p class="text-sm text-slate-grey dark:text-gray-300">Address &amp; reachability</p>
+</div>
+</li>
+<li class="flex items-start">
+<div class="flex flex-col items-center mr-4">
+<div class="flex items-center justify-center w-8 h-8 rounded-full border-2 border-slate-grey dark:border-gray-600 text-slate-grey dark:text-gray-400 font-bold">4</div>
+</div>
+<div>
+<h3 class="font-bold text-slate-grey dark:text-gray-400">Menu &amp; Launch</h3>
+<p class="text-sm text-slate-grey dark:text-gray-500">Add items and go live</p>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="col-span-12 lg:col-span-9">
+<div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-sm border border-slate-grey/20 dark:border-gray-700">
+<div class="flex flex-wrap justify-between gap-3 pb-6">
+<div class="flex min-w-72 flex-col gap-3">
+<p class="text-carbon-black dark:text-white text-3xl font-black leading-tight tracking-[-0.033em]">Location &amp; Contact Info</p>
+<p class="text-slate-grey dark:text-gray-300 text-base font-normal leading-normal">Help customers and delivery partners find you.</p>
+</div>
+</div>
+<div class="bg-bright-snow border border-slate-grey rounded-lg p-4 mb-8 flex items-start gap-3">
+<span class="material-symbols-outlined text-slate-grey dark:text-white mt-0.5">info</span>
+<div class="flex-1">
+<p class="text-sm text-carbon-black dark:text-gray-200 font-medium">Why is this important?</p>
+<p class="text-sm text-slate-grey dark:text-gray-300 mt-1">Accurate location data defines your delivery radius, ensures legal compliance, and builds customer trust. Please verify all details carefully.</p>
+</div>
+</div>
+<form class="space-y-8">
+<div class="space-y-6">
+<h2 class="text-carbon-black dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] border-b border-gray-200 dark:border-gray-700 pb-2">Address &amp; Location</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="col-span-1 md:col-span-2">
+<label class="flex flex-col">
+<p class="text-carbon-black dark:text-gray-200 text-base font-medium leading-normal pb-2">Street Address</p>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-carbon-black dark:text-white focus:outline-0 focus:ring-2 focus:ring-punch-red/50 border border-slate-grey dark:border-gray-600 bg-bright-snow dark:bg-gray-700 focus:border-punch-red h-14 placeholder:text-slate-grey dark:placeholder:text-gray-500 p-[15px] text-base font-normal leading-normal" placeholder="e.g. 123 Main Street" type="text"/>
+</label>
+</div>
+<div class="col-span-1">
+<label class="flex flex-col">
+<p class="text-carbon-black dark:text-gray-200 text-base font-medium leading-normal pb-2">City / Area</p>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-carbon-black dark:text-white focus:outline-0 focus:ring-2 focus:ring-punch-red/50 border border-slate-grey dark:border-gray-600 bg-bright-snow dark:bg-gray-700 focus:border-punch-red h-14 placeholder:text-slate-grey dark:placeholder:text-gray-500 p-[15px] text-base font-normal leading-normal" placeholder="e.g. Victoria Island" type="text"/>
+</label>
+</div>
+<div class="col-span-1">
+<label class="flex flex-col">
+<p class="text-carbon-black dark:text-gray-200 text-base font-medium leading-normal pb-2">Postal Code <span class="text-slate-grey font-normal text-sm">(Optional)</span></p>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-carbon-black dark:text-white focus:outline-0 focus:ring-2 focus:ring-punch-red/50 border border-slate-grey dark:border-gray-600 bg-bright-snow dark:bg-gray-700 focus:border-punch-red h-14 placeholder:text-slate-grey dark:placeholder:text-gray-500 p-[15px] text-base font-normal leading-normal" placeholder="e.g. 101241" type="text"/>
+</label>
+</div>
+<div class="col-span-1 md:col-span-2 pt-2">
+<p class="text-carbon-black dark:text-gray-200 text-base font-medium leading-normal pb-2">Pin Location on Map <span class="text-slate-grey font-normal text-sm">(Optional)</span></p>
+<div class="relative w-full h-56 rounded-lg overflow-hidden border border-slate-grey dark:border-gray-600 bg-gray-50 dark:bg-gray-800 flex items-center justify-center group cursor-pointer hover:border-punch-red transition-colors">
+<div class="absolute inset-0 opacity-20 dark:opacity-10" style="background-image: radial-gradient(#6b7280 1px, transparent 1px); background-size: 20px 20px;"></div>
+<div class="absolute inset-0 flex items-center justify-center opacity-10">
+<span class="material-symbols-outlined text-9xl text-slate-grey">map</span>
+</div>
+<button class="relative z-10 flex items-center gap-2 px-6 py-3 bg-bright-snow dark:bg-gray-800 text-carbon-black dark:text-white rounded-lg shadow-md hover:shadow-lg hover:text-punch-red transition-all border border-slate-grey dark:border-gray-700 font-semibold" type="button">
+<span class="material-symbols-outlined text-punch-red">add_location_alt</span>
+                      Open Map Picker
+                    </button>
+</div>
+<p class="text-sm text-slate-grey dark:text-gray-400 mt-2">Adjust the pin to the exact entrance of your restaurant.</p>
+</div>
+</div>
+</div>
+<div class="space-y-6">
+<h2 class="text-carbon-black dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] border-b border-gray-200 dark:border-gray-700 pb-2">Contact Details</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="col-span-1">
+<label class="flex flex-col">
+<p class="text-carbon-black dark:text-gray-200 text-base font-medium leading-normal pb-2">Business Phone Number</p>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-carbon-black dark:text-white focus:outline-0 focus:ring-2 focus:ring-punch-red/50 border border-slate-grey dark:border-gray-600 bg-bright-snow dark:bg-gray-700 focus:border-punch-red h-14 placeholder:text-slate-grey dark:placeholder:text-gray-500 p-[15px] text-base font-normal leading-normal" placeholder="+1 (555) 000-0000" type="tel"/>
+<p class="text-xs text-slate-grey dark:text-gray-400 mt-2">This can be the same as the owner's phone number.</p>
+</label>
+</div>
+<div class="col-span-1">
+<label class="flex flex-col">
+<p class="text-carbon-black dark:text-gray-200 text-base font-medium leading-normal pb-2">Support Email <span class="text-slate-grey font-normal text-sm">(Optional)</span></p>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-carbon-black dark:text-white focus:outline-0 focus:ring-2 focus:ring-punch-red/50 border border-slate-grey dark:border-gray-600 bg-bright-snow dark:bg-gray-700 focus:border-punch-red h-14 placeholder:text-slate-grey dark:placeholder:text-gray-500 p-[15px] text-base font-normal leading-normal" placeholder="support@restaurant.com" type="email"/>
+</label>
+</div>
+</div>
+</div>
+</form>
+<div class="mt-12 flex justify-between items-center pt-6 border-t border-gray-200 dark:border-gray-800">
+<button class="text-slate-grey dark:text-gray-300 font-bold hover:text-punch-red hover:underline flex items-center gap-2 transition-colors">
+<span class="material-symbols-outlined text-sm">arrow_back</span> Back
+            </button>
+<button class="flex min-w-[120px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-8 bg-punch-red text-white text-base font-bold leading-normal tracking-[0.015em] hover:bg-red-700 transition-colors shadow-lg shadow-punch-red/20">
+<span class="truncate">Continue</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<footer class="w-full border-t border-gray-200 dark:border-gray-800 mt-12 py-6">
+<div class="container mx-auto px-4 text-center text-slate-grey dark:text-gray-400 text-sm">
+<div class="flex justify-center gap-6">
+<a class="hover:text-punch-red transition-colors" href="#">Terms of Service</a>
+<a class="hover:text-punch-red transition-colors" href="#">Privacy Policy</a>
+<a class="hover:text-punch-red transition-colors" href="#">Support</a>
+</div>
+<p class="mt-4">© 2024 RestaurantApp. All rights reserved.</p>
+</div>
+</footer>
+</div>
+</div>
+
+</body></html>

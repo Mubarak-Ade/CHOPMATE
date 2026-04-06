@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>RestaurantOS - Professional Restaurant Onboarding</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style type="text/tailwindcss">
+        :root {
+            --punch-red: #e63946;
+            --carbon-black: #1d1d1d;
+            --bright-snow: #fafafa;
+            --slate-grey: #6b7280;
+            --sandy-brown: #f4a261;
+            --emerald: #2ecc71;
+        }
+        @layer base {
+            body {
+                @apply bg-[var(--bright-snow)] text-[var(--carbon-black)] font-['Noto_Sans'];
+            }
+            h1, h2, h3, h4, .font-display {
+                @apply font-['Work_Sans'];
+            }
+        }
+    </style>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {primary: "#a63500", secondary: "#655d58", dark: "#1d1d1d", light: "#fafafa", muted: "#6b7280", success: "#2ecc71", "primary-fixed-dim": "#ffb59c", surface: "#f9f9f8", "on-tertiary-fixed": "#002109", "surface-container-high": "#e8e8e7", "surface-tint": "#aa3700", "on-primary-container": "#fffbff", "error-container": "#ffdad6", "on-primary-fixed-variant": "#822800", "inverse-on-surface": "#f1f1f0", "surface-variant": "#e2e2e2", "on-secondary": "#ffffff", error: "#ba1a1a", "on-surface-variant": "#594139", "tertiary-container": "#00873b", "on-background": "#1a1c1c", "on-primary": "#ffffff", "surface-container-lowest": "#ffffff", "on-primary-fixed": "#380c00", "tertiary-fixed-dim": "#4ae176", "tertiary-fixed": "#6bff8f", "inverse-primary": "#ffb59c", "surface-bright": "#f9f9f8", "inverse-surface": "#2f3130", "outline-variant": "#e1bfb4", "on-error-container": "#93000a", "on-tertiary-container": "#f7fff3", "surface-dim": "#dadad9", "on-secondary-container": "#6b635e", background: "#f9f9f8", "primary-container": "#cc4911", "on-secondary-fixed-variant": "#4d4541", "secondary-container": "#ede0da", "surface-container": "#eeeeed", "on-surface": "#1a1c1c", "on-secondary-fixed": "#201a17", "on-tertiary": "#ffffff", "surface-container-highest": "#e2e2e2", "on-tertiary-fixed-variant": "#005321", "surface-container-low": "#f4f4f3", "secondary-fixed": "#ede0da", "primary-fixed": "#ffdbcf", "on-error": "#ffffff", outline: "#8d7168", tertiary: "#006b2d", "secondary-fixed-dim": "#d0c4bf"}, fontFamily: {display: "Inter", body: ["Inter"], headline: ["Inter"], label: ["Inter"]}, borderRadius: {DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", full: "9999px"}}}};</script>
+</head>
+<body class="antialiased overflow-x-hidden">
+<nav class="sticky top-0 z-50 w-full border-b border-[var(--slate-grey)]/20 bg-[var(--bright-snow)]/90 backdrop-blur-md">
+<div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex h-20 items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="size-10 bg-[var(--punch-red)] flex items-center justify-center rounded-xl text-white shadow-lg shadow-red-500/20">
+<span class="material-symbols-outlined text-[24px]">restaurant_menu</span>
+</div>
+<span class="text-2xl font-black tracking-tight text-[var(--carbon-black)]">Restaurant<span class="text-[var(--punch-red)]">OS</span></span>
+</div>
+<div class="hidden md:flex flex-1 justify-center gap-10">
+<a class="text-sm font-semibold text-[var(--carbon-black)] hover:text-[var(--punch-red)] transition-colors uppercase tracking-wider" href="#">Features</a>
+<a class="text-sm font-semibold text-[var(--carbon-black)] hover:text-[var(--punch-red)] transition-colors uppercase tracking-wider" href="#">Benefits</a>
+<a class="text-sm font-semibold text-[var(--carbon-black)] hover:text-[var(--punch-red)] transition-colors uppercase tracking-wider" href="#">Resources</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="hidden sm:flex text-sm font-bold text-[var(--carbon-black)] hover:text-[var(--punch-red)] transition-colors">
+                    Login
+                </button>
+<button class="flex h-11 px-6 items-center justify-center rounded-lg bg-[var(--punch-red)] text-white text-sm font-bold shadow-lg shadow-red-500/30 hover:brightness-110 transition-all active:scale-95">
+                    Start Free
+                </button>
+</div>
+</div>
+</div>
+</nav>
+<section class="relative pt-16 pb-24 lg:pt-32 lg:pb-40 overflow-hidden bg-[var(--bright-snow)]">
+<div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex flex-col lg:flex-row gap-16 items-center">
+<div class="flex-1 text-center lg:text-left z-10">
+<div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[var(--sandy-brown)]/10 border border-[var(--sandy-brown)]/30 text-xs font-black uppercase tracking-widest text-[var(--sandy-brown)] mb-8">
+<span class="size-2 rounded-full bg-[var(--sandy-brown)]"></span>
+                    Now Serving 2.0
+                </div>
+<h1 class="text-5xl sm:text-6xl lg:text-7xl font-black tracking-tight leading-[1] mb-8 text-[var(--carbon-black)]">
+                    Scale your Kitchen <br/>
+<span class="text-[var(--punch-red)]">With Confidence.</span>
+</h1>
+<p class="text-xl text-[var(--slate-grey)] mb-10 max-w-2xl mx-auto lg:mx-0 leading-relaxed font-medium">
+                    The modern onboarding engine for restaurateurs. Automate menu deployment, sync orders instantly, and reclaim your time.
+                </p>
+<div class="flex flex-col sm:flex-row gap-5 justify-center lg:justify-start">
+<button class="h-14 px-10 rounded-xl bg-[var(--carbon-black)] text-white text-lg font-bold shadow-2xl hover:bg-[var(--punch-red)] transition-all duration-300">
+                        Get Started Now
+                    </button>
+<button class="h-14 px-10 rounded-xl bg-white border-2 border-[var(--slate-grey)]/20 text-[var(--carbon-black)] text-lg font-bold hover:bg-[var(--bright-snow)] transition-colors flex items-center justify-center gap-3">
+<span class="material-symbols-outlined">smart_display</span>
+                        Watch Demo
+                    </button>
+</div>
+<div class="mt-12 flex items-center justify-center lg:justify-start gap-5">
+<div class="flex -space-x-3">
+<div class="size-10 rounded-full border-4 border-[var(--bright-snow)] bg-gray-200 overflow-hidden shadow-sm" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCAbHTBj6xLtzLpGgu9B422gvfH3ku0SEBTiOWXQCF735bpWRHfBVB_2UnfjRqalcXCVzVuLNg5kMVRlb1WzEKR8ZcBrLCrNZBVEnYtLKZguPRDpWZmti0KONFownhtR4O7GPvp-4yXa_cHYzUTh2ecSrBglGlPQVtuPRNp4m3iEMff2-9QlbIHZAoeZs2fVUVmBZ1hF0RqLFYY1Fmnbn4RHBB5KHBncQdE8JaeVml4LlgoCldhY5glldITjCsox5gTQfW5AEHwHmM'); background-size: cover;"></div>
+<div class="size-10 rounded-full border-4 border-[var(--bright-snow)] bg-gray-200 overflow-hidden shadow-sm" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC0KZaPAhjZIGt2b-s50Sm-w_qG9BDkOYws0aYpO0WpiVFWa0lIMHAA0mP-tvX_0JBTGDKRktPI2Huv7YM-Fypw16xf9YovZatvOulow0qGUYUPrsZhaI8BvV5jOVqca4fXYk5kkHQsx-ozPpbGHAtoCwOHlCpqL_CHi399rEwTVwwupWKBuMJRO9YZOwt7wQp2_GKIG4qmZhCW_2nxArspmi1NWZCLiuXChfG-FiUDoj9XahWbd_WxivfqYWZOS05zlRy3UMz05f0'); background-size: cover;"></div>
+<div class="size-10 rounded-full border-4 border-[var(--bright-snow)] bg-gray-200 overflow-hidden shadow-sm" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAY3EcoMMWlSJF1LCon-mWf3-FyhEmkUACU6yjCr3SV9iyI9t2gYceC7e9lCzSaWb0UeOshKx1DttiFsDVw1VbiKnb2Cg_FI0GqWLpzQyvD4PbVX-rlc3Nq0kF6QI1i3kdxkuPZbA9ZdJMAduzIRb1NUUKi8QQ1nU6Y9IsUYPHLImdPqgW7v2KEK-wZlQluTH-XhGK1SfT9bx3DgN1t4wIEMv6VetpUdWU2ZsAoFW6WyWL7pYFU7lXi8hWj1mt8IS4wFTQmzBCWHTY'); background-size: cover;"></div>
+</div>
+<p class="text-sm font-semibold text-[var(--slate-grey)]">Trusted by <span class="text-[var(--carbon-black)] font-bold">1,200+</span> top-tier restaurants</p>
+</div>
+</div>
+<div class="flex-1 w-full relative">
+<div class="relative rounded-3xl bg-[var(--carbon-black)] p-4 shadow-2xl overflow-hidden border-8 border-[var(--carbon-black)]">
+<div class="aspect-[16/10] bg-cover bg-center rounded-xl overflow-hidden" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAbwFZWwCZ8xmFDC_3IL440Cymav_FCPNndicBZXSUpy_Uk5ePo1d20F1b48UP5RavQB181F4fswzyRvjf3yU86rMSQsagDQ15G0SQ3rZO80D0et7p7zgsy8d2_cMTjOzSYWlQvUPwOK82n5TfB8J9mHJnFII7wxdOx6ow41d7nnZlXFfMwuX4C_Alhmrbmgco_R8MNfEbS62ANn5QP-OuA59CCUIx2kXVIzDKr7p6FbIUjCjg58qCBI8B4KkZHbLcD5_jCJ07A7Fc');">
+<div class="absolute inset-0 bg-gradient-to-t from-[var(--carbon-black)]/40 to-transparent"></div>
+</div>
+</div>
+<div class="absolute -bottom-8 -left-8 bg-white p-5 rounded-2xl shadow-2xl border border-[var(--slate-grey)]/10 flex items-center gap-4">
+<div class="size-12 rounded-xl bg-[var(--emerald)]/10 flex items-center justify-center text-[var(--emerald)]">
+<span class="material-symbols-outlined font-bold">trending_up</span>
+</div>
+<div>
+<p class="text-xs text-[var(--slate-grey)] font-bold uppercase tracking-wider">Growth Rate</p>
+<p class="text-xl font-black text-[var(--carbon-black)]">+32.4%</p>
+</div>
+</div>
+<div class="absolute -top-6 -right-6 bg-[var(--sandy-brown)] p-5 rounded-2xl shadow-2xl text-white hidden sm:block">
+<span class="material-symbols-outlined text-3xl">restaurant</span>
+<p class="text-xs font-black uppercase mt-2 tracking-widest">Optimized</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="py-32 bg-white relative overflow-hidden">
+<div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
+<div class="text-center max-w-3xl mx-auto mb-20">
+<h2 class="text-sm font-black text-[var(--punch-red)] uppercase tracking-[0.3em] mb-4">Core Capabilities</h2>
+<p class="text-4xl sm:text-5xl font-black tracking-tight text-[var(--carbon-black)]">
+                Engineered for speed, built for reliability.
+            </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+<div class="group bg-[var(--bright-snow)] rounded-3xl p-10 border border-[var(--slate-grey)]/10 hover:border-[var(--punch-red)]/50 transition-all duration-300">
+<div class="size-16 rounded-2xl bg-[var(--punch-red)] flex items-center justify-center text-white mb-8 group-hover:rotate-6 transition-transform">
+<span class="material-symbols-outlined text-[32px]">menu_book</span>
+</div>
+<h3 class="text-2xl font-black text-[var(--carbon-black)] mb-4">Smart Menus</h3>
+<p class="text-[var(--slate-grey)] leading-relaxed font-medium">
+                    Centralize your menu management. One update here reflects everywhere—delivery apps, in-house tablets, and QR codes instantly.
+                </p>
+</div>
+<div class="group bg-[var(--bright-snow)] rounded-3xl p-10 border border-[var(--slate-grey)]/10 hover:border-[var(--punch-red)]/50 transition-all duration-300">
+<div class="size-16 rounded-2xl bg-[var(--emerald)] flex items-center justify-center text-white mb-8 group-hover:rotate-6 transition-transform">
+<span class="material-symbols-outlined text-[32px]">hub</span>
+</div>
+<h3 class="text-2xl font-black text-[var(--carbon-black)] mb-4">Unified Orders</h3>
+<p class="text-[var(--slate-grey)] leading-relaxed font-medium">
+                    Eliminate tablet clutter. All third-party delivery orders flow directly into your POS and Kitchen Display System effortlessly.
+                </p>
+</div>
+<div class="group bg-[var(--bright-snow)] rounded-3xl p-10 border border-[var(--slate-grey)]/10 hover:border-[var(--punch-red)]/50 transition-all duration-300">
+<div class="size-16 rounded-2xl bg-[var(--sandy-brown)] flex items-center justify-center text-white mb-8 group-hover:rotate-6 transition-transform">
+<span class="material-symbols-outlined text-[32px]">insights</span>
+</div>
+<h3 class="text-2xl font-black text-[var(--carbon-black)] mb-4">Deep Analytics</h3>
+<p class="text-[var(--slate-grey)] leading-relaxed font-medium">
+                    Get real-time insights into your best-selling items, peak hours, and server performance with visual, actionable reports.
+                </p>
+</div>
+</div>
+</div>
+</section>
+<section class="py-32 bg-[var(--carbon-black)] text-white">
+<div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex flex-col lg:flex-row gap-20">
+<div class="lg:w-1/3">
+<h2 class="text-4xl font-black mb-6">Launch your system in minutes.</h2>
+<p class="text-[var(--slate-grey)] text-lg mb-8">We've removed the technical friction so you can focus on the culinary experience.</p>
+<div class="h-1 bg-[var(--punch-red)] w-24"></div>
+</div>
+<div class="lg:w-2/3 space-y-12">
+<div class="flex gap-8 group">
+<div class="flex-shrink-0 size-14 rounded-full border-2 border-[var(--slate-grey)] flex items-center justify-center text-xl font-black group-hover:bg-[var(--punch-red)] group-hover:border-[var(--punch-red)] transition-all">01</div>
+<div>
+<h4 class="text-2xl font-black mb-2 text-[var(--bright-snow)]">Brand Integration</h4>
+<p class="text-[var(--slate-grey)] leading-relaxed">Upload your logo, set your house colors, and define your restaurant's digital identity in our simple dashboard.</p>
+</div>
+</div>
+<div class="flex gap-8 group">
+<div class="flex-shrink-0 size-14 rounded-full border-2 border-[var(--slate-grey)] flex items-center justify-center text-xl font-black group-hover:bg-[var(--sandy-brown)] group-hover:border-[var(--sandy-brown)] transition-all">02</div>
+<div>
+<h4 class="text-2xl font-black mb-2 text-[var(--bright-snow)]">Menu Sync</h4>
+<p class="text-[var(--slate-grey)] leading-relaxed">Import your existing menus via PDF or CSV. Our AI automatically parses items, prices, and modifiers into structured data.</p>
+</div>
+</div>
+<div class="flex gap-8 group">
+<div class="flex-shrink-0 size-14 rounded-full border-2 border-[var(--slate-grey)] flex items-center justify-center text-xl font-black group-hover:bg-[var(--emerald)] group-hover:border-[var(--emerald)] transition-all">03</div>
+<div>
+<h4 class="text-2xl font-black mb-2 text-[var(--bright-snow)]">Instant Go-Live</h4>
+<p class="text-[var(--slate-grey)] leading-relaxed">Push to all platforms with a single click. Start receiving orders across web, mobile, and third-party delivery apps immediately.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="py-32 bg-[var(--bright-snow)]">
+<div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
+<div class="bg-white rounded-[2.5rem] p-12 lg:p-24 border border-[var(--slate-grey)]/10 relative shadow-xl">
+<div class="absolute -top-10 left-12 size-20 bg-[var(--punch-red)] rounded-3xl flex items-center justify-center text-white shadow-xl">
+<span class="material-symbols-outlined text-4xl">format_quote</span>
+</div>
+<div class="max-w-4xl">
+<p class="text-3xl sm:text-4xl font-black text-[var(--carbon-black)] leading-[1.2] mb-12 italic">
+                    "RestaurantOS didn't just give us a new website; they gave us our weekends back. The automated onboarding and menu sync saved us hundreds of manual hours."
+                </p>
+<div class="flex items-center gap-6">
+<div class="size-16 rounded-2xl overflow-hidden shadow-lg border-2 border-[var(--bright-snow)]" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBBXE1RNbfroHCWDheDbGsmWdS67MoR4tWceVVoN6V2schYsKfQegPjPxz14QUNDHon0GLlvyDrUJcv0rXO3NinPq4ODfWTLQV58Js_TntNr_T5R30M2moOrCcJ2_S6gfiQxmMwzj4oAqe634sR02H_jPa-idJ2pz-M-tzim2-Vjso3S9_79aEKaPtAr7BFdFpAPxR5XzdASpeNrruCEMtosZe_moqZKp4CUQXO6PFxBxisdnPzFkO5PU3l8zi2JBRGzScg1DCXThE'); background-size: cover;"></div>
+<div>
+<h4 class="text-xl font-black text-[var(--carbon-black)]">Sarah Jenkins</h4>
+<p class="text-[var(--slate-grey)] font-bold">Founder, The Artisan Kitchen</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="py-32 bg-[var(--bright-snow)] border-t border-[var(--slate-grey)]/10">
+<div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 text-center">
+<div class="bg-[var(--carbon-black)] rounded-[3rem] py-20 px-8 relative overflow-hidden shadow-2xl">
+<div class="absolute -right-20 -bottom-20 size-64 bg-[var(--punch-red)]/10 rounded-full blur-3xl"></div>
+<div class="absolute -left-20 -top-20 size-64 bg-[var(--sandy-brown)]/10 rounded-full blur-3xl"></div>
+<h2 class="text-4xl sm:text-6xl font-black text-white mb-8 relative z-10">Ready to transform <br/> your restaurant?</h2>
+<p class="text-xl text-[var(--slate-grey)] mb-12 max-w-2xl mx-auto relative z-10">Join over 1,000 kitchens streamlining their operations today. No credit card required to start.</p>
+<div class="flex flex-col sm:flex-row justify-center gap-6 relative z-10">
+<button class="h-16 px-12 rounded-2xl bg-[var(--punch-red)] text-white text-xl font-black shadow-xl shadow-red-500/20 hover:scale-105 transition-all">
+                    Get Started For Free
+                </button>
+<button class="h-16 px-12 rounded-2xl bg-white text-[var(--carbon-black)] text-xl font-black shadow-xl hover:bg-gray-100 transition-all">
+                    Contact Sales
+                </button>
+</div>
+</div>
+</div>
+</section>
+<footer class="bg-[var(--bright-snow)] pt-24 pb-12 border-t border-[var(--slate-grey)]/10">
+<div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
+<div class="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-5 gap-12 mb-20">
+<div class="lg:col-span-2">
+<div class="flex items-center gap-3 mb-8">
+<div class="size-8 bg-[var(--punch-red)] flex items-center justify-center rounded-lg text-white">
+<span class="material-symbols-outlined text-[18px]">restaurant_menu</span>
+</div>
+<span class="text-xl font-black tracking-tight text-[var(--carbon-black)]">Restaurant<span class="text-[var(--punch-red)]">OS</span></span>
+</div>
+<p class="text-[var(--slate-grey)] text-sm max-w-sm font-medium leading-relaxed">
+                    The leading platform for modern restaurant operations. We help kitchens automate the complex so they can focus on the food.
+                </p>
+</div>
+<div>
+<h4 class="font-black text-[var(--carbon-black)] uppercase tracking-wider text-xs mb-6">Product</h4>
+<ul class="space-y-4 text-sm font-semibold text-[var(--slate-grey)]">
+<li><a class="hover:text-[var(--punch-red)] transition-colors" href="#">Features</a></li>
+<li><a class="hover:text-[var(--punch-red)] transition-colors" href="#">Pricing</a></li>
+<li><a class="hover:text-[var(--punch-red)] transition-colors" href="#">Integrations</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-black text-[var(--carbon-black)] uppercase tracking-wider text-xs mb-6">Support</h4>
+<ul class="space-y-4 text-sm font-semibold text-[var(--slate-grey)]">
+<li><a class="hover:text-[var(--punch-red)] transition-colors" href="#">Help Center</a></li>
+<li><a class="hover:text-[var(--punch-red)] transition-colors" href="#">Guides</a></li>
+<li><a class="hover:text-[var(--punch-red)] transition-colors" href="#">Status</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-black text-[var(--carbon-black)] uppercase tracking-wider text-xs mb-6">Legal</h4>
+<ul class="space-y-4 text-sm font-semibold text-[var(--slate-grey)]">
+<li><a class="hover:text-[var(--punch-red)] transition-colors" href="#">Privacy</a></li>
+<li><a class="hover:text-[var(--punch-red)] transition-colors" href="#">Terms</a></li>
+<li><a class="hover:text-[var(--punch-red)] transition-colors" href="#">Security</a></li>
+</ul>
+</div>
+</div>
+<div class="pt-10 border-t border-[var(--slate-grey)]/10 flex flex-col md:flex-row justify-between items-center gap-6">
+<p class="text-sm font-bold text-[var(--slate-grey)]">
+                © 2024 RestaurantOS System. Built for Modern Kitchens.
+            </p>
+<div class="flex gap-8">
+<a class="text-[var(--slate-grey)] hover:text-[var(--punch-red)] transition-colors" href="#"><span class="material-symbols-outlined">public</span></a>
+<a class="text-[var(--slate-grey)] hover:text-[var(--punch-red)] transition-colors" href="#"><span class="material-symbols-outlined">alternate_email</span></a>
+</div>
+</div>
+</div>
+</footer>
+</body></html>

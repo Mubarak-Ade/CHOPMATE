@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>RestoMarket | Discover Amazing Flavors</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=JetBrains+Mono&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "tertiary": "#006b2d",
+                "surface-container-highest": "#e2e2e2",
+                "outline-variant": "#e1bfb4",
+                "tertiary-container": "#00873b",
+                "secondary": "#655d58",
+                "on-secondary": "#ffffff",
+                "on-tertiary-container": "#f7fff3",
+                "tertiary-fixed": "#6bff8f",
+                "on-tertiary": "#ffffff",
+                "on-primary-fixed": "#380c00",
+                "inverse-surface": "#2f3130",
+                "surface-container-high": "#e8e8e7",
+                "outline": "#8d7168",
+                "tertiary-fixed-dim": "#4ae176",
+                "on-surface": "#1a1c1c",
+                "on-tertiary-fixed": "#002109",
+                "inverse-on-surface": "#f1f1f0",
+                "surface": "#f9f9f8",
+                "error": "#ba1a1a",
+                "surface-tint": "#aa3700",
+                "surface-dim": "#dadad9",
+                "inverse-primary": "#ffb59c",
+                "surface-variant": "#e2e2e2",
+                "error-container": "#ffdad6",
+                "on-secondary-container": "#6b635e",
+                "on-primary-fixed-variant": "#822800",
+                "on-secondary-fixed": "#201a17",
+                "on-tertiary-fixed-variant": "#005321",
+                "on-secondary-fixed-variant": "#4d4541",
+                "secondary-fixed": "#ede0da",
+                "secondary-container": "#ede0da",
+                "primary-container": "#cc4911",
+                "on-primary-container": "#fffbff",
+                "on-primary": "#ffffff",
+                "on-surface-variant": "#594139",
+                "surface-container-lowest": "#ffffff",
+                "secondary-fixed-dim": "#d0c4bf",
+                "background": "#f9f9f8",
+                "primary-fixed": "#ffdbcf",
+                "primary": "#a63500",
+                "on-background": "#1a1c1c",
+                "on-error-container": "#93000a",
+                "surface-container-low": "#f4f4f3",
+                "surface-bright": "#f9f9f8",
+                "on-error": "#ffffff",
+                "primary-fixed-dim": "#ffb59c",
+                "surface-container": "#eeeeed"
+            },
+            "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+            },
+            "fontFamily": {
+                "headline": ["Inter"],
+                "body": ["Inter"],
+                "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #f9f9f8; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+<body class="text-on-surface">
+<!-- TopNavBar Shell -->
+<nav class="fixed top-0 w-full z-50 bg-white/95 dark:bg-zinc-950/95 backdrop-blur-md border-b border-zinc-200 dark:border-zinc-800 shadow-sm">
+<div class="max-w-7xl mx-auto flex items-center justify-between px-6 h-16">
+<div class="flex items-center gap-8">
+<span class="text-2xl font-black tracking-tighter text-orange-600 dark:text-orange-500 cursor-pointer">RestoMarket</span>
+<div class="hidden lg:flex items-center gap-6">
+<a class="text-orange-600 dark:text-orange-500 font-semibold border-b-2 border-orange-600 pb-1 font-sans text-sm tracking-tight transition-colors" href="#">Explore</a>
+<a class="text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 font-sans text-sm font-medium tracking-tight transition-colors" href="#">Offers</a>
+<a class="text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 font-sans text-sm font-medium tracking-tight transition-colors" href="#">Favorites</a>
+<a class="text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 font-sans text-sm font-medium tracking-tight transition-colors" href="#">Orders</a>
+</div>
+</div>
+<div class="flex-1 max-w-md mx-8 hidden md:block">
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-zinc-400">search</span>
+<input class="w-full bg-zinc-100 border-none rounded-lg py-2 pl-10 pr-4 text-sm focus:ring-2 focus:ring-orange-500/20 transition-all" placeholder="Search for restaurants or cuisines" type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-lg transition-colors cursor-pointer active:scale-95 duration-150">
+<span class="material-symbols-outlined text-zinc-600">notifications</span>
+</button>
+<button class="p-2 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-lg transition-colors cursor-pointer active:scale-95 duration-150 relative">
+<span class="material-symbols-outlined text-zinc-600">shopping_basket</span>
+<span class="absolute top-1 right-1 w-2 h-2 bg-orange-600 rounded-full"></span>
+</button>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-zinc-200">
+<img alt="User profile" data-alt="Close up portrait of a smiling young professional man with short dark hair in a clean studio setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAFl-YZsAH2n2kJSU-Jh6kaSRqQFddNi6A429Mf4IMhwwZPnXEzNoNo2v3x-2eq9HB43XL6Aymdqr-wn7h04hy-ESsPKGMRlrR6cFvpA66dppoXT0EZCf4GJPreiaa2YaIbBxGAbUeNCaGtJV6ldbRNc7yzQu3WOy7gy5nGZqDRaScgfkvTDfD29eK7pNhtAhZTLBiiR4Z5iZRDwmSxOXWbNxROugW4EBBnx6fZoXPVufSau1I6zPGVUShusPOV7dLsRKWbUT9_QG0"/>
+</div>
+</div>
+</div>
+</nav>
+<main class="pt-20 pb-12 min-h-screen">
+<!-- Hero Search & Filters Section -->
+<div class="max-w-7xl mx-auto px-6 mb-8">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div>
+<h1 class="text-3xl font-bold tracking-tight text-on-surface mb-2">Find your next favorite meal</h1>
+<div class="flex items-center gap-2 text-zinc-500 text-sm">
+<span class="material-symbols-outlined text-sm">location_on</span>
+<span class="font-medium text-on-surface">Lagos, Victoria Island</span>
+<button class="text-orange-600 font-semibold hover:underline">Change</button>
+</div>
+</div>
+<div class="flex items-center gap-3 overflow-x-auto scrollbar-hide pb-2">
+<button class="flex items-center gap-2 px-4 py-2 bg-orange-600 text-white rounded-full text-sm font-semibold shadow-sm hover:bg-orange-700 transition-all whitespace-nowrap">
+<span class="material-symbols-outlined text-sm">schedule</span> Open Now
+                    </button>
+<button class="flex items-center gap-2 px-4 py-2 bg-white border border-zinc-200 text-zinc-700 rounded-full text-sm font-medium hover:border-orange-600 transition-all whitespace-nowrap">
+                        Near Me
+                    </button>
+<button class="flex items-center gap-2 px-4 py-2 bg-white border border-zinc-200 text-zinc-700 rounded-full text-sm font-medium hover:border-orange-600 transition-all whitespace-nowrap">
+                        Free Delivery
+                    </button>
+<button class="flex items-center gap-2 px-4 py-2 bg-white border border-zinc-200 text-zinc-700 rounded-full text-sm font-medium hover:border-orange-600 transition-all whitespace-nowrap">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span> Top Rated
+                    </button>
+</div>
+</div>
+</div>
+<div class="max-w-7xl mx-auto px-6 flex flex-col lg:flex-row gap-8">
+<!-- Filters Sidebar -->
+<aside class="w-full lg:w-64 flex-shrink-0 space-y-8">
+<!-- Cuisine Section -->
+<div>
+<h3 class="font-semibold text-on-surface mb-4">Cuisine</h3>
+<div class="space-y-3">
+<label class="flex items-center justify-between group cursor-pointer">
+<span class="text-sm text-zinc-600 group-hover:text-on-surface transition-colors">Nigerian</span>
+<input checked="" class="rounded border-zinc-300 text-orange-600 focus:ring-orange-500" type="checkbox"/>
+</label>
+<label class="flex items-center justify-between group cursor-pointer">
+<span class="text-sm text-zinc-600 group-hover:text-on-surface transition-colors">Chinese</span>
+<input class="rounded border-zinc-300 text-orange-600 focus:ring-orange-500" type="checkbox"/>
+</label>
+<label class="flex items-center justify-between group cursor-pointer">
+<span class="text-sm text-zinc-600 group-hover:text-on-surface transition-colors">Italian</span>
+<input class="rounded border-zinc-300 text-orange-600 focus:ring-orange-500" type="checkbox"/>
+</label>
+<label class="flex items-center justify-between group cursor-pointer">
+<span class="text-sm text-zinc-600 group-hover:text-on-surface transition-colors">Mexican</span>
+<input class="rounded border-zinc-300 text-orange-600 focus:ring-orange-500" type="checkbox"/>
+</label>
+</div>
+</div>
+<!-- Price Range Section -->
+<div>
+<h3 class="font-semibold text-on-surface mb-4">Price Range</h3>
+<div class="flex bg-zinc-100 p-1 rounded-lg">
+<button class="flex-1 py-1.5 text-xs font-bold rounded bg-white shadow-sm">$</button>
+<button class="flex-1 py-1.5 text-xs font-bold text-zinc-500">$$</button>
+<button class="flex-1 py-1.5 text-xs font-bold text-zinc-500">$$$</button>
+<button class="flex-1 py-1.5 text-xs font-bold text-zinc-500">$$$$</button>
+</div>
+</div>
+<!-- Diet Section -->
+<div>
+<h3 class="font-semibold text-on-surface mb-4">Dietary</h3>
+<div class="flex flex-wrap gap-2">
+<button class="px-3 py-1 text-xs font-medium border border-zinc-200 rounded-full hover:bg-zinc-50 transition-colors">Vegan</button>
+<button class="px-3 py-1 text-xs font-medium bg-orange-50 border border-orange-200 text-orange-700 rounded-full">Halal</button>
+<button class="px-3 py-1 text-xs font-medium border border-zinc-200 rounded-full hover:bg-zinc-50 transition-colors">Gluten-free</button>
+</div>
+</div>
+<!-- Ratings Section -->
+<div>
+<h3 class="font-semibold text-on-surface mb-4">Ratings</h3>
+<div class="space-y-2">
+<button class="w-full flex items-center justify-between p-2 rounded-lg border border-zinc-200 hover:border-orange-200 hover:bg-orange-50/30 transition-all text-sm group">
+<span class="flex items-center gap-2">
+<span class="material-symbols-outlined text-orange-500 text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-zinc-700">4.5 &amp; Above</span>
+</span>
+<span class="material-symbols-outlined text-zinc-300 group-hover:text-orange-500">chevron_right</span>
+</button>
+<button class="w-full flex items-center justify-between p-2 rounded-lg border border-transparent hover:bg-zinc-100 transition-all text-sm group">
+<span class="flex items-center gap-2">
+<span class="material-symbols-outlined text-orange-500 text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-zinc-700 font-medium">4.0 &amp; Above</span>
+</span>
+<span class="material-symbols-outlined text-zinc-300">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- Distance Range -->
+<div>
+<h3 class="font-semibold text-on-surface mb-4">Distance</h3>
+<input class="w-full h-2 bg-zinc-200 rounded-lg appearance-none cursor-pointer accent-orange-600" max="10" min="0" step="1" type="range"/>
+<div class="flex justify-between text-xs text-zinc-500 mt-2">
+<span>0km</span>
+<span>5km</span>
+<span>10km</span>
+</div>
+</div>
+<!-- Toggle -->
+<div class="pt-4 border-t border-zinc-100">
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-zinc-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-orange-600"></div>
+<span class="ml-3 text-sm font-medium text-zinc-700">Available for Delivery</span>
+</label>
+</div>
+</aside>
+<!-- Results Grid -->
+<section class="flex-1">
+<div class="flex items-center justify-between mb-6">
+<h2 class="text-xl font-bold text-on-surface">128 restaurants found</h2>
+<div class="flex items-center gap-2 text-sm text-zinc-500">
+<span>Sort by:</span>
+<select class="border-none bg-transparent font-semibold text-on-surface focus:ring-0 cursor-pointer">
+<option>Most Popular</option>
+<option>Fastest Delivery</option>
+<option>Top Rated</option>
+<option>Price: Low to High</option>
+</select>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+<!-- Card 1: Promoted -->
+<div class="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-zinc-100">
+<div class="relative h-48 overflow-hidden">
+<img alt="Gourmet Platter" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="High angle shot of a wooden table featuring a diverse array of gourmet Mediterranean appetizers with rich colors and soft natural lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA2sFltq2jctY4cuXG-QIkvQEuLHX5LSZ0P2H2LRZAthV9F-aXS8GpcJukNESIaazwqTzkQMRo0YUnAY0lJLIPrWPr0lgE6afvMeSqqC9HA5zoUCbcsyAxLnRRilhPHAbn-cl0GkgrykUPWOBLUhXPz43lGGg9KTx2tKf_xicGyfl9s31QdPnyzLgWFzIQT1tesenZvN3f44AUpzCU7spk1CGsJZh5Qw4J6310n2rbwtt72TBBUPX17UYIndA_GCVs553_FBQrBq4E"/>
+<div class="absolute top-3 left-3 bg-white/90 backdrop-blur-md px-2 py-1 rounded text-[10px] font-bold tracking-widest uppercase text-orange-600">Promoted</div>
+<button class="absolute top-3 right-3 w-8 h-8 flex items-center justify-center bg-white/90 backdrop-blur-md rounded-full text-zinc-400 hover:text-red-500 transition-colors">
+<span class="material-symbols-outlined text-sm">favorite</span>
+</button>
+<div class="absolute bottom-3 right-3 bg-white px-2 py-1 rounded-lg shadow-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-orange-500 text-xs" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-xs font-bold text-on-surface">4.8</span>
+</div>
+</div>
+<div class="p-4">
+<h3 class="font-bold text-lg mb-1 group-hover:text-orange-600 transition-colors">Savory Fusion Kitchen</h3>
+<p class="text-zinc-500 text-sm mb-3">Nigerian • Continental • Grill</p>
+<div class="flex items-center justify-between pt-3 border-t border-zinc-50">
+<div class="flex items-center gap-3">
+<div class="flex items-center gap-1 text-zinc-500 text-xs">
+<span class="material-symbols-outlined text-sm">schedule</span> 20-30 min
+                                    </div>
+<div class="flex items-center gap-1 text-zinc-500 text-xs">
+<span class="material-symbols-outlined text-sm">delivery_dining</span> Free
+                                    </div>
+</div>
+<span class="text-xs font-bold text-zinc-300">$$</span>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-zinc-100">
+<div class="relative h-48 overflow-hidden">
+<img alt="Sushi Plate" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Exquisite arrangement of fresh sushi and sashimi on a dark ceramic plate with minimalist garnishes and professional studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCZqDJ3zswMnyu8CkUFTDjRO71XDp_S5_tVtu0gYblFwncmD8o0zBwebRQeHMe2Ttr_S_xIjAg74LdMQwj9dthL2zvAAH9Z4hHC_sYbczk0Ykq1AsPp6VfnGGq5MB8MOAYKEu92VPD9pMEK1Dnr7lfxy7i0GM98eRHMqsd61pmNlTMPcz98VA5kOMkJK76-JfGS4Cs58ejDCR4o3OohXiL3FCUKzXHKYPtljB7pXuJ1cRHN1Lb5BYMxA-UKvZ4BAYtwnzoCJ5UBXj0"/>
+<div class="absolute bottom-3 right-3 bg-white px-2 py-1 rounded-lg shadow-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-orange-500 text-xs" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-xs font-bold text-on-surface">4.6</span>
+</div>
+</div>
+<div class="p-4">
+<h3 class="font-bold text-lg mb-1 group-hover:text-orange-600 transition-colors">Zen Sushi Garden</h3>
+<p class="text-zinc-500 text-sm mb-3">Japanese • Seafood • Asian</p>
+<div class="flex items-center justify-between pt-3 border-t border-zinc-50">
+<div class="flex items-center gap-3">
+<div class="flex items-center gap-1 text-zinc-500 text-xs">
+<span class="material-symbols-outlined text-sm">schedule</span> 35-45 min
+                                    </div>
+<div class="flex items-center gap-1 text-zinc-500 text-xs">
+<span class="material-symbols-outlined text-sm">delivery_dining</span> ₦500
+                                    </div>
+</div>
+<span class="text-xs font-bold text-zinc-300">$$$</span>
+</div>
+</div>
+</div>
+<!-- Card 3: Top Rated -->
+<div class="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-zinc-100">
+<div class="relative h-48 overflow-hidden">
+<img alt="Artisan Pizza" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Close up of a bubbling wood-fired artisan pizza with fresh basil and mozzarella on a rustic stone background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDGV9AUSCMlibA0fMRQ8h1J-PX7MhwoZfc3JAx_PquECE8tmyI8C07WQpjrZ8Q7Tl24bASIcD2dQTYaJYJF-NT7WDSGeMyovni83yFxnHbuD4WYk8PROvOV4wVTpj59vNN1O2q0SyKeACX_MML1h52TBkYzvhXlQMyizitcjtlt23QDb0mh_ukxHloQRNaDXkZvGdEKpo1-FfiNtSt1SHljQew5ug8ohT3k-Mc4HsKTMtpNxMJeB3NYEY2BAoahHKlZsayc7GeEUB8"/>
+<div class="absolute top-3 left-3 bg-orange-600 text-white px-2 py-1 rounded text-[10px] font-bold tracking-widest uppercase">Top Rated</div>
+<div class="absolute bottom-3 right-3 bg-white px-2 py-1 rounded-lg shadow-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-orange-500 text-xs" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-xs font-bold text-on-surface">4.9</span>
+</div>
+</div>
+<div class="p-4">
+<h3 class="font-bold text-lg mb-1 group-hover:text-orange-600 transition-colors">Roma's Hearth</h3>
+<p class="text-zinc-500 text-sm mb-3">Italian • Pizza • Wine</p>
+<div class="flex items-center justify-between pt-3 border-t border-zinc-50">
+<div class="flex items-center gap-3">
+<div class="flex items-center gap-1 text-zinc-500 text-xs">
+<span class="material-symbols-outlined text-sm">schedule</span> 25-35 min
+                                    </div>
+<div class="flex items-center gap-1 text-zinc-500 text-xs">
+<span class="material-symbols-outlined text-sm">delivery_dining</span> Free
+                                    </div>
+</div>
+<span class="text-xs font-bold text-zinc-300">$$</span>
+</div>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-zinc-100">
+<div class="relative h-48 overflow-hidden">
+<img alt="Healthy Bowl" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Brightly colored fresh salad bowl with quinoa, avocado, and vibrant vegetables in a minimalist white ceramic bowl with soft morning light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8coBaSHUxeyhn2otqd3pf7lrD3FPkr1aiH5PfesFRT6kgsITPRamk5iZ1x01b9QRu00G7XAIZo7pxGQrKdp1IfEP0DfgBqFopVfJ6v4a-K45DLtrRk_JmZiCI2mKDTiyAfq0DTniFHBmqtRUxMeM2BQyQl_Qv99VqJUfKTc99HCHlYh1qvzOweMdVCg6GVhTPBj2RqtVAA4o965s0Traqa3dJsECE9Sohg1fr29N3jhLPD2bwMUr4maNUVZXXPcH1kCrxM9nZ4Vo"/>
+<div class="absolute bottom-3 right-3 bg-white px-2 py-1 rounded-lg shadow-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-orange-500 text-xs" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-xs font-bold text-on-surface">4.4</span>
+</div>
+</div>
+<div class="p-4">
+<h3 class="font-bold text-lg mb-1 group-hover:text-orange-600 transition-colors">The Green Leaf</h3>
+<p class="text-zinc-500 text-sm mb-3">Healthy • Vegan • Salads</p>
+<div class="flex items-center justify-between pt-3 border-t border-zinc-50">
+<div class="flex items-center gap-3">
+<div class="flex items-center gap-1 text-zinc-500 text-xs">
+<span class="material-symbols-outlined text-sm">schedule</span> 15-25 min
+                                    </div>
+<div class="flex items-center gap-1 text-zinc-500 text-xs">
+<span class="material-symbols-outlined text-sm">delivery_dining</span> ₦300
+                                    </div>
+</div>
+<span class="text-xs font-bold text-zinc-300">$</span>
+</div>
+</div>
+</div>
+<!-- Card 5 -->
+<div class="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-zinc-100">
+<div class="relative h-48 overflow-hidden">
+<img alt="Spicy Noodles" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Close up of steaming spicy noodles with chilies and scallions in a deep ceramic bowl, moody lighting with rising steam" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_WWYVw5yi_sSbPZMj_-ckslKWxQ7zwkGVyRT2AbrHDp4iviIHOnkar-h_LpdZB2zaXKMjjzAsEN0mq5I54r6BTrBTpcUf7X-oy7kfj2GZYArBCJ_yty5a6yjsFlj3VvfWGFqp14WglxN7WNyQ-KK8MAAYBvIdWoDbNhsCvnwPhRYZDmRnpM2ZBFxMlm6UNkFq3apl2KfAXQn73E-83FAByb79sjKUNo9GoL7MbviHiBGwXz4WSX_zXhwNhACxbil175RniB91c7E"/>
+<div class="absolute bottom-3 right-3 bg-white px-2 py-1 rounded-lg shadow-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-orange-500 text-xs" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-xs font-bold text-on-surface">4.5</span>
+</div>
+</div>
+<div class="p-4">
+<h3 class="font-bold text-lg mb-1 group-hover:text-orange-600 transition-colors">Silk Road Noodles</h3>
+<p class="text-zinc-500 text-sm mb-3">Asian • Spicy • Bowls</p>
+<div class="flex items-center justify-between pt-3 border-t border-zinc-50">
+<div class="flex items-center gap-3">
+<div class="flex items-center gap-1 text-zinc-500 text-xs">
+<span class="material-symbols-outlined text-sm">schedule</span> 30-40 min
+                                    </div>
+<div class="flex items-center gap-1 text-zinc-500 text-xs">
+<span class="material-symbols-outlined text-sm">delivery_dining</span> ₦400
+                                    </div>
+</div>
+<span class="text-xs font-bold text-zinc-300">$$</span>
+</div>
+</div>
+</div>
+<!-- Card 6 -->
+<div class="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-zinc-100">
+<div class="relative h-48 overflow-hidden">
+<img alt="Gourmet Burger" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Double-stack gourmet burger with melting cheese, crispy bacon, and fresh lettuce on a toasted brioche bun, dramatic studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkcSCW32ep2pdok52c-hOAAV6spOO8gqoOHvytf5_1qkA5XVXy1cSyyYWk7ELcRUq26A4G8ETbrMh0vw9A2xWx9u34yAp676MX6fnp8PC34mZtIJF1zTgCa3uhrf1qBTMydpnmigwme8h4Ehd9dsX6Zxu5XVDm57cDU1_H9tVoTZJkSHb60KgquEJUJLpYW_9uNvoyRzNK2tBzw3brIES_vNZ66fgyrO6o8Y4vm4EZUH9IcQ8KJTWbTeLVywIlx6BDT05Pp3_Q9lI"/>
+<div class="absolute bottom-3 right-3 bg-white px-2 py-1 rounded-lg shadow-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-orange-500 text-xs" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-xs font-bold text-on-surface">4.7</span>
+</div>
+</div>
+<div class="p-4">
+<h3 class="font-bold text-lg mb-1 group-hover:text-orange-600 transition-colors">The Burger Lab</h3>
+<p class="text-zinc-500 text-sm mb-3">American • Burgers • Shakes</p>
+<div class="flex items-center justify-between pt-3 border-t border-zinc-50">
+<div class="flex items-center gap-3">
+<div class="flex items-center gap-1 text-zinc-500 text-xs">
+<span class="material-symbols-outlined text-sm">schedule</span> 20-30 min
+                                    </div>
+<div class="flex items-center gap-1 text-zinc-500 text-xs">
+<span class="material-symbols-outlined text-sm">delivery_dining</span> ₦600
+                                    </div>
+</div>
+<span class="text-xs font-bold text-zinc-300">$$</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Pagination -->
+<div class="mt-12 flex items-center justify-center gap-2">
+<button class="w-10 h-10 flex items-center justify-center rounded-lg border border-zinc-200 text-zinc-400 hover:border-orange-600 hover:text-orange-600 transition-colors">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg bg-orange-600 text-white font-bold">1</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg border border-zinc-200 text-zinc-600 hover:border-orange-600 transition-colors font-medium">2</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg border border-zinc-200 text-zinc-600 hover:border-orange-600 transition-colors font-medium">3</button>
+<span class="px-2 text-zinc-400">...</span>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg border border-zinc-200 text-zinc-600 hover:border-orange-600 transition-colors font-medium">12</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg border border-zinc-200 text-zinc-400 hover:border-orange-600 hover:text-orange-600 transition-colors">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</section>
+</div>
+</main>
+<!-- Footer Shell -->
+<footer class="bg-zinc-50 dark:bg-zinc-900 border-t border-zinc-200 dark:border-zinc-800 w-full py-12">
+<div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+<div>
+<span class="font-bold text-zinc-900 dark:text-zinc-100 text-xl block mb-2">RestoMarket</span>
+<p class="font-sans text-xs text-zinc-500 dark:text-zinc-400 mb-4 max-w-xs">Connecting you with the best restaurants in your city. Delivered fast to your doorstep.</p>
+<div class="flex gap-4">
+<a class="text-zinc-400 hover:text-orange-600 transition-all" href="#"><span class="material-symbols-outlined">social_leaderboard</span></a>
+<a class="text-zinc-400 hover:text-orange-600 transition-all" href="#"><span class="material-symbols-outlined">brand_family</span></a>
+<a class="text-zinc-400 hover:text-orange-600 transition-all" href="#"><span class="material-symbols-outlined">share</span></a>
+</div>
+</div>
+<div class="flex flex-col md:items-end gap-6">
+<div class="flex flex-wrap gap-x-6 gap-y-2 justify-start md:justify-end">
+<a class="font-sans text-xs text-zinc-500 dark:text-zinc-400 hover:underline hover:text-orange-600 transition-all" href="#">Privacy Policy</a>
+<a class="font-sans text-xs text-zinc-500 dark:text-zinc-400 hover:underline hover:text-orange-600 transition-all" href="#">Terms of Service</a>
+<a class="font-sans text-xs text-zinc-500 dark:text-zinc-400 hover:underline hover:text-orange-600 transition-all" href="#">Help Center</a>
+<a class="font-sans text-xs text-zinc-500 dark:text-zinc-400 hover:underline hover:text-orange-600 transition-all" href="#">Merchant Portal</a>
+</div>
+<p class="font-sans text-xs text-zinc-500 dark:text-zinc-400">
+                    © 2024 RestoMarket Technologies Inc. All rights reserved.
+                </p>
+</div>
+</div>
+</footer>
+</body></html>

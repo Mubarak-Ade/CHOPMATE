@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+
+<html class="" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Restaurant Search &amp; Filter</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24
+      }
+    </style>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#13ec5b",
+              "background-light": "#f6f8f6",
+              "background-dark": "#102216",
+            },
+            fontFamily: {
+              "display": ["Work Sans"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-primary/20 px-10 py-3 dark:border-primary/30">
+<div class="flex items-center gap-4 text-slate-900 dark:text-white">
+<div class="size-6 text-primary">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M44 4H30.6666V17.3334H17.3334V30.6666H4V44H44V4Z" fill="currentColor"></path>
+</svg>
+</div>
+<h2 class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">FoodFinder</h2>
+</div>
+<div class="hidden md:flex items-center gap-9">
+<a class="text-slate-700 dark:text-slate-300 text-sm font-medium leading-normal hover:text-primary dark:hover:text-primary" href="#">Home</a>
+<a class="text-slate-700 dark:text-slate-300 text-sm font-medium leading-normal hover:text-primary dark:hover:text-primary" href="#">Favorites</a>
+<a class="text-slate-700 dark:text-slate-300 text-sm font-medium leading-normal hover:text-primary dark:hover:text-primary" href="#">About Us</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-slate-900 text-sm font-bold leading-normal tracking-[0.015em]">
+<span class="truncate">Log In</span>
+</button>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="User profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDUw3i6KeBKVPySMMSj_1vvvohSD7Frf0DoHJQn6Lp0ik0T8U8V32IVJNH3ayvSLqHLS6dFOglAZ3vZO4MpfiGvaoK1sryXJNB4THDaKCIr3r3BsMmBXLPBwgiJ8af1h52E04y7nu7xu0xu87LffipAIWa_viqobk3cevEWdLYB1y4Ol3M4KpmKbQkaJZu8Cyg9axOYMkNPTK-TKXLAn36Gvou0HZ0cD9IMltigx_CxdMu3Ys4gHZVZNiDIdTRs6M-6jgslrp7VERA");'></div>
+</div>
+</header>
+<main class="flex-1 px-4 sm:px-6 lg:px-10 py-8">
+<div class="flex min-w-72 flex-col gap-3 mb-8">
+<p class="text-slate-900 dark:text-white text-4xl font-black leading-tight tracking-[-0.033em]">Find Your Next Meal</p>
+<p class="text-slate-600 dark:text-slate-400 text-base font-normal leading-normal">Search for the best restaurants in your area</p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Left Column: Filters -->
+<aside class="lg:col-span-4 xl:col-span-3">
+<div class="bg-white dark:bg-background-dark dark:border dark:border-slate-800 rounded-xl p-6 shadow-sm">
+<h2 class="text-slate-900 dark:text-white text-[22px] font-bold leading-tight tracking-[-0.015em] pb-5">Filter &amp; Sort</h2>
+<div class="space-y-6">
+<div>
+<label class="flex flex-col">
+<p class="text-slate-800 dark:text-slate-200 text-base font-medium leading-normal pb-2">Search by name</p>
+<div class="flex w-full flex-1 items-stretch rounded-lg h-12">
+<div class="text-slate-500 dark:text-slate-400 flex border border-slate-300 dark:border-slate-700 bg-background-light dark:bg-slate-800 items-center justify-center pl-4 rounded-l-lg border-r-0">
+<span class="material-symbols-outlined" style="font-size: 20px;">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-r-lg text-slate-900 dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-slate-300 dark:border-slate-700 bg-background-light dark:bg-slate-800 h-full placeholder:text-slate-500 dark:placeholder:text-slate-400 px-4 text-base font-normal leading-normal border-l-0" placeholder="e.g. Pizza Palace" value=""/>
+</div>
+</label>
+</div>
+<div>
+<label class="flex flex-col min-w-40 flex-1">
+<p class="text-slate-800 dark:text-slate-200 text-base font-medium leading-normal pb-2">Location</p>
+<div class="flex w-full flex-1 items-stretch rounded-lg">
+<div class="text-slate-500 dark:text-slate-400 flex border border-slate-300 dark:border-slate-700 bg-background-light dark:bg-slate-800 items-center justify-center pl-4 rounded-l-lg border-r-0">
+<span class="material-symbols-outlined" style="font-size: 20px;">location_on</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-r-lg text-slate-900 dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-slate-300 dark:border-slate-700 bg-background-light dark:bg-slate-800 h-12 placeholder:text-slate-500 dark:placeholder:text-slate-400 p-[15px] border-l-0 text-base font-normal leading-normal" placeholder="Enter a city or address" value=""/>
+</div>
+</label>
+</div>
+<div>
+<label class="flex flex-col">
+<p class="text-slate-800 dark:text-slate-200 text-base font-medium leading-normal pb-2">Cuisine</p>
+<select class="form-select flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-slate-900 dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-slate-300 dark:border-slate-700 bg-background-light dark:bg-slate-800 h-12 placeholder:text-slate-500 dark:placeholder:text-slate-400 px-4 text-base font-normal leading-normal">
+<option>All Cuisines</option>
+<option>Italian</option>
+<option>Mexican</option>
+<option>Japanese</option>
+<option>Indian</option>
+</select>
+</label>
+</div>
+<div>
+<p class="text-slate-800 dark:text-slate-200 text-base font-medium leading-normal pb-2">Price Range</p>
+<div class="grid grid-cols-4 gap-2">
+<button class="flex items-center justify-center h-10 rounded-lg bg-primary/20 text-primary font-bold border border-primary dark:bg-primary/30">$</button>
+<button class="flex items-center justify-center h-10 rounded-lg bg-background-light dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-bold border border-slate-300 dark:border-slate-700">$$</button>
+<button class="flex items-center justify-center h-10 rounded-lg bg-background-light dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-bold border border-slate-300 dark:border-slate-700">$$$</button>
+<button class="flex items-center justify-center h-10 rounded-lg bg-background-light dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-bold border border-slate-300 dark:border-slate-700">$$$$</button>
+</div>
+</div>
+<div class="flex flex-col gap-3 pt-4">
+<button class="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-11 px-4 bg-primary text-slate-900 text-base font-bold leading-normal tracking-[0.015em]">
+<span class="truncate">Apply Filters</span>
+</button>
+<button class="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-11 px-4 bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-slate-200 text-base font-medium leading-normal tracking-[0.015em]">
+<span class="truncate">Reset</span>
+</button>
+</div>
+</div>
+</div>
+</aside>
+<!-- Right Column: Results -->
+<main class="lg:col-span-8 xl:col-span-9">
+<div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
+<p class="text-slate-600 dark:text-slate-400 text-base font-medium">Showing 12 of 150 restaurants</p>
+<div class="flex items-center gap-2">
+<label class="text-slate-800 dark:text-slate-200 text-sm font-medium" for="sort">Sort by:</label>
+<select class="form-select flex min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-slate-900 dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-slate-300 dark:border-slate-700 bg-background-light dark:bg-slate-800 h-10 placeholder:text-slate-500 dark:placeholder:text-slate-400 pl-3 pr-8 text-sm font-normal" id="sort">
+<option>Popularity</option>
+<option>Rating</option>
+<option>Distance</option>
+</select>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+<!-- Restaurant Card 1 -->
+<div class="bg-white dark:bg-background-dark dark:border dark:border-slate-800 rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300">
+<div class="bg-center bg-no-repeat aspect-video bg-cover" data-alt="Exterior view of The Golden Spoon restaurant" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA0-SDokXUeWklT7ZIB3_m81dXnlowsjLxUlu1-fYZ5m-FShyDJSOh7oZ5tX1Mb3jrYs_VsWzU0-h_nUbDCJhuhWUnHCcu649S20xiaT3Nab4zh37VxVDLNq4LZxB-K9zQKWoFbMq4ERWaDN12yHi0FA749C5LgXFSMFWHaJuJ_1oXKqxuk8Dw9oURL_pMqr0fpfymhQuCp3EPdTDPIRAyr-9xfNjJtjs4sHdxt_F8cVgGACyXPcSTNOVqjR2818PnoGw74Etyhhug");'></div>
+<div class="p-4">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white mb-1">The Golden Spoon</h3>
+<div class="flex items-center mb-2">
+<div class="flex text-primary">
+<span class="material-symbols-outlined !text-xl" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined !text-xl" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined !text-xl" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined !text-xl" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined !text-xl">star</span>
+</div>
+<span class="ml-2 text-sm text-slate-500 dark:text-slate-400">(212 reviews)</span>
+</div>
+<p class="text-sm text-slate-600 dark:text-slate-300 mb-3">Italian • $$$ • 1.2 miles</p>
+<p class="text-sm text-slate-500 dark:text-slate-400">123 Main St, New York, NY</p>
+</div>
+</div>
+<!-- Restaurant Card 2 -->
+<div class="bg-white dark:bg-background-dark dark:border dark:border-slate-800 rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300">
+<div class="bg-center bg-no-repeat aspect-video bg-cover" data-alt="A delicious looking taco dish" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBUhfO-pmyN32mI7xH2OMTs8t7CG9WfzT-Drc5PFKFhwS_aA4qMIe1R7_K-xJUCSk9vkiSy29HIIjjQjiqMopItGw-Zkj-fg_YFDhA6pHFwmQw9zZ2jAXo7qbE616qBVQMA7ubIK4rEerJQmhcXjtlD8MYj9qoE40-O9mx0Rvbi4hJq2wSNQmYd2KsmWyEUl4e34KQ54DAFleg0kF0rwhh0jOHyFU3CJNhJYbNQDPFZxoqnZmnfAYp8c2C_EwrpRmSaedDARK2zlyU");'></div>
+<div class="p-4">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white mb-1">Taco Fiesta</h3>
+<div class="flex items-center mb-2">
+<div class="flex text-primary">
+<span class="material-symbols-outlined !text-xl" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined !text-xl" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined !text-xl" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined !text-xl" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined !text-xl" style="font-variation-settings: 'FILL' 1;">star_half</span>
+</div>
+<span class="ml-2 text-sm text-slate-500 dark:text-slate-400">(450 reviews)</span>
+</div>
+<p class="text-sm text-slate-600 dark:text-slate-300 mb-3">Mexican • $$ • 0.5 miles</p>
+<p class="text-sm text-slate-500 dark:text-slate-400">456 Oak Ave, San Francisco, CA</p>
+</div>
+</div>
+<!-- Restaurant Card 3 -->
+<div class="bg-white dark:bg-background-dark dark:border dark:border-slate-800 rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300">
+<div class="bg-center bg-no-repeat aspect-video bg-cover" data-alt="A platter of assorted sushi rolls" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDIdAvEuAfk99VmeMaX8ooZfyCAVciKahrONAsK5zzIE_5l3H33DCE-GKNs6y-yyUxIiXmIgr5Sz-vhsEHydkSoEnYzDh-zxbQgsbn1mDLYbcbTyFhPcAYbRQnv247NMmWKyKycG8iKzQEUuHaVMFOClFuIDYgzVdxbj3cFc2WJbwWofi2nt7Gb04WLJxO5fNjeLmwYs5xBfIppBorQTT8bWfZtSnG4YOJTZKozbXBixgTJG0KtfJtMkw73iR4rEBaALkWz56s9F4o");'></div>
+<div class="p-4">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white mb-1">Sushi Express</h3>
+<div class="flex items-center mb-2">
+<div class="flex text-primary">
+<span class="material-symbols-outlined !text-xl" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined !text-xl" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined !text-xl" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined !text-xl" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined !text-xl">star</span>
+</div>
+<span class="ml-2 text-sm text-slate-500 dark:text-slate-400">(189 reviews)</span>
+</div>
+<p class="text-sm text-slate-600 dark:text-slate-300 mb-3">Japanese • $$$$ • 3.1 miles</p>
+<p class="text-sm text-slate-500 dark:text-slate-400">789 Pine St, Chicago, IL</p>
+</div>
+</div>
+<!-- Additional Cards for layout demonstration -->
+<div class="bg-white dark:bg-background-dark dark:border dark:border-slate-800 rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300">
+<div class="bg-center bg-no-repeat aspect-video bg-cover" data-alt="Plated pasta dish" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCyLeoBRAYy6ckj45xaz2vYOn3vnYraab6hi8vgubWLN3e703K6V5cczEc6VyYSPaoMeRoggZ7DbFDh9G-Ce8dd6JDnATB1z_WI_1Tft7f2NciVcavmjYV5SJlDo17SQoYNLNgSySWxvROEjbm25RGNcO71Yz4A0jeSitB0fdBO_tfFk92l_fZYrrxkkv3kAnmk6tf9tMNM67_to2q2cYkUtH5JxFv9LbPFCUFGcFFBFjFxyWovyy2bDyvevo-_iXIautoMs5LIdxc");'></div>
+<div class="p-4">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white mb-1">Pasta Bella</h3>
+<div class="flex items-center mb-2">
+<div class="flex text-primary">
+<span class="material-symbols-outlined !text-xl" style="font-variation-settings: 'FILL' 1;">star</span><span class="material-symbols-outlined !text-xl" style="font-variation-settings: 'FILL' 1;">star</span><span class="material-symbols-outlined !text-xl" style="font-variation-settings: 'FILL' 1;">star</span><span class="material-symbols-outlined !text-xl" style="font-variation-settings: 'FILL' 1;">star_half</span><span class="material-symbols-outlined !text-xl">star</span>
+</div>
+<span class="ml-2 text-sm text-slate-500 dark:text-slate-400">(305 reviews)</span>
+</div>
+<p class="text-sm text-slate-600 dark:text-slate-300 mb-3">Italian • $$ • 2.5 miles</p>
+<p class="text-sm text-slate-500 dark:text-slate-400">101 Maple Dr, New York, NY</p>
+</div>
+</div>
+<div class="bg-white dark:bg-background-dark dark:border dark:border-slate-800 rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300">
+<div class="bg-center bg-no-repeat aspect-video bg-cover" data-alt="Curry dish in a bowl" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCul0TLANBslrxv69NpFYlFve-VaMffxp9hchvGeEe3Ztl6XMf4bkng2ytSn1wk7rUeDqbLAsXpCjwra5eXUsQtl_jlZEBj0vr-L1QB1VK47rPZNwQI6vX14GKadO6nG2PL8dpRX5dR_E3pU2IDN_-xhHId2rSYbEYAvanqFCVUqwkVmJ_OJVux98L9v8-XNzxZQnoVIKoZe85pLxyUhj-4WS4J9F4p59ILGf-hQKVPmaMRH_XXk8Ooj4B-n05iedRUMZwpH38MI-U");'></div>
+<div class="p-4">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white mb-1">Curry House</h3>
+<div class="flex items-center mb-2">
+<div class="flex text-primary">
+<span class="material-symbols-outlined !text-xl" style="font-variation-settings: 'FILL' 1;">star</span><span class="material-symbols-outlined !text-xl" style="font-variation-settings: 'FILL' 1;">star</span><span class="material-symbols-outlined !text-xl" style="font-variation-settings: 'FILL' 1;">star</span><span class="material-symbols-outlined !text-xl" style="font-variation-settings: 'FILL' 1;">star</span><span class="material-symbols-outlined !text-xl">star</span>
+</div>
+<span class="ml-2 text-sm text-slate-500 dark:text-slate-400">(154 reviews)</span>
+</div>
+<p class="text-sm text-slate-600 dark:text-slate-300 mb-3">Indian • $$ • 4.0 miles</p>
+<p class="text-sm text-slate-500 dark:text-slate-400">212 Birch Ln, San Francisco, CA</p>
+</div>
+</div>
+<div class="bg-white dark:bg-background-dark dark:border dark:border-slate-800 rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300">
+<div class="bg-center bg-no-repeat aspect-video bg-cover" data-alt="Burger and fries" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA8Yj-2N7wpzE-St1NkH9l3ekTzLDDqBU2XkYsJWPEFdjrZ4eo4m2AOf4wJlnx2e8E02970FI75VumjBid5AAMXAfxwcUZmsD03-tNOW9rQfoc0pHCKhaK3whMr04zG2j6Z_IJ5VQYatKwaqSvjyJl9sVn9NKNOHuJ2tSFr5UFb9NkSfMley-lOHWv2JfX64Yh-MGBP-7oMMgjzgBMpEY-h4TAw1nXuFAxU_gE1yIe-49QTD2-AG3qbm3FDGelGaKhCNzdqkCpMvBo");'></div>
+<div class="p-4">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white mb-1">Burger Joint</h3>
+<div class="flex items-center mb-2">
+<div class="flex text-primary">
+<span class="material-symbols-outlined !text-xl" style="font-variation-settings: 'FILL' 1;">star</span><span class="material-symbols-outlined !text-xl" style="font-variation-settings: 'FILL' 1;">star</span><span class="material-symbols-outlined !text-xl" style="font-variation-settings: 'FILL' 1;">star</span><span class="material-symbols-outlined !text-xl" style="font-variation-settings: 'FILL' 1;">star</span><span class="material-symbols-outlined !text-xl">star</span>
+</div>
+<span class="ml-2 text-sm text-slate-500 dark:text-slate-400">(512 reviews)</span>
+</div>
+<p class="text-sm text-slate-600 dark:text-slate-300 mb-3">American • $ • 0.8 miles</p>
+<p class="text-sm text-slate-500 dark:text-slate-400">333 Willow Rd, Chicago, IL</p>
+</div>
+</div>
+</div>
+<!-- Pagination -->
+<div class="flex justify-center mt-10">
+<nav class="flex items-center gap-2">
+<button class="flex items-center justify-center size-9 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">
+<span class="material-symbols-outlined !text-2xl">chevron_left</span>
+</button>
+<button class="flex items-center justify-center size-9 rounded-lg font-bold bg-primary text-slate-900">1</button>
+<button class="flex items-center justify-center size-9 rounded-lg font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">2</button>
+<button class="flex items-center justify-center size-9 rounded-lg font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">3</button>
+<span class="text-slate-500">...</span>
+<button class="flex items-center justify-center size-9 rounded-lg font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">10</button>
+<button class="flex items-center justify-center size-9 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">
+<span class="material-symbols-outlined !text-2xl">chevron_right</span>
+</button>
+</nav>
+</div>
+</main>
+</div>
+</main>
+</div>
+</div>
+</body></html>
