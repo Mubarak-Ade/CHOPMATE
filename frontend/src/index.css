@@ -1,16 +1,48 @@
 @import 'tailwindcss';
 
 @theme {
-    --color-punch-red: #e63946ff;
-    --color-carbon-black: #1d1d1dff;
-    --color-bright-snow: #fafafaff;
-    --color-slate-grey: #6b7280ff;
-    --color-sandy-brown: #f4a261ff;
-    --color-emerald: #2ecc71ff;
+    --color-punch-red: #e63946;
+    --color-carbon-black: #1d1d1d;
+    --color-bright-snow: #fafafa;
+    --color-slate-grey: #6b7280;
+    --color-sandy-brown: #f4a261;
+    --color-emerald: #22c55e;
+    --color-brand: #e85d26;
+    --color-brand-muted: #fdf0ea;
+    --color-surface: #ffffff;
+    --color-bg: #f5f5f4;
+    --color-sidebar: #1a1a1a;
+    --color-warning: #f59e0b;
+    --color-danger: #ef4444;
 }
 
-verify-card {
-    background-color: var(--color-white);
+@layer base {
+  body {
+    background: linear-gradient(180deg, #fbfaf7 0%, #f5f5f4 100%);
+    color: #111111;
+    font-family: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
 }
 
+@layer components {
+  .section-shell {
+    @apply mx-auto w-full max-w-7xl;
+  }
+
+  .surface-card {
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(17, 17, 17, 0.08);
+    box-shadow: 0 16px 50px -32px rgba(0, 0, 0, 0.22);
+    backdrop-filter: blur(12px);
+  }
+
+  .dashboard-shell {
+    @apply min-h-screen bg-[linear-gradient(180deg,#fbfaf7_0%,#f3f1ed_100%)];
+  }
+}
 

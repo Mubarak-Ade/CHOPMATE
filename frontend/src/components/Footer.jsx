@@ -1,17 +1,12 @@
-
 export const Footer = () => {
   return (
-    <footer className="bg-slate-grey/10 border-t border-gray-200 pt-16 pb-8 px-10">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
-    
+    <footer className="border-t border-black/6 bg-white/75 px-6 pb-8 pt-16 lg:px-10">
+      <div className="section-shell grid grid-cols-1 gap-12 md:grid-cols-4">
         <div className="col-span-2">
-          <div className="flex items-center gap-2 mb-4">
-            <div className="bg-red-500 p-2 rounded-lg">
-               
-            </div>
+          <div className="mb-4 flex items-center gap-2">
             <span className="text-2xl font-bold text-gray-900">Chop<span className="text-red-500">MATE</span></span>
           </div>
-          <p className="text-gray-500 max-w-sm leading-relaxed">
+          <p className="max-w-sm leading-relaxed text-gray-500">
             The leading platform for modern restaurant operations. 
             We help kitchens automate the complex so they can focus on the food.
           </p>
@@ -36,11 +31,11 @@ export const Footer = () => {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto mt-16 pt-8 border-t border-gray-100">
+      <div className="section-shell mt-16 border-t border-gray-100 pt-8">
         <p className="text-gray-500 font-semibold text-sm">
           © 2026 ChopMATE System. Built for Modern Kitchens.
         </p>
       </div>
     </footer>
-  )
-}
+  );
+};

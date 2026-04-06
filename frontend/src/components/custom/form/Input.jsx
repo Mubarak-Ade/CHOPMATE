@@ -1,10 +1,11 @@
-import React from 'react'
-
-export const Input=({label, placeholder}) => {
-    return (
-        <div className="mt-5 w-full">
-            <label htmlFor="" className='font-semibold text-sm'>{label}</label>
-            <input placeholder={placeholder} type="text" className='bg-slate-grey/10 placeholder:text-slate-grey/50 py-2.5 px-4 text-sm rounded-md border border-slate-grey/80 mt-2 w-full' />
-        </div>
-    )
-}
+export const Input = ({ label, className = "", ...props }) => {
+  return (
+    <div className="mt-5 w-full">
+      {label ? <label className="text-sm font-semibold text-carbon-black">{label}</label> : null}
+      <input
+        {...props}
+        className={`mt-2 w-full rounded-2xl border border-black/8 bg-white px-4 py-3 text-sm text-carbon-black outline-none placeholder:text-slate-grey/60 ${className}`}
+      />
+    </div>
+  );
+};
