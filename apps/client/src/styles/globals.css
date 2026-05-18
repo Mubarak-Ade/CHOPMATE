@@ -1,12 +1,131 @@
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap");
+@import "tailwindcss";
+@import "tw-animate-css";
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-brand: var(--brand);
+  --color-brand-muted: var(--brand-muted);
+  --color-surface: var(--surface);
+  --color-bg: var(--bg);
+  --color-sidebar: var(--sidebar);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-danger: var(--danger);
+
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "DM Serif Display", ui-serif, Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+
+  --background-image-page-radial: radial-gradient(
+    circle at top right,
+    rgba(232, 93, 38, 0.12),
+    transparent 24%
+  );
+  --background-image-page-linear: linear-gradient(180deg, #faf7f4 0%, #f5f5f4 44%);
+  --background-image-hero-wash: linear-gradient(
+    135deg,
+    rgba(253, 240, 234, 0.82),
+    rgba(255, 255, 255, 0.96)
+  );
+  --background-image-detail-overlay: linear-gradient(
+    180deg,
+    rgba(17, 17, 17, 0.18),
+    rgba(17, 17, 17, 0.82)
+  );
+}
+
+:root {
+  --radius: 0.75rem;
+
+  --background: #f5f5f4;
+  --foreground: #111111;
+  --card: #ffffff;
+  --card-foreground: #111111;
+  --popover: #ffffff;
+  --popover-foreground: #111111;
+  --primary: #e85d26;
+  --primary-foreground: #ffffff;
+  --secondary: #fdf0ea;
+  --secondary-foreground: #e85d26;
+  --muted: #f5f5f4;
+  --muted-foreground: #6b7280;
+  --accent: #fdf0ea;
+  --accent-foreground: #e85d26;
+  --destructive: #ef4444;
+  --border: #e5e7eb;
+  --input: #e5e7eb;
+  --ring: #e85d26;
+
+  --brand: #e85d26;
+  --brand-muted: #fdf0ea;
+  --surface: #ffffff;
+  --bg: #f5f5f4;
+  --sidebar: #1a1a1a;
+  --success: #22c55e;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+}
+
+.dark {
+  --background: #1a1a1a;
+  --foreground: #f5f5f4;
+  --card: #262626;
+  --card-foreground: #f5f5f4;
+  --popover: #262626;
+  --popover-foreground: #f5f5f4;
+  --primary: #f07040;
+  --primary-foreground: #ffffff;
+  --secondary: #3d2a22;
+  --secondary-foreground: #f5f5f4;
+  --muted: #2e2e2e;
+  --muted-foreground: #a3a3a3;
+  --accent: #3d2a22;
+  --accent-foreground: #f5f5f4;
+  --destructive: #f87171;
+  --border: rgba(255, 255, 255, 0.1);
+  --input: rgba(255, 255, 255, 0.15);
+  --ring: #f07040;
+
+  --brand: #f07040;
+  --brand-muted: #3d2a22;
+  --surface: #262626;
+  --bg: #1a1a1a;
+  --sidebar: #111111;
+}
 
 @layer base {
   * {
-    @apply border-border;
+    @apply border-border outline-ring/50;
   }
 
   html {
