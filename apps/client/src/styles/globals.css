@@ -1,0 +1,30 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    color-scheme: light;
+  }
+
+  body {
+    @apply min-h-screen bg-bg font-sans text-foreground antialiased;
+    background-image:
+      radial-gradient(circle at top right, rgba(232, 93, 38, 0.12), transparent 24%),
+      linear-gradient(180deg, #faf7f4 0%, #f5f5f4 44%);
+  }
+
+  a {
+    @apply text-inherit no-underline;
+  }
+
+  #root {
+    @apply min-h-screen;
+  }
+}
