@@ -5,6 +5,11 @@ export const userRepository = {
   create: (payload: Record<string, unknown>) => UserModel.create(payload),
   findByEmail: (email: string) => UserModel.findOne({ email: email.toLowerCase() }),
   findById: (userId: string) => UserModel.findById(userId),
+  findByVerificationToken: (token: string) =>
+    UserModel.findOne({
+      emailVerificationToken: token,
+      emailVerificationExpires: { $gt: new Date() },
+    }),
   updateById: (userId: string, payload: Record<string, unknown>) =>
     UserModel.findByIdAndUpdate(userId, payload, { new: true }),
   clearRefreshToken: (userId: string) =>

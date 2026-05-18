@@ -12,6 +12,7 @@ import {
   useRestaurantCategories,
   useRestaurantMenu,
 } from "../features/restaurants/hooks/useRestaurant";
+import { formatAddress } from "../types/api";
 
 export const RestaurantDetailPage = () => {
   const { restaurantId = "" } = useParams();
@@ -89,7 +90,7 @@ export const RestaurantDetailPage = () => {
               <h1 className="font-serif text-[clamp(32px,5vw,44px)] leading-none">
                 {restaurantQuery.data.name}
               </h1>
-              <p className="mt-2 text-sm text-white/80">{restaurantQuery.data.address}</p>
+              <p className="mt-2 text-sm text-white/80">{formatAddress(restaurantQuery.data.address)}</p>
             </div>
             <StatusBadge tone={restaurantQuery.data.isOpen ? "success" : "danger"}>
               {restaurantQuery.data.isOpen ? "Open now" : "Closed"}

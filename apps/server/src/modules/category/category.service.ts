@@ -1,8 +1,11 @@
 import { Types } from "mongoose";
+import { restaurantService } from "../restaurant/restaurant.service.js";
 import { categoryRepository } from "./category.repository.js";
 
 export const categoryService = {
-  create(payload: { restaurantId: string; name: string }) {
+  async create(ownerId: string, payload: { restaurantId: string; name: string }) {
+    await restaurantService.assertOwner(ownerId, payload.restaurantId);
+
     return categoryRepository.create({
       restaurant: new Types.ObjectId(payload.restaurantId),
       name: payload.name,
@@ -13,4 +16,3 @@ export const categoryService = {
     return categoryRepository.findByRestaurantId(restaurantId);
   },
 };
-

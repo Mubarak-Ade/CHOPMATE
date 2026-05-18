@@ -1,7 +1,7 @@
 import type { Request, Response } from "express";
 import { sendSuccess } from "../../shared/utils/response.js";
 import { authService } from "./auth.service.js";
-import { loginSchema, registerSchema } from "./auth.validation.js";
+import { loginSchema, registerOwnerSchema, registerSchema, verifyEmailSchema } from "./auth.validation.js";
 
 export const authController = {
   async register(req: Request, res: Response) {
@@ -14,6 +14,23 @@ export const authController = {
     };
     const session = await authService.register(payload, res);
     sendSuccess(res, session, "Registration successful", 201);
+  },
+
+  async registerOwner(req: Request, res: Response) {
+    const payload = registerOwnerSchema.parse(req.body);
+    const session = await authService.registerOwner(payload, res);
+    sendSuccess(res, session, "Owner account created", 201);
+  },
+
+  async verifyEmail(req: Request, res: Response) {
+    const { token } = verifyEmailSchema.parse(req.body);
+    const user = await authService.verifyEmail(token);
+    sendSuccess(res, { user }, "Email verified successfully");
+  },
+
+  async resendVerification(req: Request, res: Response) {
+    const result = await authService.resendVerificationEmail(req.auth!.sub);
+    sendSuccess(res, result, "Verification email sent");
   },
 
   async login(req: Request, res: Response) {

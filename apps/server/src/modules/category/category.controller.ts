@@ -6,7 +6,7 @@ import { createCategorySchema } from "./category.validation.js";
 export const categoryController = {
   async create(req: Request, res: Response) {
     const payload = createCategorySchema.parse(req.body);
-    const category = await categoryService.create(payload);
+    const category = await categoryService.create(req.auth!.sub, payload);
     sendSuccess(res, category, "Category created", 201);
   },
 

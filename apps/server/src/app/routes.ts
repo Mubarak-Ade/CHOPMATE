@@ -3,6 +3,7 @@ import { authRoutes } from "../modules/auth/auth.routes.js";
 import { categoryRoutes } from "../modules/category/category.routes.js";
 import { menuRoutes } from "../modules/menu/menu.routes.js";
 import { restaurantRoutes } from "../modules/restaurant/restaurant.routes.js";
+import { uploadRoutes } from "../modules/uploads/uploads.routes.js";
 import { userRoutes } from "../modules/user/user.routes.js";
 
 const router = Router();
@@ -19,6 +20,7 @@ router.use("/users", userRoutes);
 router.use("/restaurants", restaurantRoutes);
 router.use("/menu", menuRoutes);
 router.use("/categories", categoryRoutes);
+router.use("/uploads", uploadRoutes);
 
 export const apiRoutes = router;
 

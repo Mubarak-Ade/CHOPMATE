@@ -1,9 +1,8 @@
 import { Router } from "express";
 import { authMiddleware } from "../../middlewares/auth.middleware.js";
 import { allowRoles } from "../../middlewares/role.middleware.js";
-import { requireVerifiedEmail } from "../../middlewares/verified.middleware.js";
 import { asyncHandler } from "../../shared/utils/async-handler.js";
-import { categoryController } from "./category.controller.js";
+import { uploadsController } from "./uploads.controller.js";
 
 const router = Router();
 
@@ -11,9 +10,7 @@ router.post(
   "/",
   authMiddleware,
   allowRoles("owner", "admin"),
-  requireVerifiedEmail,
-  asyncHandler(categoryController.create),
+  asyncHandler(uploadsController.registerUrl),
 );
-router.get("/:restaurantId", asyncHandler(categoryController.listByRestaurant));
 
-export const categoryRoutes = router;
+export const uploadRoutes = router;

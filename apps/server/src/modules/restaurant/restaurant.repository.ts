@@ -14,11 +14,15 @@ export const restaurantRepository = {
 
   findById: (restaurantId: string) => RestaurantModel.findById(restaurantId),
 
+  findBySlug: (slug: string) => RestaurantModel.findOne({ slug }),
+
   updateById: (restaurantId: string, payload: Record<string, unknown>) =>
     RestaurantModel.findByIdAndUpdate(restaurantId, payload, { new: true }),
 
   search: ({ cuisine, rating, q, lat, lng }: SearchParams) => {
-    const query: Record<string, unknown> = {};
+    const query: Record<string, unknown> = {
+      status: "active",
+    };
 
     if (cuisine) {
       query.cuisine = cuisine;
@@ -47,5 +51,17 @@ export const restaurantRepository = {
     return RestaurantModel.find(query);
   },
 
-  findOwnedByUser: (userId: string) => RestaurantModel.find({ owner: new Types.ObjectId(userId) }),
+  findOwnedByUser: (userId: string) =>
+    RestaurantModel.find({ owner: new Types.ObjectId(userId) }).sort({ createdAt: -1 }),
+
+  findOneByOwner: (userId: string) =>
+    RestaurantModel.findOne({
+      owner: new Types.ObjectId(userId),
+    }),
+
+  findDraftByOwner: (userId: string) =>
+    RestaurantModel.findOne({
+      owner: new Types.ObjectId(userId),
+      status: { $in: ["draft", "pending_review"] },
+    }),
 };

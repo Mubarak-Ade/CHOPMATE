@@ -1,7 +1,7 @@
 import type { NextFunction, Request, Response } from "express";
 import { AppError } from "../shared/utils/app-error.js";
 
-export const allowRoles = (...roles: Array<"customer" | "owner" | "admin">) => {
+export const allowRoles = (...roles: Array<"customer" | "owner" | "staff" | "admin">) => {
   return (req: Request, _res: Response, next: NextFunction) => {
     if (!req.auth) {
       return next(new AppError("Authentication required", 401));

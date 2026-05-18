@@ -4,11 +4,14 @@ import type { ReactNode } from "react";
 import { AppShell } from "../components/layout/AppShell";
 import { MarketplaceShell } from "../components/layout/MarketplaceShell";
 import { MarketingShell } from "../components/layout/MarketingShell";
+import { ProtectedRoute } from "../features/auth/components/ProtectedRoute";
 import { LandingPage } from "../pages/LandingPage";
 import { MarketplacePage } from "../pages/MarketplacePage";
+import { OwnerDashboardPage } from "../pages/OwnerDashboardPage";
 import { PartnerOnboardingPage } from "../pages/PartnerOnboardingPage";
 import { PartnerRegisterPage } from "../pages/PartnerRegisterPage";
 import { RestaurantDetailPage } from "../pages/RestaurantDetailPage";
+import { VerifyEmailPage } from "../pages/VerifyEmailPage";
 
 const easeOutExpo = [0.22, 1, 0.36, 1] as const;
 const easeInSoft = [0.4, 0, 1, 1] as const;
@@ -88,6 +91,34 @@ const AnimatedRoutes = () => {
           }
           path="/partners/onboarding"
         />
+        <Route
+          element={
+            <PageFrame>
+              <VerifyEmailPage />
+            </PageFrame>
+          }
+          path="/verify-email"
+        />
+        <Route element={<ProtectedRoute ownerOnly requireVerified requireOnboardingIncomplete />}>
+          <Route
+            element={
+              <PageFrame>
+                <PartnerOnboardingPage />
+              </PageFrame>
+            }
+            path="/onboarding"
+          />
+        </Route>
+        <Route element={<ProtectedRoute ownerOnly requireVerified requireOnboardingComplete />}>
+          <Route
+            element={
+              <PageFrame>
+                <OwnerDashboardPage />
+              </PageFrame>
+            }
+            path="/dashboard"
+          />
+        </Route>
         <Route
           element={
             <PageFrame>

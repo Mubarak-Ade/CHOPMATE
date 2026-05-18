@@ -1,13 +1,16 @@
+import crypto from "node:crypto";
 import type { Response } from "express";
 import { env } from "../../config/env.js";
 import { AppError } from "../../shared/utils/app-error.js";
 import { compareHash, hashValue } from "../../shared/utils/hash.js";
 import { signAccessToken, signRefreshToken, verifyRefreshToken } from "../../shared/utils/jwt.js";
+import { toPublicUser } from "../../shared/utils/user.js";
 import { userRepository } from "../user/user.repository.js";
 import type { UserRole } from "../user/user.model.js";
 
 const ACCESS_COOKIE_NAME = "accessToken";
 const REFRESH_COOKIE_NAME = "refreshToken";
+const VERIFICATION_TTL_MS = 24 * 60 * 60 * 1000;
 
 const buildTokenPayload = (user: { _id: { toString(): string }; email: string; role: UserRole }) => ({
   sub: user._id.toString(),
@@ -49,6 +52,14 @@ const clearRefreshCookie = (res: Response) => {
   });
 };
 
+const createVerificationToken = () => crypto.randomBytes(32).toString("hex");
+
+const logVerificationLink = (email: string, token: string) => {
+  const verifyUrl = `${env.CLIENT_ORIGIN}/verify-email?token=${token}`;
+  // eslint-disable-next-line no-console
+  console.info(`[auth] Verification link for ${email}: ${verifyUrl}`);
+};
+
 export const authService = {
   async register(
     payload: { name: string; email: string; password: string; role?: UserRole | undefined },
@@ -69,6 +80,78 @@ export const authService = {
     });
 
     return this.createSession(user, res);
+  },
+
+  async registerOwner(
+    payload: { fullName: string; email: string; password: string },
+    res: Response,
+  ) {
+    const existingUser = await userRepository.findByEmail(payload.email);
+
+    if (existingUser) {
+      throw new AppError("Email is already in use", 409);
+    }
+
+    const verificationToken = createVerificationToken();
+    const password = await hashValue(payload.password);
+
+    const user = await userRepository.create({
+      name: payload.fullName,
+      email: payload.email.toLowerCase(),
+      password,
+      role: "owner",
+      isVerified: false,
+      onboardingCompleted: false,
+      emailVerificationToken: verificationToken,
+      emailVerificationExpires: new Date(Date.now() + VERIFICATION_TTL_MS),
+    });
+
+    logVerificationLink(user.email, verificationToken);
+
+    return this.createSession(user, res, { includeVerificationToken: env.NODE_ENV !== "production" });
+  },
+
+  async verifyEmail(token: string) {
+    const user = await userRepository.findByVerificationToken(token);
+
+    if (!user) {
+      throw new AppError("Invalid or expired verification token", 400);
+    }
+
+    const updatedUser = await userRepository.updateById(user._id.toString(), {
+      isVerified: true,
+      $unset: {
+        emailVerificationToken: 1,
+        emailVerificationExpires: 1,
+      },
+    });
+
+    return toPublicUser(updatedUser);
+  },
+
+  async resendVerificationEmail(userId: string) {
+    const user = await userRepository.findById(userId);
+
+    if (!user) {
+      throw new AppError("User not found", 404);
+    }
+
+    if (user.isVerified) {
+      throw new AppError("Email is already verified", 400);
+    }
+
+    const verificationToken = createVerificationToken();
+    const updatedUser = await userRepository.updateById(userId, {
+      emailVerificationToken: verificationToken,
+      emailVerificationExpires: new Date(Date.now() + VERIFICATION_TTL_MS),
+    });
+
+    logVerificationLink(user.email, verificationToken);
+
+    return {
+      user: toPublicUser(updatedUser),
+      ...(env.NODE_ENV !== "production" ? { verificationToken } : {}),
+    };
   },
 
   async login(payload: { email: string; password: string }, res: Response) {
@@ -124,12 +207,13 @@ export const authService = {
       throw new AppError("User not found", 404);
     }
 
-    return user;
+    return toPublicUser(user);
   },
 
   async createSession(
     user: { _id: { toString(): string }; email: string; role: UserRole },
     res: Response,
+    options?: { includeVerificationToken?: boolean },
   ) {
     const tokenPayload = buildTokenPayload(user);
     const accessToken = signAccessToken(tokenPayload);
@@ -140,8 +224,13 @@ export const authService = {
     setAccessCookie(res, accessToken);
     setRefreshCookie(res, refreshToken);
 
+    const publicUser = await userRepository.findById(user._id.toString());
+
     return {
-      user: await userRepository.findById(user._id.toString()),
+      user: toPublicUser(publicUser),
+      ...(options?.includeVerificationToken && publicUser?.emailVerificationToken
+        ? { verificationToken: publicUser.emailVerificationToken }
+        : {}),
     };
   },
 };

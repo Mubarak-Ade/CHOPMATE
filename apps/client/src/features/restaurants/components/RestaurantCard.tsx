@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import type { Restaurant } from "../../../types/api";
+import { formatAddress } from "../../../types/api";
 import { StatusBadge } from "../../../components/common/StatusBadge";
 import { Badge } from "../../../components/ui/badge";
 import { Button } from "../../../components/ui/button";
@@ -40,7 +41,7 @@ export const RestaurantCard = ({ restaurant }: RestaurantCardProps) => {
         <div className="flex items-start justify-between gap-4">
           <div>
             <h3 className="text-xl font-semibold text-foreground">{restaurant.name}</h3>
-            <p className="mt-1 text-sm text-muted-foreground">{restaurant.address}</p>
+            <p className="mt-1 text-sm text-muted-foreground">{formatAddress(restaurant.address)}</p>
           </div>
           <div className="min-w-[68px] rounded-[10px] bg-brand-muted px-3 py-2 text-center">
             <span className="block text-lg font-bold text-foreground">

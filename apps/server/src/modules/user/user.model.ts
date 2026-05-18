@@ -1,6 +1,6 @@
 import { Schema, Types, model } from "mongoose";
 
-export type UserRole = "customer" | "owner" | "admin";
+export type UserRole = "customer" | "owner" | "staff" | "admin";
 
 export interface UserDocument {
   _id: Types.ObjectId;
@@ -10,6 +10,9 @@ export interface UserDocument {
   role: UserRole;
   favorites: Types.ObjectId[];
   isVerified: boolean;
+  onboardingCompleted: boolean;
+  emailVerificationToken?: string;
+  emailVerificationExpires?: Date;
   refreshTokenHash?: string;
   createdAt: Date;
   updatedAt: Date;
@@ -35,7 +38,7 @@ const userSchema = new Schema<UserDocument>(
     },
     role: {
       type: String,
-      enum: ["customer", "owner", "admin"],
+      enum: ["customer", "owner", "staff", "admin"],
       default: "customer",
     },
     favorites: [
@@ -48,6 +51,16 @@ const userSchema = new Schema<UserDocument>(
       type: Boolean,
       default: false,
     },
+    onboardingCompleted: {
+      type: Boolean,
+      default: false,
+    },
+    emailVerificationToken: {
+      type: String,
+    },
+    emailVerificationExpires: {
+      type: Date,
+    },
     refreshTokenHash: {
       type: String,
     },
@@ -58,4 +71,3 @@ const userSchema = new Schema<UserDocument>(
 );
 
 export const UserModel = model<UserDocument>("User", userSchema);
-

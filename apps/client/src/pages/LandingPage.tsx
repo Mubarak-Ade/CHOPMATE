@@ -6,6 +6,7 @@ import { Button } from "../components/ui/button";
 import { Card, CardContent } from "../components/ui/card";
 import { Badge } from "../components/ui/badge";
 import { useRestaurants } from "../features/restaurants/hooks/useRestaurants";
+import { formatAddress } from "../types/api";
 
 const featureBullets = [
   "1-click payroll integration",
@@ -270,7 +271,7 @@ export const LandingPage = () => {
                           {restaurant.isOpen ? "Open" : "Closed"}
                         </Badge>
                       </div>
-                      <p className="text-sm leading-6 text-muted-foreground">{restaurant.address}</p>
+                      <p className="text-sm leading-6 text-muted-foreground">{formatAddress(restaurant.address)}</p>
                       <div className="flex flex-wrap gap-2">
                         {restaurant.cuisine.slice(0, 2).map((entry) => (
                           <Badge key={entry} variant="brand">

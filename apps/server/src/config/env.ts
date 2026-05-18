@@ -9,7 +9,7 @@ export const env = cleanEnv(process.env, {
     default: "development",
   }),
   PORT: num({ default: 4000 }),
-  CLIENT_ORIGIN: str({ default: "http://localhost:5173" }),
+  CLIENT_ORIGIN: str({ default: "http://localhost:3000" }),
   MONGO_URI: str(),
   JWT_SECRET: str(),
   JWT_EXPIRES_IN: str({ default: "15m" }),

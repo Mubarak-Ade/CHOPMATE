@@ -1,4 +1,4 @@
-import { apiRequest } from "../../../services/api";
+import { apiGet, apiRequest } from "../../../services/api";
 import type {
   Category,
   Restaurant,
@@ -7,7 +7,11 @@ import type {
 } from "../../../types/api";
 
 export const getRestaurants = (params: RestaurantSearchParams) =>
-  apiRequest<Restaurant[]>("restaurants", { ...params });
+  apiGet<Restaurant[]>("restaurants", {
+    ...(params.q ? { q: params.q } : {}),
+    ...(params.cuisine ? { cuisine: params.cuisine } : {}),
+    ...(params.rating !== undefined ? { rating: params.rating } : {}),
+  });
 
 export const getRestaurantById = (restaurantId: string) =>
   apiRequest<Restaurant>(`restaurants/${restaurantId}`);

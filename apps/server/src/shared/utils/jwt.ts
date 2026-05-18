@@ -4,7 +4,7 @@ import { env } from "../../config/env.js";
 export interface JwtPayload {
   sub: string;
   email: string;
-  role: "customer" | "owner" | "admin";
+  role: "customer" | "owner" | "staff" | "admin";
 }
 
 const accessTokenExpiresIn = env.JWT_EXPIRES_IN as jwt.SignOptions["expiresIn"] & {};

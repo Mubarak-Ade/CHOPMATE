@@ -1,5 +1,6 @@
 import type { Request, Response } from "express";
 import { sendSuccess } from "../../shared/utils/response.js";
+import { restaurantService } from "../restaurant/restaurant.service.js";
 import {
   createMenuItemSchema,
   createMenuSchema,
@@ -10,7 +11,7 @@ import { menuService } from "./menu.service.js";
 export const menuController = {
   async createMenu(req: Request, res: Response) {
     const payload = createMenuSchema.parse(req.body);
-    const menu = await menuService.createMenu(payload);
+    const menu = await menuService.createMenu(req.auth!.sub, payload);
     sendSuccess(res, menu, "Menu created", 201);
   },
 
@@ -33,14 +34,12 @@ export const menuController = {
       ...(parsedPayload.image ? { image: parsedPayload.image } : {}),
       ...(parsedPayload.isAvailable !== undefined ? { isAvailable: parsedPayload.isAvailable } : {}),
     };
-    const item = await menuService.createMenuItem(payload);
+    const item = await menuService.createMenuItem(req.auth!.sub, payload);
     sendSuccess(res, item, "Menu item created", 201);
   },
 
   async updateMenuItem(req: Request, res: Response) {
-    const menuItemId = Array.isArray(req.params.id)
-      ? req.params.id[0] ?? ""
-      : req.params.id ?? "";
+    const menuItemId = Array.isArray(req.params.id) ? req.params.id[0] ?? "" : req.params.id ?? "";
     const parsedPayload = updateMenuItemSchema.parse(req.body);
     const payload = {
       ...(parsedPayload.categoryId ? { categoryId: parsedPayload.categoryId } : {}),
@@ -50,15 +49,21 @@ export const menuController = {
       ...(parsedPayload.image ? { image: parsedPayload.image } : {}),
       ...(parsedPayload.isAvailable !== undefined ? { isAvailable: parsedPayload.isAvailable } : {}),
     };
-    const item = await menuService.updateMenuItem(menuItemId, payload);
+    const item = await menuService.updateMenuItem(req.auth!.sub, menuItemId, payload);
     sendSuccess(res, item, "Menu item updated");
   },
 
   async deleteMenuItem(req: Request, res: Response) {
-    const menuItemId = Array.isArray(req.params.id)
-      ? req.params.id[0] ?? ""
-      : req.params.id ?? "";
-    await menuService.deleteMenuItem(menuItemId);
+    const menuItemId = Array.isArray(req.params.id) ? req.params.id[0] ?? "" : req.params.id ?? "";
+    await menuService.deleteMenuItem(req.auth!.sub, menuItemId);
     sendSuccess(res, null, "Menu item deleted");
+  },
+
+  async completeMenuStep(req: Request, res: Response) {
+    const restaurantId = Array.isArray(req.params.restaurantId)
+      ? req.params.restaurantId[0] ?? ""
+      : req.params.restaurantId ?? "";
+    const restaurant = await restaurantService.markMenuComplete(req.auth!.sub, restaurantId);
+    sendSuccess(res, restaurant, "Menu step completed");
   },
 };

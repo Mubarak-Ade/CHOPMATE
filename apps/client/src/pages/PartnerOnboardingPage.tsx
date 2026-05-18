@@ -1,1158 +1,816 @@
-import { useMemo, useState } from "react";
+import { FormEvent, useEffect, useMemo, useState } from "react";
 import {
   ArrowLeft,
   ArrowRight,
-  Banknote,
-  Bell,
-  BookOpen,
-  Building2,
-  CheckCircle2,
-  CircleHelp,
-  CreditCard,
-  LayoutGrid,
+  Check,
+  ImagePlus,
+  Loader2,
+  MapPin,
   Plus,
   Rocket,
-  Shield,
   Store,
-  Table2,
-  Upload,
-  Users,
+  Truck,
+  UtensilsCrossed,
 } from "lucide-react";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { cn } from "../lib/utils";
+import { useAuth } from "../features/auth/hooks/useAuth";
+import { useOnboardingState } from "../features/onboarding/hooks/useOnboarding";
+import {
+  completeMenuStep,
+  createCategory,
+  createMenuItem,
+  createRestaurant,
+  getCategories,
+  getRestaurantMenu,
+  publishRestaurant,
+  updateBranding,
+  updateDelivery,
+  updateRestaurant,
+} from "../features/onboarding/services/onboarding.api";
+import {
+  ONBOARDING_STEPS,
+  type OnboardingStepId,
+  useOnboardingStore,
+} from "../features/onboarding/store/onboarding.store";
+import type { Category, MenuItem, Restaurant } from "../types/api";
 
-type StepId = "identity" | "operations" | "menu" | "tables" | "payments" | "review";
+const stepIcon: Record<OnboardingStepId, typeof Store> = {
+  welcome: Store,
+  "restaurant-info": MapPin,
+  branding: ImagePlus,
+  "menu-setup": UtensilsCrossed,
+  delivery: Truck,
+  preview: Store,
+  publish: Rocket,
+};
 
-const steps: { id: StepId; label: string; icon: typeof Store }[] = [
-  { id: "identity", label: "Business Identity", icon: Building2 },
-  { id: "operations", label: "Operational Details", icon: Users },
-  { id: "menu", label: "Menu Setup", icon: BookOpen },
-  { id: "tables", label: "Table Setup", icon: Table2 },
-  { id: "payments", label: "Payments", icon: CreditCard },
-  { id: "review", label: "Review & Launch", icon: Rocket },
-];
+const stepByNumber: Record<number, OnboardingStepId> = {
+  1: "branding",
+  2: "branding",
+  3: "menu-setup",
+  4: "delivery",
+  5: "preview",
+  6: "publish",
+};
 
-const cuisineTags = [
-  "Contemporary American",
-  "Italian",
-  "Japanese",
-  "French Modern",
-  "Nordic",
-  "+ Add Others",
-];
+const getErrorMessage = (error: unknown) =>
+  error instanceof Error ? error.message : "Something went wrong. Try again.";
 
-const sectionCards = [
-  { title: "Main Dining Room", count: "12 Tables • 48 Total Capacity" },
-  { title: "The Patio", count: "6 Tables • 24 Total Capacity" },
-  { title: "Cocktail Bar", count: "8 Seats • 8 Total Capacity" },
-  { title: "Private Library", count: "2 Tables • 10 Total Capacity" },
-];
-
-const tableCards = [
-  { code: "M1", name: "Window Booth", capacity: "Capacity: 4 Guests", tags: ["Booth", "Window"] },
-  { code: "M2", name: "Central Round", capacity: "Capacity: 6 Guests", tags: ["Round"] },
-  { code: "M3", name: "Corner Two", capacity: "Capacity: 2 Guests", tags: ["Square", "High-Top"] },
-];
-
-const payoutSchedules = [
-  { label: "Daily", detail: "T+2 Rolling Basis", active: true },
-  { label: "Weekly", detail: "Every Monday" },
-  { label: "Monthly", detail: "Last Business Day" },
-];
-
-const menuCategories = [
-  {
-    section: "Section 01",
-    title: "Starters",
-    empty: true,
-  },
-  {
-    section: "Section 02",
-    title: "Mains",
-    itemName: "Pan-Seared Ribeye",
-    price: "42.00",
-    description: "Dry-aged 14 days, served with truffle butter and seasonal root vegetables.",
-    image:
-      "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1200&q=80",
-  },
-];
-
-const progressLabel = (index: number) => `Step ${index + 1} of ${steps.length}`;
+const parseCuisine = (value: string) =>
+  value
+    .split(",")
+    .map((item) => item.trim())
+    .filter(Boolean);
 
 export const PartnerOnboardingPage = () => {
-  const [activeStep, setActiveStep] = useState<StepId>("identity");
-  const stepIndex = useMemo(
-    () => steps.findIndex((step) => step.id === activeStep),
-    [activeStep],
-  );
+  const navigate = useNavigate();
+  const { user, isLoading: isAuthLoading, refetchUser } = useAuth();
+  const onboardingQuery = useOnboardingState();
+  const restaurantId = useOnboardingStore((state) => state.restaurantId);
+  const currentStep = useOnboardingStore((state) => state.currentStep);
+  const draft = useOnboardingStore((state) => state.draft);
+  const setRestaurantId = useOnboardingStore((state) => state.setRestaurantId);
+  const setCurrentStep = useOnboardingStore((state) => state.setCurrentStep);
+  const setDraft = useOnboardingStore((state) => state.setDraft);
+  const hydrateFromRestaurant = useOnboardingStore((state) => state.hydrateFromRestaurant);
+  const resetOnboarding = useOnboardingStore((state) => state.reset);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
+  const [categoryName, setCategoryName] = useState("");
+  const [itemForm, setItemForm] = useState({
+    categoryId: "",
+    name: "",
+    description: "",
+    price: "",
+    image: "",
+  });
+  const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
+  const [isSaving, setIsSaving] = useState(false);
+
+  const activeIndex = ONBOARDING_STEPS.findIndex((step) => step.id === currentStep);
+  const activeRestaurantId = restaurantId ?? onboardingQuery.data?.restaurant?._id ?? null;
+  const restaurant = onboardingQuery.data?.restaurant ?? null;
+  const cuisineText = useMemo(() => draft.cuisineTypes.join(", "), [draft.cuisineTypes]);
+
+  useEffect(() => {
+    if (onboardingQuery.data?.restaurant) {
+      const existingRestaurant = onboardingQuery.data.restaurant;
+      hydrateFromRestaurant(existingRestaurant);
+      setCurrentStep(stepByNumber[existingRestaurant.onboardingStep] ?? "restaurant-info");
+    }
+  }, [hydrateFromRestaurant, onboardingQuery.data?.restaurant, setCurrentStep]);
+
+  useEffect(() => {
+    const loadMenu = async () => {
+      if (!activeRestaurantId) {
+        return;
+      }
+
+      const [loadedCategories, menu] = await Promise.all([
+        getCategories(activeRestaurantId),
+        getRestaurantMenu(activeRestaurantId),
+      ]);
+      setCategories(loadedCategories);
+      setMenuItems(menu.items);
+    };
+
+    void loadMenu();
+  }, [activeRestaurantId]);
+
+  useEffect(() => {
+    const firstCategory = categories[0];
+    if (!itemForm.categoryId && firstCategory) {
+      setItemForm((current) => ({ ...current, categoryId: firstCategory._id }));
+    }
+  }, [categories, itemForm.categoryId]);
+
+  if (isAuthLoading || onboardingQuery.isLoading) {
+    return (
+      <div className="grid min-h-screen place-items-center bg-bg">
+        <Loader2 className="size-6 animate-spin text-brand" />
+      </div>
+    );
+  }
+
+  if (!user) {
+    return <Navigate replace to="/partners/register" />;
+  }
+
+  if (user.role !== "owner" && user.role !== "admin") {
+    return <Navigate replace to="/" />;
+  }
+
+  if (!user.isVerified) {
+    return <Navigate replace to="/verify-email" />;
+  }
+
+  if (user.onboardingCompleted) {
+    return <Navigate replace to="/dashboard" />;
+  }
+
+  const goToStep = (step: OnboardingStepId) => {
+    setError("");
+    setMessage("");
+    setCurrentStep(step);
+  };
 
   const nextStep = () => {
-    const next = steps[stepIndex + 1];
+    const next = ONBOARDING_STEPS[activeIndex + 1];
     if (next) {
-      setActiveStep(next.id);
+      goToStep(next.id);
     }
   };
 
   const previousStep = () => {
-    const previous = steps[stepIndex - 1];
+    const previous = ONBOARDING_STEPS[activeIndex - 1];
     if (previous) {
-      setActiveStep(previous.id);
+      goToStep(previous.id);
+    }
+  };
+
+  const refreshState = async () => {
+    await onboardingQuery.refetch();
+  };
+
+  const saveRestaurantInfo = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setError("");
+    setMessage("");
+    setIsSaving(true);
+
+    try {
+      const payload = {
+        name: draft.name,
+        phoneNumber: draft.phoneNumber,
+        description: draft.description,
+        cuisineTypes: draft.cuisineTypes,
+        address: draft.address,
+        ...(draft.email ? { email: draft.email } : {}),
+      };
+
+      const savedRestaurant = activeRestaurantId
+        ? await updateRestaurant(activeRestaurantId, payload)
+        : await createRestaurant(payload);
+
+      setRestaurantId(savedRestaurant._id);
+      hydrateFromRestaurant(savedRestaurant);
+      await refreshState();
+      goToStep("branding");
+    } catch (requestError) {
+      setError(getErrorMessage(requestError));
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const saveBranding = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (!activeRestaurantId) {
+      setError("Create restaurant info first.");
+      return;
+    }
+
+    setError("");
+    setMessage("");
+    setIsSaving(true);
+
+    try {
+      const savedRestaurant = await updateBranding(activeRestaurantId, {
+        description: draft.description,
+        ...(draft.logo ? { logo: draft.logo } : {}),
+        ...(draft.coverImage ? { coverImage: draft.coverImage } : {}),
+      });
+      hydrateFromRestaurant(savedRestaurant);
+      await refreshState();
+      goToStep("menu-setup");
+    } catch (requestError) {
+      setError(getErrorMessage(requestError));
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const addCategory = async () => {
+    if (!activeRestaurantId || !categoryName.trim()) {
+      return;
+    }
+
+    setError("");
+    setIsSaving(true);
+    try {
+      const category = await createCategory({ restaurantId: activeRestaurantId, name: categoryName.trim() });
+      setCategories((current) => [...current, category]);
+      setCategoryName("");
+      setItemForm((current) => ({ ...current, categoryId: category._id }));
+    } catch (requestError) {
+      setError(getErrorMessage(requestError));
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const addMenuItem = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (!activeRestaurantId) {
+      setError("Create restaurant info first.");
+      return;
+    }
+
+    setError("");
+    setIsSaving(true);
+    try {
+      const itemPayload = {
+        restaurantId: activeRestaurantId,
+        categoryId: itemForm.categoryId,
+        name: itemForm.name,
+        description: itemForm.description,
+        price: Number(itemForm.price),
+        ...(itemForm.image ? { image: itemForm.image } : {}),
+      };
+      const item = await createMenuItem(itemPayload);
+      setMenuItems((current) => [...current, item]);
+      setItemForm((current) => ({ ...current, name: "", description: "", price: "", image: "" }));
+      setMessage("Menu item added.");
+    } catch (requestError) {
+      setError(getErrorMessage(requestError));
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const finishMenu = async () => {
+    if (!activeRestaurantId) {
+      return;
+    }
+
+    setError("");
+    setIsSaving(true);
+    try {
+      await completeMenuStep(activeRestaurantId);
+      await refreshState();
+      goToStep("delivery");
+    } catch (requestError) {
+      setError(getErrorMessage(requestError));
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const saveDelivery = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (!activeRestaurantId) {
+      return;
+    }
+
+    setError("");
+    setIsSaving(true);
+    try {
+      const savedRestaurant = await updateDelivery(activeRestaurantId, {
+        deliveryFee: draft.deliveryFee,
+        pickupAvailable: draft.pickupAvailable,
+        deliveryRadiusKm: draft.deliveryRadiusKm,
+        prepTimeMinutes: draft.prepTimeMinutes,
+      });
+      hydrateFromRestaurant(savedRestaurant);
+      await refreshState();
+      goToStep("preview");
+    } catch (requestError) {
+      setError(getErrorMessage(requestError));
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const publish = async () => {
+    if (!activeRestaurantId) {
+      return;
+    }
+
+    setError("");
+    setIsSaving(true);
+    try {
+      await publishRestaurant(activeRestaurantId);
+      resetOnboarding();
+      await refetchUser();
+      navigate("/dashboard", { replace: true });
+    } catch (requestError) {
+      setError(getErrorMessage(requestError));
+    } finally {
+      setIsSaving(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-[#fbf7f3] text-[#161311] lg:grid lg:grid-cols-[300px_minmax(0,1fr)]">
-      <aside className="flex flex-col bg-[#2d2a29] px-6 py-8 text-white shadow-[24px_0_70px_rgba(23,18,14,0.12)]">
-        <div>
-          <div className="flex items-center gap-4">
-            <div className="grid h-14 w-14 place-items-center rounded-2xl bg-[#c64a12] text-white shadow-lg">
-              <Store className="h-6 w-6" />
-            </div>
-            <div>
-              <p className="text-2xl font-bold tracking-[-0.04em]">Editorial Hospitality</p>
-              <p className="text-sm text-white/65">Onboarding Concierge</p>
-            </div>
+    <div className="min-h-screen bg-bg text-foreground lg:grid lg:grid-cols-[290px_minmax(0,1fr)]">
+      <aside className="flex flex-col bg-sidebar px-5 py-6 text-white">
+        <Link className="flex items-center gap-3" to="/">
+          <span className="grid size-10 place-items-center rounded-md bg-brand font-semibold">CM</span>
+          <div>
+            <strong>Chopmate</strong>
+            <p className="text-xs text-white/60">Restaurant setup</p>
           </div>
+        </Link>
 
-          <div className="mt-10 grid gap-4">
-            {steps.map((step, index) => {
-              const Icon = step.icon;
-              const isActive = step.id === activeStep;
-              const isComplete = index < stepIndex;
+        <nav className="mt-8 grid gap-2">
+          {ONBOARDING_STEPS.map((step, index) => {
+            const Icon = stepIcon[step.id];
+            const isActive = step.id === currentStep;
+            const isComplete = index < activeIndex;
 
-              return (
-                <button
-                  className={cn(
-                    "flex items-center gap-4 rounded-2xl px-5 py-4 text-left transition-colors",
-                    isActive
-                      ? "bg-[#c64a12] text-white"
-                      : "text-white/65 hover:bg-white/5 hover:text-white",
-                  )}
-                  key={step.id}
-                  onClick={() => setActiveStep(step.id)}
-                  type="button"
-                >
-                  <span
-                    className={cn(
-                      "grid h-8 w-8 place-items-center rounded-full text-sm",
-                      isActive ? "bg-white/12" : isComplete ? "bg-emerald-500/20 text-emerald-300" : "bg-white/8",
-                    )}
-                  >
-                    {isComplete ? <CheckCircle2 className="h-4 w-4" /> : <Icon className="h-4 w-4" />}
-                  </span>
-                  <span className="text-[18px] font-medium">{step.label}</span>
-                </button>
-              );
-            })}
-          </div>
-        </div>
+            return (
+              <button
+                className={cn(
+                  "flex items-center gap-3 rounded-md px-3 py-3 text-left text-sm transition-colors",
+                  isActive ? "bg-brand text-white" : isComplete ? "bg-white/10 text-white" : "text-white/55",
+                )}
+                key={step.id}
+                onClick={() => goToStep(step.id)}
+                type="button"
+              >
+                <span className="grid size-7 place-items-center rounded-full bg-white/10">
+                  {isComplete ? <Check className="size-4" /> : <Icon className="size-4" />}
+                </span>
+                {step.label}
+              </button>
+            );
+          })}
+        </nav>
 
-        <div className="mt-auto space-y-5">
-          <div className="rounded-[26px] bg-white/6 p-5">
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-white/55">
-              Progress
-            </p>
-            <p className="mt-3 text-3xl font-bold tracking-[-0.04em]">{progressLabel(stepIndex)}</p>
-            <div className="mt-5 flex gap-2">
-              {steps.map((step, index) => (
-                <div
-                  className={cn(
-                    "h-1.5 flex-1 rounded-full",
-                    index <= stepIndex ? "bg-[#f26422]" : "bg-white/10",
-                  )}
-                  key={step.id}
-                />
-              ))}
-            </div>
-          </div>
-
-          <div className="rounded-[24px] border border-white/8 bg-white/4 p-5">
-            <p className="text-lg font-semibold">User Concierge</p>
-            <p className="mt-1 text-sm text-white/60">Support Active</p>
-          </div>
+        <div className="mt-auto rounded-md bg-white/10 p-4 text-sm text-white/70">
+          Progress persists in your account and local draft state.
         </div>
       </aside>
 
-      <div className="min-w-0">
-        <header className="flex flex-col gap-6 px-6 py-6 md:px-10 lg:flex-row lg:items-center lg:justify-between">
-          <div className="flex flex-wrap items-center gap-4 text-[#2f261f]">
-            <p className="text-2xl font-bold tracking-[-0.04em]">Business Onboarding</p>
-            <div className="hidden h-7 w-px bg-[#e7dad3] md:block" />
-            <div className="flex items-center gap-2">
-              {steps.map((step, index) => (
-                <div
-                  className={cn(
-                    "h-1.5 w-8 rounded-full",
-                    index <= stepIndex ? "bg-[#c64a12]" : "bg-[#e6ddd7]",
-                  )}
-                  key={step.id}
-                />
-              ))}
-            </div>
-            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[#9a887d]">
-              {progressLabel(stepIndex)}
+      <main className="px-5 py-6 md:px-8 lg:px-10">
+        <header className="mb-8 flex flex-col gap-4 border-b border-border pb-6 md:flex-row md:items-center md:justify-between">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.12em] text-brand">
+              Step {activeIndex + 1} of {ONBOARDING_STEPS.length}
             </p>
+            <h1 className="mt-2 text-3xl font-bold tracking-tight md:text-4xl">
+              {ONBOARDING_STEPS[activeIndex]?.label}
+            </h1>
           </div>
-
-          <div className="flex items-center gap-4 text-[17px] text-[#5e4f45]">
-            <button className="transition-colors hover:text-[#c64a12]" type="button">
-              Documentation
-            </button>
-            <button className="transition-colors hover:text-[#c64a12]" type="button">
-              Support
-            </button>
-            <button className="font-semibold text-[#c64a12]" type="button">
-              Save Progress
-            </button>
-            <button
-              aria-label="Help"
-              className="grid h-11 w-11 place-items-center rounded-full bg-white shadow-sm"
-              type="button"
-            >
-              <CircleHelp className="h-5 w-5" />
-            </button>
+          <div className="flex items-center gap-2">
+            <Button disabled={activeIndex === 0} onClick={previousStep} type="button" variant="outline">
+              <ArrowLeft className="mr-2 size-4" />
+              Back
+            </Button>
+            <Button onClick={nextStep} type="button" variant="secondary">
+              Skip
+              <ArrowRight className="ml-2 size-4" />
+            </Button>
           </div>
         </header>
 
-        <main className="px-6 pb-12 md:px-10">
-          {activeStep === "identity" ? <IdentityStep onNext={nextStep} stepIndex={stepIndex} /> : null}
-          {activeStep === "operations" ? (
-            <OperationsStep onNext={nextStep} onPrevious={previousStep} />
-          ) : null}
-          {activeStep === "menu" ? <MenuStep onNext={nextStep} onPrevious={previousStep} /> : null}
-          {activeStep === "tables" ? <TablesStep onNext={nextStep} onPrevious={previousStep} /> : null}
-          {activeStep === "payments" ? (
-            <PaymentsStep onNext={nextStep} onPrevious={previousStep} />
-          ) : null}
-          {activeStep === "review" ? <ReviewStep onPrevious={previousStep} /> : null}
-        </main>
-      </div>
+        {error ? <p className="mb-5 rounded-md bg-danger/10 px-4 py-3 text-sm text-danger">{error}</p> : null}
+        {message ? <p className="mb-5 rounded-md bg-success/10 px-4 py-3 text-sm text-success">{message}</p> : null}
+
+        {currentStep === "welcome" ? (
+          <section className="grid gap-6 lg:grid-cols-[1fr_0.8fr]">
+            <div className="rounded-lg border border-border bg-white p-6 shadow-sm md:p-8">
+              <h2 className="text-3xl font-semibold tracking-tight">Get live in under 10 minutes.</h2>
+              <p className="mt-4 max-w-2xl text-lg leading-8 text-muted-foreground">
+                We will create your restaurant only when you submit business info, then guide you
+                through branding, your first menu item, delivery settings, preview, and publish.
+              </p>
+              <Button className="mt-8" onClick={() => goToStep("restaurant-info")} type="button">
+                Start setup
+                <ArrowRight className="ml-2 size-4" />
+              </Button>
+            </div>
+            <PreviewCard restaurant={restaurant} menuItems={menuItems} />
+          </section>
+        ) : null}
+
+        {currentStep === "restaurant-info" ? (
+          <form className="grid gap-6 lg:grid-cols-[1fr_0.75fr]" onSubmit={saveRestaurantInfo}>
+            <section className="rounded-lg border border-border bg-white p-6 shadow-sm">
+              <div className="grid gap-4 md:grid-cols-2">
+                <label className="grid gap-2 md:col-span-2">
+                  <span className="text-sm font-medium">Restaurant name</span>
+                  <Input
+                    onChange={(event) => setDraft({ name: event.target.value })}
+                    placeholder="Burger Hub"
+                    required
+                    value={draft.name}
+                  />
+                </label>
+                <label className="grid gap-2">
+                  <span className="text-sm font-medium">Phone number</span>
+                  <Input
+                    onChange={(event) => setDraft({ phoneNumber: event.target.value })}
+                    placeholder="090000000"
+                    required
+                    value={draft.phoneNumber}
+                  />
+                </label>
+                <label className="grid gap-2">
+                  <span className="text-sm font-medium">Business email</span>
+                  <Input
+                    onChange={(event) => setDraft({ email: event.target.value })}
+                    placeholder="orders@burgerhub.com"
+                    type="email"
+                    value={draft.email}
+                  />
+                </label>
+                <label className="grid gap-2">
+                  <span className="text-sm font-medium">Country</span>
+                  <Input
+                    onChange={(event) =>
+                      setDraft({ address: { ...draft.address, country: event.target.value } })
+                    }
+                    required
+                    value={draft.address.country}
+                  />
+                </label>
+                <label className="grid gap-2">
+                  <span className="text-sm font-medium">State</span>
+                  <Input
+                    onChange={(event) => setDraft({ address: { ...draft.address, state: event.target.value } })}
+                    placeholder="Lagos"
+                    required
+                    value={draft.address.state}
+                  />
+                </label>
+                <label className="grid gap-2">
+                  <span className="text-sm font-medium">City</span>
+                  <Input
+                    onChange={(event) => setDraft({ address: { ...draft.address, city: event.target.value } })}
+                    placeholder="Lekki"
+                    required
+                    value={draft.address.city}
+                  />
+                </label>
+                <label className="grid gap-2">
+                  <span className="text-sm font-medium">Street</span>
+                  <Input
+                    onChange={(event) => setDraft({ address: { ...draft.address, street: event.target.value } })}
+                    placeholder="12 Admiralty Way"
+                    required
+                    value={draft.address.street}
+                  />
+                </label>
+                <label className="grid gap-2 md:col-span-2">
+                  <span className="text-sm font-medium">Cuisine types</span>
+                  <Input
+                    onChange={(event) => setDraft({ cuisineTypes: parseCuisine(event.target.value) })}
+                    placeholder="Fast Food, Burgers"
+                    required
+                    value={cuisineText}
+                  />
+                </label>
+                <label className="grid gap-2 md:col-span-2">
+                  <span className="text-sm font-medium">Description</span>
+                  <textarea
+                    className="min-h-28 rounded-md border border-input bg-white px-3 py-2 text-sm shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/20"
+                    onChange={(event) => setDraft({ description: event.target.value })}
+                    placeholder="A short customer-facing description."
+                    value={draft.description}
+                  />
+                </label>
+              </div>
+              <Button className="mt-6" disabled={isSaving} type="submit">
+                {isSaving ? "Saving..." : activeRestaurantId ? "Save info" : "Create restaurant draft"}
+              </Button>
+            </section>
+            <PreviewCard restaurant={restaurant} menuItems={menuItems} />
+          </form>
+        ) : null}
+
+        {currentStep === "branding" ? (
+          <form className="grid gap-6 lg:grid-cols-[1fr_0.75fr]" onSubmit={saveBranding}>
+            <section className="rounded-lg border border-border bg-white p-6 shadow-sm">
+              <div className="grid gap-4">
+                <label className="grid gap-2">
+                  <span className="text-sm font-medium">Logo URL</span>
+                  <Input
+                    onChange={(event) => setDraft({ logo: event.target.value })}
+                    placeholder="https://..."
+                    type="url"
+                    value={draft.logo}
+                  />
+                </label>
+                <label className="grid gap-2">
+                  <span className="text-sm font-medium">Cover image URL</span>
+                  <Input
+                    onChange={(event) => setDraft({ coverImage: event.target.value })}
+                    placeholder="https://..."
+                    type="url"
+                    value={draft.coverImage}
+                  />
+                </label>
+                <label className="grid gap-2">
+                  <span className="text-sm font-medium">Customer-facing description</span>
+                  <textarea
+                    className="min-h-32 rounded-md border border-input bg-white px-3 py-2 text-sm shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/20"
+                    onChange={(event) => setDraft({ description: event.target.value })}
+                    value={draft.description}
+                  />
+                </label>
+              </div>
+              <Button className="mt-6" disabled={isSaving || !activeRestaurantId} type="submit">
+                Save branding
+              </Button>
+            </section>
+            <PreviewCard restaurant={restaurant} menuItems={menuItems} />
+          </form>
+        ) : null}
+
+        {currentStep === "menu-setup" ? (
+          <section className="grid gap-6 lg:grid-cols-[1fr_0.75fr]">
+            <div className="space-y-6">
+              <div className="rounded-lg border border-border bg-white p-6 shadow-sm">
+                <h2 className="text-xl font-semibold">Categories</h2>
+                <div className="mt-4 flex gap-3">
+                  <Input
+                    onChange={(event) => setCategoryName(event.target.value)}
+                    placeholder="Burgers"
+                    value={categoryName}
+                  />
+                  <Button disabled={isSaving || !activeRestaurantId} onClick={addCategory} type="button">
+                    <Plus className="size-4" />
+                  </Button>
+                </div>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {categories.map((category) => (
+                    <span className="rounded-full bg-brand-muted px-3 py-1 text-sm text-brand" key={category._id}>
+                      {category.name}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <form className="rounded-lg border border-border bg-white p-6 shadow-sm" onSubmit={addMenuItem}>
+                <h2 className="text-xl font-semibold">First menu item</h2>
+                <div className="mt-4 grid gap-4 md:grid-cols-2">
+                  <label className="grid gap-2">
+                    <span className="text-sm font-medium">Category</span>
+                    <select
+                      className="h-12 rounded-md border border-input bg-white px-3 text-sm shadow-sm"
+                      onChange={(event) => setItemForm((current) => ({ ...current, categoryId: event.target.value }))}
+                      required
+                      value={itemForm.categoryId}
+                    >
+                      <option value="">Select category</option>
+                      {categories.map((category) => (
+                        <option key={category._id} value={category._id}>
+                          {category.name}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                  <label className="grid gap-2">
+                    <span className="text-sm font-medium">Price</span>
+                    <Input
+                      min="0"
+                      onChange={(event) => setItemForm((current) => ({ ...current, price: event.target.value }))}
+                      placeholder="4500"
+                      required
+                      type="number"
+                      value={itemForm.price}
+                    />
+                  </label>
+                  <label className="grid gap-2 md:col-span-2">
+                    <span className="text-sm font-medium">Item name</span>
+                    <Input
+                      onChange={(event) => setItemForm((current) => ({ ...current, name: event.target.value }))}
+                      placeholder="Classic smash burger"
+                      required
+                      value={itemForm.name}
+                    />
+                  </label>
+                  <label className="grid gap-2 md:col-span-2">
+                    <span className="text-sm font-medium">Image URL</span>
+                    <Input
+                      onChange={(event) => setItemForm((current) => ({ ...current, image: event.target.value }))}
+                      placeholder="https://..."
+                      type="url"
+                      value={itemForm.image}
+                    />
+                  </label>
+                  <label className="grid gap-2 md:col-span-2">
+                    <span className="text-sm font-medium">Description</span>
+                    <textarea
+                      className="min-h-24 rounded-md border border-input bg-white px-3 py-2 text-sm shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/20"
+                      onChange={(event) =>
+                        setItemForm((current) => ({ ...current, description: event.target.value }))
+                      }
+                      value={itemForm.description}
+                    />
+                  </label>
+                </div>
+                <div className="mt-6 flex flex-wrap gap-3">
+                  <Button disabled={isSaving || categories.length === 0} type="submit">
+                    Add item
+                  </Button>
+                  <Button
+                    disabled={isSaving || categories.length === 0 || menuItems.length === 0}
+                    onClick={finishMenu}
+                    type="button"
+                    variant="secondary"
+                  >
+                    Continue to delivery
+                  </Button>
+                </div>
+              </form>
+            </div>
+            <PreviewCard restaurant={restaurant} menuItems={menuItems} />
+          </section>
+        ) : null}
+
+        {currentStep === "delivery" ? (
+          <form className="grid gap-6 lg:grid-cols-[1fr_0.75fr]" onSubmit={saveDelivery}>
+            <section className="rounded-lg border border-border bg-white p-6 shadow-sm">
+              <div className="grid gap-4 md:grid-cols-2">
+                <label className="grid gap-2">
+                  <span className="text-sm font-medium">Delivery fee</span>
+                  <Input
+                    min="0"
+                    onChange={(event) => setDraft({ deliveryFee: Number(event.target.value) })}
+                    type="number"
+                    value={draft.deliveryFee}
+                  />
+                </label>
+                <label className="grid gap-2">
+                  <span className="text-sm font-medium">Delivery radius (km)</span>
+                  <Input
+                    min="0"
+                    onChange={(event) => setDraft({ deliveryRadiusKm: Number(event.target.value) })}
+                    type="number"
+                    value={draft.deliveryRadiusKm}
+                  />
+                </label>
+                <label className="grid gap-2">
+                  <span className="text-sm font-medium">Prep time (minutes)</span>
+                  <Input
+                    min="5"
+                    onChange={(event) => setDraft({ prepTimeMinutes: Number(event.target.value) })}
+                    type="number"
+                    value={draft.prepTimeMinutes}
+                  />
+                </label>
+                <label className="flex items-center gap-3 rounded-md border border-border bg-muted px-4 py-3">
+                  <input
+                    checked={draft.pickupAvailable}
+                    onChange={(event) => setDraft({ pickupAvailable: event.target.checked })}
+                    type="checkbox"
+                  />
+                  <span className="text-sm font-medium">Pickup available</span>
+                </label>
+              </div>
+              <Button className="mt-6" disabled={isSaving} type="submit">
+                Save delivery settings
+              </Button>
+            </section>
+            <PreviewCard restaurant={restaurant} menuItems={menuItems} />
+          </form>
+        ) : null}
+
+        {currentStep === "preview" ? (
+          <section className="grid gap-6 lg:grid-cols-[1fr_0.75fr]">
+            <div className="rounded-lg border border-border bg-white p-6 shadow-sm">
+              <h2 className="text-2xl font-semibold">Customer preview</h2>
+              <p className="mt-2 text-muted-foreground">
+                This mirrors the customer-facing restaurant surface before you publish.
+              </p>
+              <Button className="mt-6" onClick={() => goToStep("publish")} type="button">
+                Looks good
+                <ArrowRight className="ml-2 size-4" />
+              </Button>
+            </div>
+            <PreviewCard restaurant={restaurant} menuItems={menuItems} />
+          </section>
+        ) : null}
+
+        {currentStep === "publish" ? (
+          <section className="grid gap-6 lg:grid-cols-[1fr_0.75fr]">
+            <div className="rounded-lg border border-border bg-white p-6 shadow-sm">
+              <h2 className="text-2xl font-semibold">Publish restaurant</h2>
+              <div className="mt-5 grid gap-3">
+                <ChecklistItem done={Boolean(activeRestaurantId)} label="Restaurant draft created" />
+                <ChecklistItem done={Boolean(draft.logo || draft.coverImage || draft.description)} label="Branding added" />
+                <ChecklistItem done={menuItems.length > 0} label="At least one menu item added" />
+                <ChecklistItem done={draft.deliveryRadiusKm >= 0 && draft.prepTimeMinutes >= 5} label="Delivery configured" />
+              </div>
+              <Button className="mt-6" disabled={isSaving} onClick={publish} type="button">
+                {isSaving ? "Publishing..." : "Publish and enter dashboard"}
+                <Rocket className="ml-2 size-4" />
+              </Button>
+            </div>
+            <PreviewCard restaurant={restaurant} menuItems={menuItems} />
+          </section>
+        ) : null}
+      </main>
     </div>
   );
 };
 
-const IdentityStep = ({ onNext, stepIndex }: { onNext: () => void; stepIndex: number }) => (
-  <div className="space-y-10">
-    <section className="grid gap-10 xl:grid-cols-[1.1fr_0.65fr]">
-      <div className="space-y-7">
-        <p className="text-sm font-semibold uppercase tracking-[0.26em] text-[#c64a12]">
-          The Digital Maître D&apos;
-        </p>
-        <h1 className="max-w-4xl text-5xl font-bold leading-[0.92] tracking-[-0.06em] text-[#171311] md:text-7xl">
-          Define your establishment&apos;s{" "}
-          <span className="font-serif italic text-[#c64a12]">unique identity.</span>
-        </h1>
-      </div>
-
-      <p className="max-w-md pt-8 text-[18px] leading-10 text-[#4f4038]">
-        Start your journey by detailing the core essentials of your venue. This information shapes
-        your brand&apos;s digital presence.
-      </p>
-    </section>
-
-    <section className="grid gap-6 xl:grid-cols-[0.68fr_1.32fr]">
-      <div className="relative overflow-hidden rounded-[28px] bg-[#d7d2cd]">
-        <img
-          alt="Editorial interior"
-          className="h-full min-h-[480px] w-full object-cover opacity-70"
-          src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80"
-        />
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(16,12,10,0.03),rgba(16,12,10,0.52))]" />
-        <div className="absolute bottom-6 left-6">
-          <p className="text-3xl font-semibold tracking-[-0.04em] text-white">Onboarding Phase 01</p>
-          <p className="mt-1 text-xs font-medium uppercase tracking-[0.28em] text-white/80">
-            Structural Foundation
-          </p>
-        </div>
-      </div>
-
-      <div className="rounded-[30px] bg-[#f4f0ed] p-8 md:p-12">
-        <div className="flex flex-wrap items-center justify-between gap-4">
-          <div className="flex gap-2">
-            {steps.map((step, index) => (
-              <div
-                className={cn(
-                  "h-1.5 w-9 rounded-full",
-                  index <= stepIndex ? "bg-[#c64a12]" : "bg-[#e2d2ca]",
-                )}
-                key={step.id}
-              />
-            ))}
-          </div>
-          <p className="text-sm font-bold uppercase tracking-[0.24em] text-[#493b34]">
-            {progressLabel(stepIndex)}
-          </p>
-        </div>
-
-        <div className="mt-10 space-y-8">
-          <label className="block">
-            <span className="mb-3 block text-sm font-bold uppercase tracking-[0.2em] text-[#4b3c35]">
-              Restaurant Name
-            </span>
-            <Input
-              className="h-16 rounded-2xl border-transparent bg-white px-5 text-lg shadow-none placeholder:text-[#d0c6c0]"
-              placeholder="The Glass House"
-            />
-          </label>
-
-          <label className="block">
-            <span className="mb-3 block text-sm font-bold uppercase tracking-[0.2em] text-[#4b3c35]">
-              Physical Address
-            </span>
-            <Input
-              className="h-16 rounded-2xl border-transparent bg-white px-5 text-lg shadow-none placeholder:text-[#7a6e67]"
-              placeholder="124 Editorial Lane, New York, NY"
-            />
-          </label>
-
-          <div>
-            <span className="mb-4 block text-sm font-bold uppercase tracking-[0.2em] text-[#4b3c35]">
-              Cuisine Type
-            </span>
-            <div className="flex flex-wrap gap-3">
-              {cuisineTags.map((tag, index) => (
-                <button
-                  className={cn(
-                    "rounded-2xl px-5 py-3 text-[17px] transition-colors",
-                    index === 0
-                      ? "bg-[#c64a12] text-white"
-                      : "bg-white text-[#4d4039] hover:bg-[#f2e7e1]",
-                  )}
-                  key={tag}
-                  type="button"
-                >
-                  {tag}
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-12 flex justify-end">
-          <Button
-            className="h-16 rounded-2xl bg-[#c64a12] px-10 text-xl font-semibold shadow-[0_18px_36px_rgba(198,74,18,0.22)] hover:bg-[#af4110]"
-            onClick={onNext}
-            size="lg"
-            type="button"
-          >
-            Next: Menu Logic
-            <ArrowRight className="ml-3 h-5 w-5" />
-          </Button>
-        </div>
-      </div>
-    </section>
+const ChecklistItem = ({ done, label }: { done: boolean; label: string }) => (
+  <div className="flex items-center gap-3 rounded-md bg-muted px-4 py-3">
+    <span
+      className={cn(
+        "grid size-6 place-items-center rounded-full text-white",
+        done ? "bg-success" : "bg-muted-foreground/35",
+      )}
+    >
+      <Check className="size-4" />
+    </span>
+    <span className="text-sm font-medium">{label}</span>
   </div>
 );
 
-const OperationsStep = ({
-  onNext,
-  onPrevious,
+const PreviewCard = ({
+  restaurant,
+  menuItems,
 }: {
-  onNext: () => void;
-  onPrevious: () => void;
-}) => (
-  <div className="space-y-8">
-    <section className="max-w-4xl space-y-5 pt-2">
-      <h1 className="text-5xl font-bold tracking-[-0.05em] text-[#161210] md:text-6xl">
-        Tell us about your business
-      </h1>
-      <p className="max-w-4xl text-[18px] leading-9 text-[#4f4038]">
-        This information helps us verify your establishment and set up your billing profile.
-      </p>
-    </section>
+  restaurant: Restaurant | null;
+  menuItems: MenuItem[];
+}) => {
+  const coverImage =
+    restaurant?.coverImage ||
+    "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1200&q=80";
 
-    <section className="grid gap-8 xl:grid-cols-[1.2fr_0.8fr]">
-      <div className="space-y-8">
-        <div className="rounded-[30px] bg-[#f4f0ed] p-10">
-          <label className="block">
-            <span className="mb-3 block text-sm font-bold uppercase tracking-[0.2em] text-[#7d675e]">
-              Legal Business Name
-            </span>
-            <Input
-              className="h-16 rounded-2xl border-transparent bg-white px-6 text-lg shadow-none placeholder:text-[#d0c6c0]"
-              placeholder="e.g. The Gilded Fork Hospitality Group"
-            />
-          </label>
-
-          <label className="mt-8 block">
-            <span className="mb-3 flex items-center gap-2 text-sm font-bold uppercase tracking-[0.2em] text-[#7d675e]">
-              Employer Identification Number (EIN)
-              <Bell className="h-4 w-4" />
-            </span>
-            <Input
-              className="h-16 rounded-2xl border-transparent bg-white px-6 text-lg shadow-none placeholder:text-[#d0c6c0]"
-              placeholder="00-0000000"
-            />
-          </label>
-        </div>
-
-        <div className="rounded-[30px] bg-[#f4f0ed] p-10">
-          <label className="block">
-            <span className="mb-3 block text-sm font-bold uppercase tracking-[0.2em] text-[#7d675e]">
-              Primary Contact Person
-            </span>
-            <Input
-              className="h-16 rounded-2xl border-transparent bg-white px-6 text-lg shadow-none placeholder:text-[#d0c6c0]"
-              placeholder="Full Name"
-            />
-          </label>
-
-          <div className="mt-8 grid gap-6 md:grid-cols-2">
-            <label className="block">
-              <span className="mb-3 block text-sm font-bold uppercase tracking-[0.2em] text-[#7d675e]">
-                Contact Email
-              </span>
-              <Input
-                className="h-16 rounded-2xl border-transparent bg-white px-6 text-lg shadow-none placeholder:text-[#d0c6c0]"
-                placeholder="name@restaurant.com"
-              />
-            </label>
-
-            <label className="block">
-              <span className="mb-3 block text-sm font-bold uppercase tracking-[0.2em] text-[#7d675e]">
-                Phone Number
-              </span>
-              <Input
-                className="h-16 rounded-2xl border-transparent bg-white px-6 text-lg shadow-none placeholder:text-[#d0c6c0]"
-                placeholder="+1 (555) 000-0000"
-              />
-            </label>
-          </div>
-        </div>
-      </div>
-
-      <div className="space-y-8">
-        <div className="rounded-[30px] bg-[#b5b1b0] p-8 text-[#171311]">
-          <Shield className="h-10 w-10 text-[#c64a12]" />
-          <h3 className="mt-10 max-w-xs text-5xl font-bold leading-[1.02] tracking-[-0.05em]">
-            Your data is secured by industry standards.
-          </h3>
-          <p className="mt-6 max-w-sm text-[18px] leading-9 text-[#4b3c34]">
-            We use enterprise-grade encryption to protect your business identity and tax
-            information.
+  return (
+    <aside className="overflow-hidden rounded-lg border border-border bg-white shadow-sm">
+      <div className="relative h-52">
+        <img alt="" className="h-full w-full object-cover" src={coverImage} />
+        <div className="absolute inset-0 bg-detail-overlay" />
+        <div className="absolute bottom-4 left-4 right-4 text-white">
+          <p className="text-2xl font-semibold">{restaurant?.name || "Your restaurant"}</p>
+          <p className="mt-1 text-sm text-white/80">
+            {restaurant?.cuisine.join(", ") || "Cuisine types"} · {restaurant?.address.city || "City"}
           </p>
         </div>
-
-        <div className="rounded-[30px] border border-[#ecd9cf] bg-white p-8">
-          <p className="text-sm font-bold uppercase tracking-[0.2em] text-[#c64a12]">Need Help?</p>
-          <p className="mt-6 text-[19px] italic leading-9 text-[#3a2f29]">
-            &quot;The concierge team is standing by to help you with EIN verification.&quot;
-          </p>
-          <button className="mt-8 border-b border-[#d7c0b3] pb-1 text-lg font-semibold" type="button">
-            Chat with a Maître D&apos;
-          </button>
-        </div>
       </div>
-    </section>
-
-    <div className="flex flex-col gap-5 pt-6 md:flex-row md:items-end md:justify-between">
-      <div>
-        <p className="text-sm font-bold uppercase tracking-[0.24em] text-[#c5b2a6]">Coming Up Next</p>
-        <p className="mt-2 text-4xl font-semibold tracking-[-0.04em] text-[#1b1512]">
-          Kitchen &amp; Service Operations
+      <div className="p-5">
+        <p className="text-sm leading-6 text-muted-foreground">
+          {restaurant?.description || "Your description will show customers what makes this restaurant worth ordering from."}
         </p>
-      </div>
-      <div className="flex gap-4">
-        <Button className="h-16 rounded-2xl px-8" onClick={onPrevious} type="button" variant="outline">
-          <ArrowLeft className="mr-2 h-5 w-5" />
-          Previous
-        </Button>
-        <Button
-          className="h-16 rounded-2xl bg-[#c64a12] px-10 text-xl font-semibold shadow-[0_18px_36px_rgba(198,74,18,0.22)] hover:bg-[#af4110]"
-          onClick={onNext}
-          size="lg"
-          type="button"
-        >
-          Continue to Operations
-          <ArrowRight className="ml-3 h-5 w-5" />
-        </Button>
-      </div>
-    </div>
-  </div>
-);
-
-const MenuStep = ({
-  onNext,
-  onPrevious,
-}: {
-  onNext: () => void;
-  onPrevious: () => void;
-}) => (
-  <div className="space-y-10">
-    <section className="max-w-4xl space-y-4 pt-2">
-      <p className="text-2xl font-semibold tracking-[-0.04em] text-[#1e1815]">Menu Setup</p>
-      <h1 className="text-5xl font-bold tracking-[-0.05em] text-[#161210] md:text-6xl">
-        Build your menu
-      </h1>
-      <p className="max-w-4xl text-[18px] leading-9 text-[#4f4038]">
-        Organize your offerings into logical categories to help guests navigate your culinary
-        journey. Define flavors, pricing, and visual appeal.
-      </p>
-    </section>
-
-    <section className="space-y-12">
-      {menuCategories.map((category) => (
-        <div key={category.title}>
-          <div className="mb-5 flex items-center justify-between gap-4">
-            <div>
-              <p className="text-sm font-bold uppercase tracking-[0.22em] text-[#c64a12]">
-                {category.section}
-              </p>
-              <h2 className="mt-2 text-4xl font-semibold tracking-[-0.04em] text-[#1b1512]">
-                {category.title}
-              </h2>
-            </div>
-            <button className="text-[17px] text-[#4b3c34]" type="button">
-              Rename Category
-            </button>
-          </div>
-
-          <div className="rounded-[28px] bg-[#f4f0ed] p-8">
-            <div className="grid gap-6 md:grid-cols-[130px_minmax(0,1fr)]">
-              <div className="grid h-32 place-items-center rounded-2xl border border-dashed border-[#dbc8bc] bg-[#f1e7e0] text-center">
-                {category.empty ? (
-                  <div>
-                    <Upload className="mx-auto h-8 w-8 text-[#5c4336]" />
-                    <p className="mt-3 text-xs font-bold uppercase tracking-[0.2em] text-[#3a2b22]">
-                      Upload
-                    </p>
-                  </div>
-                ) : (
-                  <img
-                    alt={category.itemName}
-                    className="h-28 w-28 rounded-2xl object-cover"
-                    src={category.image}
-                  />
-                )}
-              </div>
-
-              <div className="grid gap-5">
-                <div className="grid gap-5 md:grid-cols-[minmax(0,1fr)_240px]">
-                  <label className="block">
-                    <span className="mb-2 block text-xs font-bold uppercase tracking-[0.2em] text-[#4b3c35]">
-                      Item Name
-                    </span>
-                    <Input
-                      className="h-14 rounded-2xl border-transparent bg-white px-5 text-lg shadow-none placeholder:text-[#d0c6c0]"
-                      placeholder={category.itemName ?? "e.g. Crispy Calamari"}
-                    />
-                  </label>
-
-                  <label className="block">
-                    <span className="mb-2 block text-xs font-bold uppercase tracking-[0.2em] text-[#4b3c35]">
-                      Price ($)
-                    </span>
-                    <Input
-                      className="h-14 rounded-2xl border-transparent bg-white px-5 text-lg shadow-none placeholder:text-[#d0c6c0]"
-                      placeholder={category.price ?? "0.00"}
-                    />
-                  </label>
-                </div>
-
-                <label className="block">
-                  <span className="mb-2 block text-xs font-bold uppercase tracking-[0.2em] text-[#4b3c35]">
-                    Description
-                  </span>
-                  <textarea
-                    className="min-h-[110px] w-full rounded-2xl border border-transparent bg-white px-5 py-4 text-lg text-[#171311] outline-none placeholder:text-[#d0c6c0]"
-                    placeholder={
-                      category.description ?? "Briefly describe ingredients and preparation..."
-                    }
-                  />
-                </label>
-              </div>
-            </div>
-          </div>
-
-          <button
-            className="mt-5 flex h-20 w-full items-center justify-center gap-3 rounded-[24px] border border-dashed border-[#ecd8cb] bg-white/50 text-xl font-medium text-[#422f25]"
-            type="button"
-          >
-            <Plus className="h-5 w-5" />
-            Add Item to {category.title}
-          </button>
-        </div>
-      ))}
-    </section>
-
-    <div className="flex flex-col items-center gap-8 border-t border-[#ecdfd7] pt-12">
-      <button
-        className="inline-flex h-16 items-center gap-3 rounded-2xl bg-[#efebe8] px-8 text-xl font-semibold text-[#171311]"
-        type="button"
-      >
-        <Plus className="h-5 w-5" />
-        Add New Category
-      </button>
-
-      <div className="w-full max-w-xl rounded-[30px] bg-white p-8 text-center shadow-[0_22px_50px_rgba(32,21,15,0.08)]">
-        <p className="text-[18px] italic text-[#5f4f46]">
-          &quot;The secret of a great menu is balance and rhythm.&quot;
-        </p>
-        <Button
-          className="mt-8 h-16 w-full rounded-2xl bg-[#c64a12] text-xl font-semibold shadow-[0_18px_36px_rgba(198,74,18,0.22)] hover:bg-[#af4110]"
-          onClick={onNext}
-          size="lg"
-          type="button"
-        >
-          Next: Table Setup
-        </Button>
-        <p className="mt-5 text-xs font-medium uppercase tracking-[0.3em] text-[#b39d92]">
-          Step 3 of 5
-        </p>
-      </div>
-
-      <Button className="h-14 rounded-2xl px-8" onClick={onPrevious} type="button" variant="outline">
-        <ArrowLeft className="mr-2 h-4 w-4" />
-        Previous Step
-      </Button>
-    </div>
-  </div>
-);
-
-const TablesStep = ({
-  onNext,
-  onPrevious,
-}: {
-  onNext: () => void;
-  onPrevious: () => void;
-}) => (
-  <div className="space-y-10">
-    <section className="max-w-5xl space-y-4 pt-2">
-      <h1 className="text-5xl font-bold tracking-[-0.05em] text-[#161210] md:text-6xl">
-        Architect Your Space
-      </h1>
-      <p className="max-w-5xl text-[18px] leading-9 text-[#4f4038]">
-        Define your zones and place your tables. This layout will be the heart of your digital
-        floor management.
-      </p>
-    </section>
-
-    <section className="grid gap-8 xl:grid-cols-[1.15fr_0.85fr]">
-      <div className="space-y-8">
-        <div className="grid gap-6 xl:grid-cols-[260px_minmax(0,1fr)]">
-          <div className="rounded-[28px] bg-[#f4f0ed] p-7">
-            <div className="mb-5 flex items-center justify-between">
-              <p className="text-sm font-bold uppercase tracking-[0.22em] text-[#1f1916]">
-                Dining Areas
-              </p>
-              <button
-                className="grid h-10 w-10 place-items-center rounded-full bg-[#c64a12] text-white"
-                type="button"
-              >
-                <Plus className="h-5 w-5" />
-              </button>
-            </div>
-
-            <div className="grid gap-3 text-[18px]">
-              {sectionCards.map((section, index) => (
-                <button
-                  className={cn(
-                    "rounded-2xl px-5 py-4 text-left transition-colors",
-                    index === 0 ? "bg-white text-[#b53700] shadow-sm" : "text-[#4b3c34]",
-                  )}
-                  key={section.title}
-                  type="button"
-                >
-                  {section.title}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <div className="mb-5 flex flex-wrap items-center justify-between gap-4">
+        <div className="mt-5 grid gap-3">
+          {(menuItems.length ? menuItems : []).slice(0, 3).map((item) => (
+            <div className="flex items-center justify-between rounded-md border border-border p-3" key={item._id}>
               <div>
-                <h2 className="text-4xl font-semibold tracking-[-0.04em] text-[#1b1512]">
-                  Main Dining Room
-                </h2>
-                <p className="mt-1 text-[18px] text-[#5d4d43]">12 Tables • 48 Total Capacity</p>
+                <p className="font-medium">{item.name}</p>
+                <p className="line-clamp-1 text-sm text-muted-foreground">{item.description}</p>
               </div>
-              <div className="flex gap-4">
-                <button
-                  className="inline-flex h-16 items-center gap-3 rounded-2xl bg-[#efebe8] px-7 text-xl font-medium text-[#161311]"
-                  type="button"
-                >
-                  <Plus className="h-5 w-5" />
-                  Add Dining Section
-                </button>
-                <button
-                  className="inline-flex h-16 items-center gap-3 rounded-2xl bg-[#c64a12] px-7 text-xl font-semibold text-white"
-                  type="button"
-                >
-                  <Table2 className="h-5 w-5" />
-                  Add Table
-                </button>
-              </div>
+              <span className="font-semibold">₦{item.price.toLocaleString()}</span>
             </div>
-
-            <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-              {tableCards.map((table) => (
-                <div className="rounded-[24px] bg-white p-7 shadow-sm" key={table.code}>
-                  <div className="mb-6 flex items-center justify-between">
-                    <span className="rounded-2xl bg-[#f5f0eb] px-5 py-4 text-3xl font-bold text-[#b53700]">
-                      {table.code}
-                    </span>
-                    <div className="flex gap-2">
-                      <span className="h-3 w-3 rounded-full bg-[#b53700]" />
-                      <span className="h-3 w-3 rounded-full bg-[#b53700]" />
-                    </div>
-                  </div>
-                  <p className="text-2xl font-semibold tracking-[-0.04em] text-[#1b1512]">
-                    {table.name}
-                  </p>
-                  <p className="mt-2 text-[18px] leading-8 text-[#4f4038]">{table.capacity}</p>
-                  <div className="mt-6 flex flex-wrap gap-2">
-                    {table.tags.map((tag) => (
-                      <span
-                        className="rounded-xl bg-[#fee5db] px-3 py-2 text-sm font-semibold uppercase tracking-[0.14em] text-[#5b2c18]"
-                        key={tag}
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              ))}
-
-              <button
-                className="grid min-h-[280px] place-items-center rounded-[24px] border border-dashed border-[#e7d5ca] bg-white/40 text-center text-2xl font-semibold text-[#92776b]"
-                type="button"
-              >
-                <span>
-                  <Plus className="mx-auto mb-5 h-10 w-10" />
-                  Add Table
-                </span>
-              </button>
+          ))}
+          {menuItems.length === 0 ? (
+            <div className="rounded-md border border-dashed border-border p-5 text-center text-sm text-muted-foreground">
+              Menu preview appears after your first item.
             </div>
-          </div>
-        </div>
-
-        <div className="grid gap-6 xl:grid-cols-[260px_minmax(0,1fr)]">
-          <div className="rounded-[24px] border border-[#efdcd1] bg-white p-8 text-center">
-            <div className="mx-auto grid h-20 w-20 place-items-center rounded-3xl bg-[#fee6db]">
-              <Bell className="h-8 w-8 text-[#b53700]" />
-            </div>
-            <h3 className="mt-8 text-4xl font-semibold tracking-[-0.04em] text-[#171311]">
-              Pro Tip
-            </h3>
-            <p className="mt-5 text-[18px] leading-9 text-[#4f4038]">
-              Use naming conventions like &apos;M1&apos;, &apos;M2&apos; for Main Dining to keep staff
-              communication crisp.
-            </p>
-          </div>
-
-          <div className="relative overflow-hidden rounded-[30px] bg-[#ece7e2]">
-            <img
-              alt="Floor map preview"
-              className="h-full min-h-[360px] w-full object-cover opacity-28"
-              src="https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&w=1400&q=80"
-            />
-            <div className="absolute inset-0 grid place-items-center text-center">
-              <div>
-                <div className="mx-auto grid h-20 w-20 place-items-center rounded-3xl bg-white shadow-md">
-                  <LayoutGrid className="h-8 w-8 text-[#b53700]" />
-                </div>
-                <h3 className="mt-8 text-5xl font-bold tracking-[-0.05em] text-[#161311]">
-                  Live Floor Map Preview
-                </h3>
-                <p className="mx-auto mt-5 max-w-xl text-[18px] leading-9 text-[#4f4038]">
-                  Drag and drop your tables to match your physical restaurant layout for more
-                  efficient seating.
-                </p>
-                <button className="mt-8 text-2xl font-semibold text-[#b53700]" type="button">
-                  Launch Floor Plan Editor
-                </button>
-              </div>
-            </div>
-          </div>
+          ) : null}
         </div>
       </div>
-    </section>
-
-    <div className="flex flex-col gap-6 border-t border-[#ecdfd7] pt-8 md:flex-row md:items-end md:justify-between">
-      <div>
-        <p className="text-sm font-bold uppercase tracking-[0.24em] text-[#a99286]">Step 03</p>
-        <p className="mt-2 text-3xl font-semibold tracking-[-0.04em] text-[#1b1512]">Table Layout</p>
-      </div>
-      <div className="flex flex-wrap gap-4">
-        <Button className="h-16 rounded-2xl px-8" onClick={onPrevious} type="button" variant="outline">
-          Previous Step
-        </Button>
-        <Button
-          className="h-16 rounded-2xl bg-[#c64a12] px-10 text-xl font-semibold shadow-[0_18px_36px_rgba(198,74,18,0.22)] hover:bg-[#af4110]"
-          onClick={onNext}
-          size="lg"
-          type="button"
-        >
-          Continue to Payments
-        </Button>
-      </div>
-    </div>
-  </div>
-);
-
-const PaymentsStep = ({
-  onNext,
-  onPrevious,
-}: {
-  onNext: () => void;
-  onPrevious: () => void;
-}) => (
-  <div className="space-y-10">
-    <section className="space-y-4 pt-2">
-      <h1 className="text-5xl font-bold tracking-[-0.05em] text-[#161210] md:text-6xl">
-        Configure your payouts
-      </h1>
-      <p className="max-w-5xl text-[18px] leading-9 text-[#4f4038]">
-        Set up your secure financial foundation. We partner with leading financial providers to
-        ensure your earnings reach you reliably and safely.
-      </p>
-    </section>
-
-    <section className="grid gap-8 xl:grid-cols-[1.2fr_0.8fr]">
-      <div className="space-y-8">
-        <div className="rounded-[28px] bg-[#f4f0ed] p-9">
-          <div className="flex flex-wrap items-center justify-between gap-4">
-            <div className="flex items-start gap-5">
-              <div className="grid h-14 w-14 place-items-center rounded-2xl bg-[#5e5cff] text-white">
-                <Banknote className="h-6 w-6" />
-              </div>
-              <div>
-                <p className="text-4xl font-semibold tracking-[-0.04em] text-[#171311]">
-                  Connect Bank Account
-                </p>
-                <p className="mt-2 text-[18px] text-[#5b4a40]">Instant verification via Stripe</p>
-              </div>
-            </div>
-            <span className="rounded-lg bg-[#ebe5e1] px-4 py-2 text-sm font-bold uppercase tracking-[0.18em] text-[#171311]">
-              Recommended
-            </span>
-          </div>
-
-          <button
-            className="mt-8 flex h-16 w-full items-center justify-center gap-3 rounded-2xl bg-[#5b59ff] text-xl font-semibold text-white"
-            type="button"
-          >
-            <CreditCard className="h-5 w-5" />
-            Link Account with Stripe
-          </button>
-          <p className="mx-auto mt-5 max-w-2xl text-center text-[15px] leading-7 text-[#5b4a40]">
-            By clicking, you will be redirected to Stripe to securely connect your bank. No login
-            details are stored by Editorial Hospitality.
-          </p>
-        </div>
-
-        <div>
-          <div className="mb-7 flex items-center gap-4">
-            <p className="text-2xl font-bold uppercase tracking-[0.2em] text-[#c64a12]">Verification</p>
-            <div className="h-px flex-1 bg-[#ebddd5]" />
-          </div>
-
-          <div className="grid gap-6 md:grid-cols-2">
-            <label className="block">
-              <span className="mb-3 block text-sm font-bold uppercase tracking-[0.2em] text-[#4b3c35]">
-                Legal Representative Name
-              </span>
-              <Input
-                className="h-16 rounded-2xl border-transparent bg-[#f4f0ed] px-5 text-lg shadow-none placeholder:text-[#8a95a6]"
-                placeholder="e.g. Julianne V. Smith"
-              />
-            </label>
-
-            <label className="block">
-              <span className="mb-3 block text-sm font-bold uppercase tracking-[0.2em] text-[#4b3c35]">
-                Tax Identification Number (TIN)
-              </span>
-              <Input
-                className="h-16 rounded-2xl border-transparent bg-[#f4f0ed] px-5 text-lg shadow-none placeholder:text-[#8a95a6]"
-                placeholder="•••-•••••••"
-              />
-            </label>
-          </div>
-
-          <label className="mt-6 block">
-            <span className="mb-3 block text-sm font-bold uppercase tracking-[0.2em] text-[#4b3c35]">
-              Registered Business Address
-            </span>
-            <Input
-              className="h-28 rounded-2xl border-transparent bg-[#f4f0ed] px-5 text-lg shadow-none placeholder:text-[#8a95a6]"
-              placeholder="Street Address, Suite, City, State, Zip"
-            />
-          </label>
-        </div>
-
-        <div>
-          <div className="mb-7 flex items-center gap-4">
-            <p className="text-2xl font-bold uppercase tracking-[0.2em] text-[#c64a12]">Payout Schedule</p>
-            <div className="h-px flex-1 bg-[#ebddd5]" />
-          </div>
-
-          <div className="grid gap-4 md:grid-cols-3">
-            {payoutSchedules.map((schedule) => (
-              <button
-                className={cn(
-                  "rounded-2xl border p-7 text-left transition-colors",
-                  schedule.active
-                    ? "border-[#c64a12] bg-white shadow-sm"
-                    : "border-transparent bg-[#f4f0ed]",
-                )}
-                key={schedule.label}
-                type="button"
-              >
-                <p className="text-3xl font-semibold tracking-[-0.04em] text-[#171311]">
-                  {schedule.label}
-                </p>
-                <p className="mt-2 text-[18px] text-[#5b4a40]">{schedule.detail}</p>
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      <div className="space-y-7">
-        <div className="rounded-[30px] bg-[#2f2c2b] p-9 text-white">
-          <Shield className="h-10 w-10 text-[#ffd7c7]" />
-          <h3 className="mt-8 text-5xl font-bold leading-[1.05] tracking-[-0.05em]">
-            Enterprise Grade Security
-          </h3>
-          <p className="mt-6 text-[18px] leading-9 text-white/65">
-            We utilize AES-256 encryption for all financial data. Editorial Hospitality never has
-            direct access to your full bank account numbers or routing information.
-          </p>
-          <div className="mt-8 grid gap-4 text-[18px] text-white/80">
-            <p>PCI-DSS Level 1 Compliant</p>
-            <p>SOC2 Type II Verified</p>
-            <p>24/7 Fraud Monitoring</p>
-          </div>
-        </div>
-
-        <div className="rounded-[28px] bg-[#efebe8] p-8">
-          <h4 className="text-3xl font-semibold tracking-[-0.04em] text-[#171311]">
-            Need a different provider?
-          </h4>
-          <p className="mt-5 text-[18px] leading-9 text-[#4f4038]">
-            If you require manual wire setup or international settlement in specific currencies,
-            please contact our implementation team.
-          </p>
-          <button className="mt-8 text-2xl font-semibold text-[#c64a12]" type="button">
-            Talk to a Payment Specialist
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <div className="flex flex-col gap-4 border-t border-[#ecdfd7] pt-8 md:flex-row md:items-center md:justify-between">
-      <button className="inline-flex items-center gap-2 text-[18px] text-[#2f261f]" onClick={onPrevious} type="button">
-        <ArrowLeft className="h-4 w-4" />
-        Previous: Table Setup
-      </button>
-      <div className="flex gap-4">
-        <button className="text-[18px] text-[#2f261f]" type="button">
-          Save as Draft
-        </button>
-        <Button
-          className="h-16 rounded-2xl bg-[#c64a12] px-10 text-xl font-semibold shadow-[0_18px_36px_rgba(198,74,18,0.22)] hover:bg-[#af4110]"
-          onClick={onNext}
-          size="lg"
-          type="button"
-        >
-          Continue to Review
-        </Button>
-      </div>
-    </div>
-  </div>
-);
-
-const ReviewStep = ({ onPrevious }: { onPrevious: () => void }) => (
-  <div className="space-y-10">
-    <section className="space-y-5 pt-2">
-      <span className="rounded-full bg-[#f9e6dd] px-4 py-2 text-sm font-bold uppercase tracking-[0.18em] text-[#c64a12]">
-        Final Step
-      </span>
-      <h1 className="text-5xl font-bold tracking-[-0.05em] text-[#161210] md:text-6xl">
-        Ready to go live?
-      </h1>
-      <p className="max-w-4xl text-[18px] leading-9 text-[#4f4038]">
-        Everything is prepared for your debut. Review the operational summaries below to ensure
-        your digital maître d&apos; is configured exactly to your standards.
-      </p>
-    </section>
-
-    <section className="grid gap-8 xl:grid-cols-[1.15fr_0.85fr]">
-      <div className="space-y-8">
-        <div className="rounded-[28px] bg-[#f4f0ed] p-8">
-          <div className="flex items-start justify-between gap-4">
-            <div>
-              <p className="text-sm font-bold uppercase tracking-[0.2em] text-[#3f342e]">
-                Business Identity
-              </p>
-              <h2 className="mt-3 text-4xl font-semibold tracking-[-0.04em] text-[#171311]">
-                Verified Information
-              </h2>
-            </div>
-            <CheckCircle2 className="h-6 w-6 text-emerald-500" />
-          </div>
-
-          <div className="mt-8 grid gap-8 text-[18px] text-[#2b231f] md:grid-cols-2">
-            <div className="space-y-8">
-              <div>
-                <p className="text-sm text-[#84736b]">Legal Name</p>
-                <p className="mt-2 font-medium">The Archive Room &amp; Cellar LLC</p>
-              </div>
-              <div>
-                <p className="text-sm text-[#84736b]">Tax ID (EIN)</p>
-                <p className="mt-2 font-medium">XX-XXX4920</p>
-              </div>
-            </div>
-            <div>
-              <p className="text-sm text-[#84736b]">Address</p>
-              <p className="mt-2 font-medium">
-                482 Lexington Avenue
-                <br />
-                Upper East Side, NY 10022
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div className="rounded-[28px] bg-white p-8 shadow-sm">
-          <div className="flex items-center justify-between gap-4">
-            <div>
-              <p className="text-sm font-bold uppercase tracking-[0.2em] text-[#3f342e]">Menu Preview</p>
-              <h2 className="mt-3 text-4xl font-semibold tracking-[-0.04em] text-[#171311]">
-                The Seasonal Collection
-              </h2>
-            </div>
-            <button className="text-[17px] font-semibold text-[#c64a12]" type="button">
-              Edit Full Menu
-            </button>
-          </div>
-
-          <div className="mt-10 grid gap-8 md:grid-cols-2">
-            <div>
-              <p className="text-sm font-bold uppercase tracking-[0.2em] text-[#c64a12]">Starters</p>
-              <div className="mt-4 space-y-5 border-t border-[#efe1d9] pt-5">
-                <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <p className="text-2xl font-semibold">Burrata &amp; Heirloom Beet</p>
-                    <p className="mt-2 text-[16px] italic text-[#7d6c63]">
-                      Smoked pine nut, aged balsamic pearls, micro-basil.
-                    </p>
-                  </div>
-                  <span className="text-xl font-medium">$24</span>
-                </div>
-                <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <p className="text-2xl font-semibold">Cured Scallop Crudo</p>
-                    <p className="mt-2 text-[16px] italic text-[#7d6c63]">
-                      Yuzu emulsion, serrano, pickled radish.
-                    </p>
-                  </div>
-                  <span className="text-xl font-medium">$28</span>
-                </div>
-              </div>
-            </div>
-
-            <div>
-              <p className="text-sm font-bold uppercase tracking-[0.2em] text-[#c64a12]">Mains</p>
-              <div className="mt-4 space-y-5 border-t border-[#efe1d9] pt-5">
-                <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <p className="text-2xl font-semibold">Dry-Aged Duck Breast</p>
-                    <p className="mt-2 text-[16px] italic text-[#7d6c63]">
-                      Honey lacquer, parsnip puree, spiced jus.
-                    </p>
-                  </div>
-                  <span className="text-xl font-medium">$48</span>
-                </div>
-                <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <p className="text-2xl font-semibold">Miso Glazed Black Cod</p>
-                    <p className="mt-2 text-[16px] italic text-[#7d6c63]">
-                      Wilted bok choy, ginger dashi, crispy leek.
-                    </p>
-                  </div>
-                  <span className="text-xl font-medium">$52</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="space-y-8">
-        <div className="rounded-[28px] bg-[linear-gradient(135deg,#262321,#3d2d22)] p-8 text-white">
-          <p className="text-sm font-bold uppercase tracking-[0.2em] text-white/60">Financials</p>
-          <h3 className="mt-3 text-4xl font-semibold tracking-[-0.04em]">Payouts Ready</h3>
-          <div className="mt-8 rounded-2xl border border-white/10 bg-white/6 p-5">
-            <p className="text-2xl font-semibold">Stripe Connected</p>
-            <p className="mt-2 text-[16px] text-white/60">Account ending in •••• 8812</p>
-          </div>
-          <p className="mt-6 text-[17px] leading-8 text-white/70">
-            Your payment gateway is live. Funds from reservations and pre-orders will be deposited
-            on a T+2 rolling basis.
-          </p>
-        </div>
-
-        <div className="rounded-[28px] bg-[#f4f0ed] p-8">
-          <p className="text-sm font-bold uppercase tracking-[0.2em] text-[#3f342e]">Floor Plan</p>
-          <h3 className="mt-3 text-3xl font-semibold tracking-[-0.04em] text-[#171311]">
-            Main Dining Room
-          </h3>
-          <p className="mt-2 text-[17px] text-[#5b4a40]">12 Tables • 48 Capacity</p>
-          <div className="mt-6 rounded-2xl bg-white p-4 text-[16px] text-[#2a241f]">
-            Systems operational. All checks passed.
-          </div>
-          <img
-            alt="Floor plan preview"
-            className="mt-5 h-36 w-full rounded-2xl object-cover"
-            src="https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&w=1200&q=80"
-          />
-        </div>
-
-        <div className="rounded-[28px] border border-[#f0d8ca] bg-[#fff6f2] p-8">
-          <p className="text-sm font-bold uppercase tracking-[0.2em] text-[#c64a12]">Support</p>
-          <h3 className="mt-4 text-3xl font-semibold tracking-[-0.04em] text-[#171311]">
-            Need a last-minute change?
-          </h3>
-          <p className="mt-4 text-[17px] leading-8 text-[#5b4a40]">
-            Our concierge team is available 24/7 to help you refine your settings post-launch.
-          </p>
-          <button className="mt-7 text-lg font-semibold text-[#c64a12]" type="button">
-            Contact Onboarding Specialist
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <section className="border-t border-[#ecdfd7] pt-12 text-center">
-      <div className="mx-auto grid h-20 w-20 place-items-center rounded-[24px] bg-[#def7ea]">
-        <CheckCircle2 className="h-10 w-10 text-emerald-500" />
-      </div>
-      <h2 className="mt-8 text-5xl font-bold tracking-[-0.05em] text-[#161210]">Ready for Service</h2>
-      <p className="mx-auto mt-5 max-w-4xl text-[18px] leading-9 text-[#4f4038]">
-        By launching, you acknowledge that your restaurant will be visible to diners and ready to
-        accept bookings. You can pause operations at any time from your management dashboard.
-      </p>
-
-      <div className="mt-10 flex flex-col items-center gap-4">
-        <Button
-          className="h-16 rounded-2xl bg-[#c64a12] px-12 text-xl font-semibold shadow-[0_18px_36px_rgba(198,74,18,0.22)] hover:bg-[#af4110]"
-          size="lg"
-          type="button"
-        >
-          Finalize &amp; Launch Restaurant
-        </Button>
-        <p className="text-sm text-[#b19d92]">Estimated activation time: &lt; 5 minutes</p>
-      </div>
-
-      <div className="mt-8 flex justify-center">
-        <Button className="h-14 rounded-2xl px-8" onClick={onPrevious} type="button" variant="outline">
-          <ArrowLeft className="mr-2 h-4 w-4" />
-          Previous Step
-        </Button>
-      </div>
-    </section>
-  </div>
-);
+    </aside>
+  );
+};
