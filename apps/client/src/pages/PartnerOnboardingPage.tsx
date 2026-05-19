@@ -353,7 +353,7 @@ export const PartnerOnboardingPage = () => {
         <Link className="flex items-center gap-3" to="/">
           <span className="grid size-10 place-items-center rounded-md bg-brand font-semibold">CM</span>
           <div>
-            <strong>Chopmate</strong>
+            <strong>CHOPMATE</strong>
             <p className="text-xs text-white/60">Restaurant setup</p>
           </div>
         </Link>

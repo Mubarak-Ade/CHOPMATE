@@ -11,7 +11,7 @@ export const OnboardingLayout = () => {
     <div className="min-h-screen bg-[#fbf7f3] text-foreground lg:grid lg:grid-cols-[300px_minmax(0,1fr)]">
       <aside className="flex flex-col bg-sidebar px-6 py-8 text-stone-50">
         <Link className="text-xl font-bold tracking-tight text-white" to="/">
-          Chopmate
+          CHOPMATE
         </Link>
         <p className="mt-2 text-sm text-stone-300">Restaurant onboarding</p>
 

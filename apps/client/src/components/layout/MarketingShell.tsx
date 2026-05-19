@@ -12,6 +12,7 @@ interface MarketingShellProps {
 
 const navLinks = [
   { label: "Marketplace", to: "/marketplace" },
+  { label: "For Restaurants", to: "/partners/register" },
   { label: "Journal", to: "/" },
 ];
 
@@ -27,7 +28,7 @@ export const MarketingShell = ({ children }: MarketingShellProps) => (
     >
       <div className="mx-auto flex max-w-7xl items-center gap-4 px-4 py-4 md:px-6">
         <Link className="shrink-0 font-sans text-2xl font-bold tracking-tight text-brand" to="/">
-          Chopmate
+          CHOPMATE
         </Link>
 
         <div className="relative hidden flex-1 md:block">
@@ -57,10 +58,12 @@ export const MarketingShell = ({ children }: MarketingShellProps) => (
         </nav>
 
         <div className="ml-auto flex items-center gap-3">
-          <Button className="hidden md:inline-flex" type="button" variant="ghost">
-            Sign In
+          <Button asChild className="hidden md:inline-flex" variant="ghost">
+            <Link to="/partners/login">Sign In</Link>
           </Button>
-          <Button type="button">Join Now</Button>
+          <Button asChild>
+            <Link to="/partners/register">Start Selling</Link>
+          </Button>
         </div>
       </div>
     </motion.header>

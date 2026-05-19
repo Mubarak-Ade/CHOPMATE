@@ -8,6 +8,7 @@ import { ProtectedRoute } from "../features/auth/components/ProtectedRoute";
 import { LandingPage } from "../pages/LandingPage";
 import { MarketplacePage } from "../pages/MarketplacePage";
 import { OwnerDashboardPage } from "../pages/OwnerDashboardPage";
+import { PartnerLoginPage } from "../pages/PartnerLoginPage";
 import { PartnerOnboardingPage } from "../pages/PartnerOnboardingPage";
 import { PartnerRegisterPage } from "../pages/PartnerRegisterPage";
 import { RestaurantDetailPage } from "../pages/RestaurantDetailPage";
@@ -82,6 +83,14 @@ const AnimatedRoutes = () => {
             </PageFrame>
           }
           path="/partners/register"
+        />
+        <Route
+          element={
+            <PageFrame>
+              <PartnerLoginPage />
+            </PageFrame>
+          }
+          path="/partners/login"
         />
         <Route
           element={

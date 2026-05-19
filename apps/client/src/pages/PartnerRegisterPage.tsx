@@ -54,7 +54,7 @@ export const PartnerRegisterPage = () => {
         <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-5">
           <Link className="flex items-center gap-3 font-semibold" to="/">
             <span className="grid size-10 place-items-center rounded-md bg-brand text-white">CM</span>
-            Chopmate Partners
+            CHOPMATE
           </Link>
           <Link className="text-sm font-medium text-brand" to="/marketplace">
             Browse marketplace
@@ -72,7 +72,7 @@ export const PartnerRegisterPage = () => {
               Start selling without landing in an empty dashboard.
             </h1>
             <p className="mt-5 max-w-lg text-lg leading-8 text-muted-foreground">
-              Create your owner account first. After email verification, Chopmate guides you through
+              Create your owner account first. After email verification, CHOPMATE guides you through
               business setup, branding, menu, delivery, preview, and publish.
             </p>
           </div>

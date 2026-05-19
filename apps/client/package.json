@@ -10,20 +10,22 @@
     "lint": "tsc --noEmit"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.9.0",
     "@radix-ui/react-slot": "^1.2.4",
     "@tanstack/react-query": "^5.59.16",
+    "axios": "^1.16.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "framer-motion": "^12.38.0",
     "lucide-react": "^1.8.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^6.27.0",
-    "tailwind-merge": "^3.5.0",
-    "zustand": "^5.0.8",
     "react-hook-form": "^7.53.0",
-    "@hookform/resolvers": "^3.9.0",
-    "zod": "^3.23.8"
+    "react-router-dom": "^6.27.0",
+    "recharts": "^3.8.1",
+    "tailwind-merge": "^3.5.0",
+    "zod": "^3.23.8",
+    "zustand": "^5.0.8"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.1.8",

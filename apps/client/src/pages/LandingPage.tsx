@@ -55,7 +55,7 @@ export const LandingPage = () => {
               initial={{ opacity: 0, y: 20 }}
               transition={{ delay: 0.24, duration: 0.55, ease: easeOutExpo }}
             >
-              Chopmate is a restaurant marketplace and management system in one place.
+              CHOPMATE is a restaurant marketplace and management system in one place.
               Discover food, accept bookings, run service operations, and give small restaurants
               enterprise-grade tools without enterprise chaos.
             </motion.p>
@@ -324,7 +324,7 @@ export const LandingPage = () => {
             <p className="mt-3 max-w-sm leading-7">
               Restaurant marketplace and operations software for startups and small restaurants.
             </p>
-            <p className="mt-4 text-xs">© 2026 Chopmate. All rights reserved.</p>
+            <p className="mt-4 text-xs">© 2026 CHOPMATE. All rights reserved.</p>
           </div>
 
           <div className="flex flex-wrap gap-6">

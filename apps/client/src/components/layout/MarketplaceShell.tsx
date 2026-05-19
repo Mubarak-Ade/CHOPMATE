@@ -12,6 +12,7 @@ interface MarketplaceShellProps {
 
 const navLinks = [
   { label: "Discover", to: "/marketplace" },
+  { label: "List Your Restaurant", to: "/partners/register" },
   { label: "Orders", to: "/" },
 ];
 
@@ -30,7 +31,7 @@ export const MarketplaceShell = ({ children }: MarketplaceShellProps) => (
           className="shrink-0 text-lg font-bold tracking-[-0.03em] text-[#c53b12] sm:text-2xl"
           to="/"
         >
-          Editorial Hospitality
+          CHOPMATE
         </Link>
 
         <div className="relative hidden flex-1 xl:block">
@@ -70,8 +71,8 @@ export const MarketplaceShell = ({ children }: MarketplaceShellProps) => (
           </span>
         </button>
 
-        <Button className="rounded-xl bg-[#c53b12] px-6 hover:bg-[#ab3310]" type="button">
-          Login
+        <Button asChild className="rounded-xl bg-[#c53b12] px-6 hover:bg-[#ab3310]">
+          <Link to="/partners/login">Login</Link>
         </Button>
       </div>
     </motion.header>

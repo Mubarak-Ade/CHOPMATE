@@ -26,7 +26,7 @@ export const ProtectedRoute = ({
   }
 
   if (!user) {
-    return <Navigate replace state={{ from: location.pathname }} to="/partners/register" />;
+    return <Navigate replace state={{ from: location.pathname }} to="/partners/login" />;
   }
 
   if (ownerOnly && user.role !== "owner" && user.role !== "admin") {

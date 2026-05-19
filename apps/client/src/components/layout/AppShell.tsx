@@ -29,7 +29,7 @@ export const AppShell = ({ children }: AppShellProps) => (
           CM
         </span>
         <div className="hidden lg:block">
-          <strong className="block text-lg">Chopmate</strong>
+          <strong className="block text-lg">CHOPMATE</strong>
           <p className="text-sm text-stone-300/80">Food discovery</p>
         </div>
       </Link>
@@ -70,8 +70,11 @@ export const AppShell = ({ children }: AppShellProps) => (
           </h2>
         </div>
         <div className="grid gap-3 sm:flex sm:items-center">
-          <Button type="button" variant="outline">
-            Sign in
+          <Button asChild variant="outline">
+            <Link to="/partners/login">Sign in</Link>
+          </Button>
+          <Button asChild variant="secondary">
+            <Link to="/partners/register">List restaurant</Link>
           </Button>
           <Button type="button">Cart (0)</Button>
         </div>

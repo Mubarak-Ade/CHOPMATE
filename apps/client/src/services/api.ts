@@ -1,51 +1,53 @@
+import axios, { AxiosError, type AxiosRequestConfig } from "axios";
 import type { ApiResponse } from "@/types/api";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? "http://localhost:4000/api";
 
 type QueryParamValue = string | number | boolean | undefined;
 
-type ApiMethod = "GET" | "POST" | "PATCH" | "PUT" | "DELETE";
-
 interface ApiRequestOptions {
-  method?: ApiMethod;
+  method?: AxiosRequestConfig["method"];
   body?: unknown;
   params?: Record<string, QueryParamValue> | undefined;
 }
 
-const buildUrl = (path: string, params?: Record<string, QueryParamValue>) => {
-  const normalizedPath = path.startsWith("/") ? path.slice(1) : path;
-  const url = new URL(normalizedPath, API_BASE_URL.endsWith("/") ? API_BASE_URL : `${API_BASE_URL}/`);
+export const apiClient = axios.create({
+  baseURL: API_BASE_URL,
+  withCredentials: true,
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
 
-  if (params) {
-    for (const [key, value] of Object.entries(params)) {
-      if (value !== undefined && value !== "") {
-        url.searchParams.set(key, String(value));
-      }
-    }
-  }
-
-  return url.toString();
+const normalizePath = (path: string) => {
+  return path.startsWith("/") ? path.slice(1) : path;
 };
 
 export const apiRequest = async <T>(path: string, options: ApiRequestOptions = {}): Promise<T> => {
   const { method = "GET", body, params } = options;
 
-  const response = await fetch(buildUrl(path, params), {
-    method,
-    credentials: "include",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    ...(body !== undefined ? { body: JSON.stringify(body) } : {}),
-  });
+  try {
+    const response = await apiClient.request<ApiResponse<T>>({
+      url: normalizePath(path),
+      method,
+      data: body,
+      params,
+    });
+    const payload = response.data;
 
-  const payload = (await response.json()) as ApiResponse<T>;
+    if (!payload.success) {
+      throw new Error(payload.message || "Something went wrong. Try again.");
+    }
 
-  if (!response.ok || !payload.success) {
-    throw new Error(payload.message || "Something went wrong. Try again.");
+    return payload.data;
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      const payload = error.response?.data as Partial<ApiResponse<unknown>> | undefined;
+      throw new Error(payload?.message || error.message || "Something went wrong. Try again.");
+    }
+
+    throw error;
   }
-
-  return payload.data;
 };
 
 export const apiGet = <T>(path: string, params?: Record<string, QueryParamValue>) =>

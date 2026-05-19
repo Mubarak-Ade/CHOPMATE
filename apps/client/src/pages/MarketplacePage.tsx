@@ -283,7 +283,7 @@ export const MarketplacePage = () => (
     <footer className="bg-[#2d2928] text-white">
       <div className="mx-auto grid max-w-7xl gap-12 px-4 py-14 md:px-6 lg:grid-cols-[1.4fr_repeat(3,1fr)]">
         <div className="max-w-xs">
-          <h3 className="text-[30px] font-bold tracking-[-0.04em]">Editorial Hospitality</h3>
+          <h3 className="text-[30px] font-bold tracking-[-0.04em]">CHOPMATE</h3>
           <p className="mt-5 text-sm leading-7 text-stone-300">
             Redefining digital service through editorial excellence and seamless culinary
             discovery.
@@ -312,7 +312,7 @@ export const MarketplacePage = () => (
 
       <div className="border-t border-white/10">
         <div className="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-5 text-sm text-stone-400 md:flex-row md:items-center md:justify-between md:px-6">
-          <p>© 2024 Editorial Hospitality. All rights reserved.</p>
+          <p>© 2024 CHOPMATE. All rights reserved.</p>
           <div className="flex items-center gap-4">
             <button
               aria-label="Search social links"
